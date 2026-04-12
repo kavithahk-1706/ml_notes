@@ -1,543 +1,1094 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ML Unit 4 — Clustering &amp; Dimensionality Reduction (Q31–40)</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML Unit 4 — Clustering &amp; Dimensionality Reduction (Q31–40)</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<div class="page">
+  <div class="page">
 
-  <header class="page-header">
-    <p class="page-kicker">Machine Learning — Examination Preparation</p>
-    <h1 class="page-title">Unit 4: Clustering &amp; Dimensionality Reduction</h1>
-    <p class="page-sub">Questions 31 – 40</p>
-  </header>
+    <header class="page-header">
+      <p class="page-kicker">Machine Learning — Examination Preparation</p>
+      <h1 class="page-title">Unit 4: Clustering &amp; Dimensionality Reduction</h1>
+      <p class="page-sub">Questions 31 – 40</p>
+      <nav class="page-nav">
+        <a href="unit3.html">← Unit 3</a>
+        <a class="home" href="index.html">↑ Home</a>
+        <a href="unit5.html">Unit 5 →</a>
+      </nav>
 
-  <nav class="tab-bar" role="tablist">
-    <button class="tab-btn active" role="tab" onclick="show(31)">Q31 — K-Means Numerical</button>
-    <button class="tab-btn" role="tab" onclick="show(32)">Q32 — K-Means vs K-Medoid</button>
-    <button class="tab-btn" role="tab" onclick="show(33)">Q33 — PCA</button>
-    <button class="tab-btn" role="tab" onclick="show(34)">Q34 — Linkage Methods</button>
-    <button class="tab-btn" role="tab" onclick="show(35)">Q35 — K-Means vs Hierarchical</button>
-    <button class="tab-btn" role="tab" onclick="show(36)">Q36 — Agglomerative Numerical</button>
-    <button class="tab-btn" role="tab" onclick="show(37)">Q37 — Centroid-Based Clustering</button>
-    <button class="tab-btn" role="tab" onclick="show(38)">Q38 — Top-Down vs Bottom-Up</button>
-    <button class="tab-btn" role="tab" onclick="show(39)">Q39 — Fuzzy K-Means</button>
-    <button class="tab-btn" role="tab" onclick="show(40)">Q40 — Hybrid Clustering</button>
+    </header>
+
+    <nav class="tab-bar" role="tablist">
+      <button class="tab-btn active" role="tab" onclick="show(31)">Q31 — K-Means Numerical</button>
+      <button class="tab-btn" role="tab" onclick="show(32)">Q32 — K-Means vs K-Medoid</button>
+      <button class="tab-btn" role="tab" onclick="show(33)">Q33 — PCA</button>
+      <button class="tab-btn" role="tab" onclick="show(34)">Q34 — Linkage Methods</button>
+      <button class="tab-btn" role="tab" onclick="show(35)">Q35 — K-Means vs Hierarchical</button>
+      <button class="tab-btn" role="tab" onclick="show(36)">Q36 — Agglomerative Numerical</button>
+      <button class="tab-btn" role="tab" onclick="show(37)">Q37 — Centroid-Based Clustering</button>
+      <button class="tab-btn" role="tab" onclick="show(38)">Q38 — Top-Down vs Bottom-Up</button>
+      <button class="tab-btn" role="tab" onclick="show(39)">Q39 — Fuzzy K-Means</button>
+      <button class="tab-btn" role="tab" onclick="show(40)">Q40 — Hybrid Clustering</button>
+    </nav>
+
+    <!-- ════════════════ Q31 ════════════════ -->
+    <section class="q-panel active" id="panel-31" role="tabpanel">
+      <p class="q-label">Question 31 · Numerical</p>
+      <div class="q-title">Given the dataset of six objects with two attributes (X and Y), apply K-Means clustering to
+        form 2 clusters using X1 and X2 as initial centroids. Perform one complete iteration using Euclidean distance
+        and recalculate the centroids after assignment.</div>
+      <div class="q-body">
+
+        <h3>Given Data</h3>
+        <table>
+          <tr>
+            <th>Object</th>
+            <th>Attribute 1 (X)</th>
+            <th>Attribute 2 (Y)</th>
+          </tr>
+          <tr>
+            <td>X1</td>
+            <td>2</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>X2</td>
+            <td>5</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>X3</td>
+            <td>1</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>X4</td>
+            <td>4</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>X5</td>
+            <td>6</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>X6</td>
+            <td>3</td>
+            <td>2</td>
+          </tr>
+        </table>
+
+        <p><strong>Initial centroids:</strong> C1 = X1 = (2, 3) and C2 = X2 = (5, 4).</p>
+
+        <h3>Step 1 — Euclidean Distance Formula</h3>
+        <div class="formula formula-block">d(A, B) = √( (x₁ − x₂)² + (y₁ − y₂)² )</div>
+
+        <h3>Step 2 — Distance Calculations &amp; Assignments</h3>
+
+        <p><strong>X1 (2,3):</strong> to C1 = √0 = 0 &nbsp;|&nbsp; to C2 = √((2−5)²+(3−4)²) = √10 ≈ 3.16 →
+          <strong>C1</strong></p>
+        <p><strong>X2 (5,4):</strong> to C1 = √10 ≈ 3.16 &nbsp;|&nbsp; to C2 = √0 = 0 → <strong>C2</strong></p>
+        <p><strong>X3 (1,2):</strong> to C1 = √((1−2)²+(2−3)²) = √2 ≈ 1.41 &nbsp;|&nbsp; to C2 = √((1−5)²+(2−4)²) = √20
+          ≈ 4.47 → <strong>C1</strong></p>
+        <p><strong>X4 (4,5):</strong> to C1 = √((4−2)²+(5−3)²) = √8 ≈ 2.83 &nbsp;|&nbsp; to C2 = √((4−5)²+(5−4)²) = √2 ≈
+          1.41 → <strong>C2</strong></p>
+        <p><strong>X5 (6,3):</strong> to C1 = √((6−2)²+(3−3)²) = 4.00 &nbsp;|&nbsp; to C2 = √((6−5)²+(3−4)²) = √2 ≈ 1.41
+          → <strong>C2</strong></p>
+        <p><strong>X6 (3,2):</strong> to C1 = √((3−2)²+(2−3)²) = √2 ≈ 1.41 &nbsp;|&nbsp; to C2 = √((3−5)²+(2−4)²) = √8 ≈
+          2.83 → <strong>C1</strong></p>
+
+        <h3>Step 3 — Summary Table</h3>
+        <table>
+          <tr>
+            <th>Object</th>
+            <th>Point</th>
+            <th>Distance to C1(2,3)</th>
+            <th>Distance to C2(5,4)</th>
+            <th>Assigned to</th>
+          </tr>
+          <tr>
+            <td>X1</td>
+            <td>(2,3)</td>
+            <td>0</td>
+            <td>√10 ≈ 3.16</td>
+            <td><strong>C1</strong></td>
+          </tr>
+          <tr>
+            <td>X2</td>
+            <td>(5,4)</td>
+            <td>√10 ≈ 3.16</td>
+            <td>0</td>
+            <td><strong>C2</strong></td>
+          </tr>
+          <tr>
+            <td>X3</td>
+            <td>(1,2)</td>
+            <td>√2 ≈ 1.41</td>
+            <td>√20 ≈ 4.47</td>
+            <td><strong>C1</strong></td>
+          </tr>
+          <tr>
+            <td>X4</td>
+            <td>(4,5)</td>
+            <td>√8 ≈ 2.83</td>
+            <td>√2 ≈ 1.41</td>
+            <td><strong>C2</strong></td>
+          </tr>
+          <tr>
+            <td>X5</td>
+            <td>(6,3)</td>
+            <td>4.00</td>
+            <td>√2 ≈ 1.41</td>
+            <td><strong>C2</strong></td>
+          </tr>
+          <tr>
+            <td>X6</td>
+            <td>(3,2)</td>
+            <td>√2 ≈ 1.41</td>
+            <td>√8 ≈ 2.83</td>
+            <td><strong>C1</strong></td>
+          </tr>
+        </table>
+
+        <h3>Step 4 — Cluster Assignments</h3>
+        <p><strong>Cluster 1 (C1):</strong> X1(2,3), X3(1,2), X6(3,2)</p>
+        <p><strong>Cluster 2 (C2):</strong> X2(5,4), X4(4,5), X5(6,3)</p>
+
+        <h3>Step 5 — Recalculate Centroids</h3>
+        <p><strong>New C1:</strong> x = (2+1+3)/3 = 6/3 = 2 &nbsp;|&nbsp; y = (3+2+2)/3 = 7/3 ≈ 2.33</p>
+        <div class="formula formula-block">New C1 = (2, 2.33)</div>
+        <p><strong>New C2:</strong> x = (5+4+6)/3 = 15/3 = 5 &nbsp;|&nbsp; y = (4+5+3)/3 = 12/3 = 4</p>
+        <div class="formula formula-block">New C2 = (5, 4)</div>
+
+        <figure class="fig-wrap">
+          <img src="images/unit4/img1.png"
+            alt="search: k-means clustering 2D scatter plot two clusters centroid assignment iteration">
+          <figcaption class="fig-caption">Fig. 1 — K-Means cluster assignments after one iteration. C1 (lower-left
+            group) and C2 (upper-right group) with updated centroids marked.</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q32 ════════════════ -->
+    <section class="q-panel" id="panel-32" role="tabpanel">
+      <p class="q-label">Question 32</p>
+      <div class="q-title">Explain the differences between K-Means and K-Medoid clustering techniques and when each is
+        most appropriate.</div>
+      <div class="q-body">
+
+        <p>Both K-Means and K-Medoid are centroid-based clustering algorithms that partition data into K clusters. While
+          they share a similar iterative structure, they differ fundamentally in how the cluster centre is defined and
+          updated.</p>
+
+        <h3>1. K-Means Clustering</h3>
+        <p>In K-Means, the centre of each cluster is the <strong>computed mean</strong> of all data points assigned to
+          it. This mean may not correspond to any actual data point. The algorithm minimises the Within-Cluster Sum of
+          Squares (WCSS).</p>
+        <div class="formula formula-block">Objective: minimise Σ Σ ||xᵢ − μⱼ||²</div>
+        <ol>
+          <li><strong>Initialize:</strong> Randomly select K data points as initial centroids.</li>
+          <li><strong>Assign:</strong> Each data point goes to the nearest centroid.</li>
+          <li><strong>Update:</strong> Recompute each centroid as the mean of assigned points.</li>
+          <li><strong>Repeat:</strong> Until convergence.</li>
+        </ol>
+        <p>K-Means is computationally efficient with O(nkt) complexity and is well-suited for large datasets. However,
+          it is <strong>highly sensitive to outliers</strong> — a single extreme point can drag the centroid far from
+          the true cluster centre.</p>
+
+        <h3>2. K-Medoid Clustering</h3>
+        <p>K-Medoid requires that the cluster centre be an <strong>actual data point</strong> called a medoid. The most
+          widely used implementation is PAM (Partitioning Around Medoids). The algorithm selects the point within a
+          cluster that minimises total dissimilarity to all other cluster members.</p>
+        <ol>
+          <li><strong>Initialize:</strong> Randomly select K data points as initial medoids.</li>
+          <li><strong>Assign:</strong> Each point goes to the cluster of its nearest medoid.</li>
+          <li><strong>Swap:</strong> For each medoid m and non-medoid o, if swapping reduces total cost, perform the
+            swap.</li>
+          <li><strong>Repeat:</strong> Until no cost-reducing swap exists.</li>
+        </ol>
+        <p>Because the centre is always a real data point, K-Medoid is significantly more <strong>robust to outliers and
+            noise</strong>. It can also work with non-Euclidean distance measures, making it applicable to categorical
+          data. The trade-off is higher computational cost: O(k(n−k)²) per iteration.</p>
+
+        <h3>3. Comparison</h3>
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>K-Means</th>
+            <th>K-Medoid</th>
+          </tr>
+          <tr>
+            <td>Cluster Centre</td>
+            <td>Computed mean (may not be a real point)</td>
+            <td>Actual data point (medoid)</td>
+          </tr>
+          <tr>
+            <td>Sensitivity to Outliers</td>
+            <td>High — outliers skew the mean</td>
+            <td>Low — real point resists extremes</td>
+          </tr>
+          <tr>
+            <td>Time Complexity</td>
+            <td>O(nkt) — faster</td>
+            <td>O(k(n−k)²) — slower</td>
+          </tr>
+          <tr>
+            <td>Distance Metric</td>
+            <td>Typically Euclidean</td>
+            <td>Any dissimilarity measure</td>
+          </tr>
+          <tr>
+            <td>Data Types</td>
+            <td>Numeric only</td>
+            <td>Numeric, categorical, mixed</td>
+          </tr>
+          <tr>
+            <td>Best Used When</td>
+            <td>Large, clean, numeric datasets</td>
+            <td>Noisy data, outliers present, non-Euclidean space</td>
+          </tr>
+        </table>
+
+        <h3>4. When to Use Which</h3>
+        <p>K-Means is preferred when the dataset is large, clean, and numeric, and speed is a priority. K-Medoid is
+          preferred when data contains outliers or noise, when interpretability of the cluster centre matters (the
+          medoid is a real, recognisable object from the dataset), or when dealing with non-numeric data where computing
+          a mean is not meaningful.</p>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q33 ════════════════ -->
+    <section class="q-panel" id="panel-33" role="tabpanel">
+      <p class="q-label">Question 33</p>
+      <div class="q-title">Evaluate the effectiveness of dimensionality reduction techniques, such as Principal
+        Component Analysis, in preserving the key features of a dataset while reducing its dimensionality.</div>
+      <div class="q-body">
+
+        <p>Real-world datasets often contain hundreds of features. Many are redundant or correlated, carrying
+          overlapping information. Dimensionality reduction is the process of reducing the number of features while
+          retaining as much useful information as possible, reducing the curse of dimensionality and lowering
+          computational cost.</p>
+
+        <h3>1. Introduction to PCA</h3>
+        <p>Principal Component Analysis (PCA) is the most widely used dimensionality reduction technique. It identifies
+          the directions — called <strong>principal components</strong> — along which the data varies the most, and
+          projects the data onto those directions. The components are linear combinations of the original features and
+          are ordered by the amount of variance they capture.</p>
+
+        <h3>2. Steps of PCA</h3>
+        <ol>
+          <li><strong>Standardise the data</strong> — subtract the mean and scale to unit variance so all features are
+            comparable.</li>
+          <li><strong>Compute the covariance matrix</strong> — captures how features vary together.</li>
+          <li><strong>Calculate eigenvectors and eigenvalues</strong> — eigenvectors define the directions of maximum
+            variance; eigenvalues indicate how much variance each direction explains.</li>
+          <li><strong>Select top K components</strong> — choose the K eigenvectors with the highest eigenvalues.</li>
+          <li><strong>Project the data</strong> — transform the original data onto the new K-dimensional space.</li>
+        </ol>
+
+        <figure class="fig-wrap">
+          <img src="images/unit4/img2.png"
+            alt="search: PCA principal component analysis 2D scatter plot PC1 PC2 orthogonal axes maximum variance direction">
+          <figcaption class="fig-caption">Fig. 2 — PCA identifies orthogonal principal components. PC1 captures the
+            direction of maximum variance; PC2 is perpendicular to PC1.</figcaption>
+        </figure>
+
+        <h3>3. Effectiveness in Preserving Key Features</h3>
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>How PCA Addresses It</th>
+          </tr>
+          <tr>
+            <td>Variance Preservation</td>
+            <td>Selecting components that explain 95%+ of variance retains most data structure while cutting dimensions.
+            </td>
+          </tr>
+          <tr>
+            <td>Redundancy Removal</td>
+            <td>Correlated features are transformed into uncorrelated principal components, eliminating overlapping
+              information.</td>
+          </tr>
+          <tr>
+            <td>Noise Reduction</td>
+            <td>Lower-variance components often represent noise; discarding them denoises the dataset.</td>
+          </tr>
+          <tr>
+            <td>Data Compression</td>
+            <td>High-dimensional data is compressed while preserving essential patterns — useful in image processing.
+            </td>
+          </tr>
+          <tr>
+            <td>Visualisation</td>
+            <td>PCA reduces data from 10D, 100D, etc. to 2D or 3D for human inspection.</td>
+          </tr>
+        </table>
+
+        <h3>4. Limitations of PCA</h3>
+        <ul>
+          <li><strong>Loss of Information:</strong> Some information is inevitably lost when dimensions are reduced;
+            features with low variance may be discarded even if meaningful.</li>
+          <li><strong>Interpretability:</strong> Principal components are linear combinations of original features, not
+            the features themselves — harder to interpret.</li>
+          <li><strong>Assumes Linearity:</strong> PCA only captures linear relationships; unsuitable for complex
+            non-linear data.</li>
+          <li><strong>Sensitive to Scaling:</strong> Requires normalisation/standardisation before application.</li>
+        </ul>
+
+        <h3>5. Evaluation Metrics</h3>
+        <table>
+          <tr>
+            <th>Metric</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Explained Variance Ratio</td>
+            <td>Proportion of total variance captured by each component. A cumulative ratio of 95% is typically a good
+              cut-off.</td>
+          </tr>
+          <tr>
+            <td>Reconstruction Error</td>
+            <td>Measures how well the original data can be reconstructed from the reduced representation. Lower is
+              better.</td>
+          </tr>
+          <tr>
+            <td>Downstream Model Performance</td>
+            <td>Compare ML model accuracy before and after PCA. If performance is similar, the reduction is effective.
+            </td>
+          </tr>
+        </table>
+
+        <h3>6. Applications</h3>
+        <ul>
+          <li>Image compression and face recognition</li>
+          <li>Feature extraction as a preprocessing step for classification and clustering</li>
+          <li>Noise reduction in signal processing</li>
+          <li>Visualisation of high-dimensional datasets</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q34 ════════════════ -->
+    <section class="q-panel" id="panel-34" role="tabpanel">
+      <p class="q-label">Question 34</p>
+      <div class="q-title">Analyze the impact of using different linkage methods (single-linkage, multiple linkage) in
+        hierarchical clustering, highlighting scenarios where each method is advantageous.</div>
+      <div class="q-body">
+
+        <p>In hierarchical clustering, after individual data points are placed into singleton clusters, we need a rule
+          to measure the distance between clusters (not just individual points) as merging proceeds. This is the role of
+          linkage methods. Different linkage rules lead to very different cluster shapes and structures.</p>
+
+        <h3>1. Single-Linkage (Minimum Linkage)</h3>
+        <p>The distance between two clusters is defined as the <strong>minimum distance</strong> between any single pair
+          of points, one from each cluster.</p>
+        <div class="formula formula-block">d(A, B) = min { d(a, b) : a ∈ A, b ∈ B }</div>
+        <p>Single-linkage tends to produce <strong>elongated, chain-like clusters</strong> due to the chaining effect —
+          if one point from cluster A is close to one point from cluster B, the clusters merge even if most of their
+          points are far apart. It is highly sensitive to outliers and noise.</p>
+        <p><strong>Best for:</strong> Detecting non-convex, elongated, or irregular cluster shapes. Useful when clusters
+          are expected to be connected in chains.</p>
+
+        <h3>2. Complete-Linkage (Maximum Linkage)</h3>
+        <p>The distance between two clusters is the <strong>maximum distance</strong> between any pair of points across
+          the two clusters — the distance between the two farthest points.</p>
+        <div class="formula formula-block">d(A, B) = max { d(a, b) : a ∈ A, b ∈ B }</div>
+        <p>Complete-linkage produces <strong>compact, roughly spherical clusters</strong> of similar diameter. It avoids
+          chaining but can break large natural clusters unnecessarily. Less sensitive to outliers than single-linkage.
+        </p>
+        <p><strong>Best for:</strong> Compact, well-separated clusters where cluster diameter needs to be controlled.
+        </p>
+
+        <h3>3. Average-Linkage</h3>
+        <p>The distance between clusters is the <strong>average of all pairwise distances</strong> between points in the
+          two clusters. It is a middle-ground approach, generally more robust than both single and complete linkage.</p>
+        <p><strong>Best for:</strong> Balanced clusters, datasets with moderate noise, general-purpose hierarchical
+          clustering.</p>
+
+        <figure class="fig-wrap">
+          <img src="images/unit4/img3.png"
+            alt="search: hierarchical clustering single linkage complete linkage average linkage comparison diagram">
+          <figcaption class="fig-caption">Fig. 3 — Linkage method comparison. Single-linkage uses the minimum pair
+            distance; complete-linkage uses the maximum pair distance.</figcaption>
+        </figure>
+
+        <h3>4. Comparison</h3>
+        <table>
+          <tr>
+            <th>Linkage Method</th>
+            <th>Distance Used</th>
+            <th>Cluster Shape</th>
+            <th>Outlier Sensitivity</th>
+            <th>Best Scenario</th>
+          </tr>
+          <tr>
+            <td>Single</td>
+            <td>Minimum</td>
+            <td>Chain-like, elongated</td>
+            <td>High</td>
+            <td>Irregular, non-convex shapes</td>
+          </tr>
+          <tr>
+            <td>Complete</td>
+            <td>Maximum</td>
+            <td>Compact, spherical</td>
+            <td>Lower</td>
+            <td>Well-separated, compact clusters</td>
+          </tr>
+          <tr>
+            <td>Average</td>
+            <td>Mean of all pairs</td>
+            <td>Balanced</td>
+            <td>Moderate</td>
+            <td>General use, moderate noise</td>
+          </tr>
+        </table>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q35 ════════════════ -->
+    <section class="q-panel" id="panel-35" role="tabpanel">
+      <p class="q-label">Question 35</p>
+      <div class="q-title">Propose a scenario where K-Means clustering would outperform hierarchical clustering,
+        providing a rationale and potential benefits.</div>
+      <div class="q-body">
+
+        <p>Both K-Means and hierarchical clustering are valid unsupervised learning approaches. K-Means becomes the
+          clearly better choice under specific conditions related to dataset size, cluster geometry, and prior knowledge
+          of K.</p>
+
+        <h3>1. Proposed Scenario</h3>
+        <p>A retail company wants to segment 500,000 customers into 5 distinct groups based on purchase frequency,
+          average spend, and product category preferences, for targeted marketing campaigns. The number of segments (K =
+          5) is known in advance from business requirements.</p>
+
+        <h3>2. Why K-Means Outperforms Here</h3>
+
+        <p><strong>Scalability:</strong> Hierarchical clustering has O(n² log n) time complexity and requires an n×n
+          distance matrix — computationally infeasible for 500,000 records. K-Means operates at O(nkt), linear in the
+          number of data points, making it vastly more scalable.</p>
+
+        <p><strong>Known K:</strong> The business has already defined 5 customer segments. Hierarchical clustering's
+          strength is in discovering K through the dendrogram, which adds unnecessary overhead when K is predetermined.
+        </p>
+
+        <p><strong>Compact, Globular Clusters:</strong> Customer segments in retail tend to be relatively well-separated
+          and roughly spherical in feature space after preprocessing. K-Means performs optimally in this geometry.</p>
+
+        <p><strong>Iterative Refinement:</strong> K-Means allows continuous re-clustering as new customer data arrives —
+          simply re-run using existing centroids as starting points. Hierarchical clustering would require rebuilding
+          the entire dendrogram from scratch.</p>
+
+        <h3>3. Potential Benefits</h3>
+        <ul>
+          <li>Clusters can be directly interpreted as customer personas for targeted marketing.</li>
+          <li>Centroids can be profiled as "typical customers" within each segment.</li>
+          <li>Low computational cost enables real-time segmentation updates.</li>
+          <li>Fast convergence allows rapid experimentation with different values of K.</li>
+        </ul>
+
+        <h3>4. Conclusion</h3>
+        <p>K-Means is preferred over hierarchical clustering when the dataset is large, K is known in advance, clusters
+          are expected to be compact and spherical, and scalability or real-time processing is a requirement.</p>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q36 ════════════════ -->
+    <section class="q-panel" id="panel-36" role="tabpanel">
+      <p class="q-label">Question 36 · Numerical</p>
+      <div class="q-title">Given the one-dimensional data points 15, 28, 34, 21, 39, and 45, apply the agglomerative
+        hierarchical clustering algorithm using single-linkage. Show the proximity matrix at each step, merge the
+        closest clusters, and draw the dendrogram.</div>
+      <div class="q-body">
+
+        <p>Data points (sorted): <strong>15, 21, 28, 34, 39, 45</strong>. For 1D data, distance = |a − b|.</p>
+
+        <h3>Step 1 — Initial Proximity Matrix</h3>
+        <table>
+          <tr>
+            <th></th>
+            <th>15</th>
+            <th>21</th>
+            <th>28</th>
+            <th>34</th>
+            <th>39</th>
+            <th>45</th>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>0</td>
+            <td>6</td>
+            <td>13</td>
+            <td>19</td>
+            <td>24</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <th>21</th>
+            <td>6</td>
+            <td>0</td>
+            <td>7</td>
+            <td>13</td>
+            <td>18</td>
+            <td>24</td>
+          </tr>
+          <tr>
+            <th>28</th>
+            <td>13</td>
+            <td>7</td>
+            <td>0</td>
+            <td>6</td>
+            <td>11</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <th>34</th>
+            <td>19</td>
+            <td>13</td>
+            <td>6</td>
+            <td>0</td>
+            <td class="hl">5</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <th>39</th>
+            <td>24</td>
+            <td>18</td>
+            <td>11</td>
+            <td class="hl">5</td>
+            <td>0</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <th>45</th>
+            <td>30</td>
+            <td>24</td>
+            <td>17</td>
+            <td>11</td>
+            <td>6</td>
+            <td>0</td>
+          </tr>
+        </table>
+        <p>Minimum = <strong>5</strong> (between 34 and 39) → Merge <strong>{34, 39}</strong></p>
+
+        <h3>Step 2 — Updated Matrix</h3>
+        <p>Clusters: {15}, {21}, {28}, <strong>{34,39}</strong>, {45}. Distance to {34,39} = min(dist to 34, dist to
+          39).</p>
+        <table>
+          <tr>
+            <th></th>
+            <th>15</th>
+            <th>21</th>
+            <th>28</th>
+            <th>{34,39}</th>
+            <th>45</th>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>0</td>
+            <td>6</td>
+            <td>13</td>
+            <td>min(19,24)=19</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <th>21</th>
+            <td>6</td>
+            <td>0</td>
+            <td class="hl">7</td>
+            <td>min(13,18)=13</td>
+            <td>24</td>
+          </tr>
+          <tr>
+            <th>28</th>
+            <td>13</td>
+            <td class="hl">7</td>
+            <td>0</td>
+            <td>min(6,11)=6</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <th>{34,39}</th>
+            <td>19</td>
+            <td>13</td>
+            <td>6</td>
+            <td>0</td>
+            <td>min(11,6)=6</td>
+          </tr>
+          <tr>
+            <th>45</th>
+            <td>30</td>
+            <td>24</td>
+            <td>17</td>
+            <td>6</td>
+            <td>0</td>
+          </tr>
+        </table>
+        <p>Minimum = <strong>6</strong> (between 28 and {34,39}) → Merge <strong>{28, 34, 39}</strong></p>
+
+        <h3>Step 3 — Updated Matrix</h3>
+        <p>Clusters: {15}, {21}, <strong>{28,34,39}</strong>, {45}</p>
+        <table>
+          <tr>
+            <th></th>
+            <th>15</th>
+            <th>21</th>
+            <th>{28,34,39}</th>
+            <th>45</th>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>0</td>
+            <td>6</td>
+            <td>min(13,19,24)=13</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <th>21</th>
+            <td>6</td>
+            <td>0</td>
+            <td>min(7,13,18)=7</td>
+            <td>24</td>
+          </tr>
+          <tr>
+            <th>{28,34,39}</th>
+            <td>13</td>
+            <td>7</td>
+            <td>0</td>
+            <td class="hl">min(17,11,6)=6</td>
+          </tr>
+          <tr>
+            <th>45</th>
+            <td>30</td>
+            <td>24</td>
+            <td class="hl">6</td>
+            <td>0</td>
+          </tr>
+        </table>
+        <p>Minimum = <strong>6</strong> (between {28,34,39} and 45) → Merge <strong>{28, 34, 39, 45}</strong></p>
+
+        <h3>Step 4 — Updated Matrix</h3>
+        <p>Clusters: {15}, {21}, <strong>{28,34,39,45}</strong></p>
+        <table>
+          <tr>
+            <th></th>
+            <th>15</th>
+            <th>21</th>
+            <th>{28,34,39,45}</th>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>0</td>
+            <td class="hl">6</td>
+            <td>min(13,19,24,30)=13</td>
+          </tr>
+          <tr>
+            <th>21</th>
+            <td class="hl">6</td>
+            <td>0</td>
+            <td>min(7,13,18,24)=7</td>
+          </tr>
+          <tr>
+            <th>{28,34,39,45}</th>
+            <td>13</td>
+            <td>7</td>
+            <td>0</td>
+          </tr>
+        </table>
+        <p>Minimum = <strong>6</strong> (between 15 and 21) → Merge <strong>{15, 21}</strong></p>
+
+        <h3>Step 5 — Final Merge</h3>
+        <p>Clusters: <strong>{15,21}</strong> and <strong>{28,34,39,45}</strong>. Distance = min(dist 15 to
+          {28,34,39,45}, dist 21 to {28,34,39,45}) = min(13, 7) = <strong>7</strong>.</p>
+        <p>Merge everything → one cluster at distance <strong>7</strong>.</p>
+
+        <h3>Merge Summary</h3>
+        <table>
+          <tr>
+            <th>Step</th>
+            <th>Clusters Merged</th>
+            <th>Distance</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>{34} + {39}</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>{28} + {34,39}</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>{28,34,39} + {45}</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>{15} + {21}</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>{15,21} + {28,34,39,45}</td>
+            <td>7</td>
+          </tr>
+        </table>
+
+        <figure class="fig-wrap">
+          <img src="images/unit4/img4.jpeg"
+            alt="search: agglomerative hierarchical clustering dendrogram 1D data points single linkage y-axis distance">
+          <figcaption class="fig-caption">Fig. 4 — Dendrogram for agglomerative clustering on {15, 21, 28, 34, 39, 45}.
+            Merges at d=5, d=6, and d=7. Final cluster formed at height 7.</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q37 ════════════════ -->
+    <section class="q-panel" id="panel-37" role="tabpanel">
+      <p class="q-label">Question 37</p>
+      <div class="q-title">Define and explain the concept of centroid-based clustering in the context of K-Means
+        clustering.</div>
+      <div class="q-body">
+
+        <p>Centroid-based clustering is a category of clustering algorithms where each cluster is represented by a
+          central point called a <strong>centroid</strong>. Every data point in the dataset is assigned to the cluster
+          whose centroid it is closest to, based on a defined distance metric. K-Means is the most prominent example of
+          this paradigm.</p>
+
+        <h3>1. The Centroid Concept</h3>
+        <p>A centroid is a virtual representative point for a cluster — typically the <strong>mean of all data
+            points</strong> currently assigned to that cluster. It may or may not correspond to an actual data point.
+          The centroid captures the "centre of gravity" of the cluster in the feature space.</p>
+
+        <h3>2. K-Means Algorithm Steps</h3>
+        <ol>
+          <li><strong>Initialization:</strong> Randomly select K data points as the initial centroids (or use K-Means++
+            for smarter selection).</li>
+          <li><strong>Assignment:</strong> Assign each data point to the nearest centroid based on Euclidean distance.
+          </li>
+          <li><strong>Update:</strong> Recalculate each centroid as the mean of all points assigned to it.</li>
+          <li><strong>Repeat:</strong> Repeat steps 2 and 3 until centroids no longer change significantly
+            (convergence).</li>
+        </ol>
+
+        <h3>3. Objective Function</h3>
+        <p>K-Means minimises the <strong>Within-Cluster Sum of Squares (WCSS)</strong> — the total squared distance
+          between every point and its assigned cluster centroid. This is also called <em>inertia</em>.</p>
+        <div class="formula formula-block">WCSS = Σᵢ Σₓ∈Cᵢ ||x − μᵢ||²</div>
+        <div class="formula formula-block">Centroid: μₖ = (1/|Cₖ|) Σ xᵢ</div>
+
+        <h3>4. Properties and Limitations</h3>
+        <table>
+          <tr>
+            <th>Property</th>
+            <th>Detail</th>
+          </tr>
+          <tr>
+            <td>Cluster shape assumption</td>
+            <td>Convex and isotropic (roughly spherical) — struggles with elongated or irregular shapes</td>
+          </tr>
+          <tr>
+            <td>Requires K in advance</td>
+            <td>Number of clusters must be specified before running</td>
+          </tr>
+          <tr>
+            <td>Initialisation sensitivity</td>
+            <td>Bad starting points can lead to poor local optima; K-Means++ mitigates this</td>
+          </tr>
+          <tr>
+            <td>Scalability</td>
+            <td>Computationally efficient O(nkt); scales well to large datasets</td>
+          </tr>
+          <tr>
+            <td>Outlier sensitivity</td>
+            <td>Outliers distort the mean centroid; K-Medoid is more robust</td>
+          </tr>
+        </table>
+
+        <h3>5. Applications</h3>
+        <ul>
+          <li>Customer segmentation</li>
+          <li>Image compression (colour quantisation)</li>
+          <li>Pattern recognition and document clustering</li>
+          <li>Anomaly detection (points far from any centroid)</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q38 ════════════════ -->
+    <section class="q-panel" id="panel-38" role="tabpanel">
+      <p class="q-label">Question 38</p>
+      <div class="q-title">Describe the differences between top-down and bottom-up hierarchical clustering approaches
+        and their implications on the resulting clusters.</div>
+      <div class="q-body">
+
+        <p>Hierarchical clustering builds a tree of clusters called a <strong>dendrogram</strong>. This tree can be
+          constructed in two opposite directions, leading to two fundamentally different approaches: agglomerative
+          (bottom-up) and divisive (top-down).</p>
+
+        <h3>1. Bottom-Up: Agglomerative Clustering</h3>
+        <p>This is the more common approach. It starts with each data point as its own individual cluster and
+          <strong>progressively merges</strong> the two closest clusters at each step, until all points form a single
+          cluster.</p>
+        <ol>
+          <li>Start: N clusters (each point is its own cluster)</li>
+          <li>Compute pairwise distances between all clusters</li>
+          <li>Merge the two closest clusters (using chosen linkage method)</li>
+          <li>Update the distance matrix and repeat until 1 cluster remains</li>
+        </ol>
+        <p><strong>Implication:</strong> Agglomerative clustering builds from fine-grained detail upward. Local
+          structure (close neighbours) is captured early and accurately. Better at identifying small, tight clusters
+          within larger groups. O(n² log n) complexity. More commonly used in practice.</p>
+
+        <h3>2. Top-Down: Divisive Clustering</h3>
+        <p>Divisive clustering takes the opposite approach. It begins with all data points in a <strong>single
+            cluster</strong> and recursively splits the most heterogeneous cluster into two sub-clusters, continuing
+          until each point is its own cluster.</p>
+        <ol>
+          <li>Start: 1 cluster (all points together)</li>
+          <li>Find the cluster with the highest internal dissimilarity</li>
+          <li>Split it into two sub-clusters (e.g., using K-Means with K=2)</li>
+          <li>Repeat until desired number of clusters is reached</li>
+        </ol>
+        <p><strong>Implication:</strong> Divisive clustering captures global structure first — the major distinctions
+          between large groups are made at the top of the dendrogram. More computationally expensive (O(2ⁿ) worst case)
+          but tends to produce more accurate top-level splits.</p>
+
+        <figure class="fig-wrap">
+          <img src="images/unit4/img5.png"
+            alt="search: agglomerative vs divisive hierarchical clustering diagram dendrogram bottom-up top-down comparison">
+          <figcaption class="fig-caption">Fig. 5 — Agglomerative (bottom-up) merges singleton clusters upward; Divisive
+            (top-down) splits the full dataset downward.</figcaption>
+        </figure>
+
+        <h3>3. Comparison</h3>
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>Agglomerative (Bottom-Up)</th>
+            <th>Divisive (Top-Down)</th>
+          </tr>
+          <tr>
+            <td>Starting point</td>
+            <td>N singleton clusters</td>
+            <td>1 all-encompassing cluster</td>
+          </tr>
+          <tr>
+            <td>Operation</td>
+            <td>Merge similar clusters iteratively</td>
+            <td>Split dissimilar clusters iteratively</td>
+          </tr>
+          <tr>
+            <td>Time complexity</td>
+            <td>O(n² log n)</td>
+            <td>O(2ⁿ) worst case</td>
+          </tr>
+          <tr>
+            <td>Captures</td>
+            <td>Local structure first</td>
+            <td>Global structure first</td>
+          </tr>
+          <tr>
+            <td>Practical usage</td>
+            <td>Much more commonly used</td>
+            <td>More complex to implement</td>
+          </tr>
+        </table>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q39 ════════════════ -->
+    <section class="q-panel" id="panel-39" role="tabpanel">
+      <p class="q-label">Question 39</p>
+      <div class="q-title">Explain the working of Fuzzy K-Means clustering and discuss how it differs from traditional
+        K-Means clustering in terms of cluster assignment and objective function.</div>
+      <div class="q-body">
+
+        <p>In traditional K-Means, each data point is assigned to <strong>exactly one cluster</strong> — this is called
+          hard or crisp assignment. Fuzzy K-Means (also called Fuzzy C-Means, or FCM) relaxes this constraint by
+          allowing each point to <strong>belong to multiple clusters simultaneously</strong>, with a degree of
+          membership for each.</p>
+
+        <h3>1. Membership Degrees</h3>
+        <p>Instead of a binary cluster assignment, each data point xᵢ is given a <strong>membership value</strong> μᵢⱼ
+          for each cluster j, where 0 ≤ μᵢⱼ ≤ 1. A value of 1 means the point fully belongs to that cluster; values
+          between 0 and 1 represent partial membership. The membership values for a given point must sum to 1 across all
+          clusters:</p>
+        <div class="formula formula-block">Σⱼ μᵢⱼ = 1, for all data points xᵢ</div>
+
+        <h3>2. Objective Function</h3>
+        <p>Fuzzy K-Means minimises a weighted version of WCSS, where distances are weighted by membership values raised
+          to a fuzziness parameter <strong>m</strong> (typically m = 2):</p>
+        <div class="formula formula-block">J = Σᵢ Σⱼ (μᵢⱼ)ᵐ · ||xᵢ − cⱼ||²</div>
+        <p>The fuzziness parameter m controls the degree of cluster overlap. When m = 1, the algorithm approaches hard
+          K-Means. As m → ∞, all memberships converge to 1/K (complete fuzziness with no meaningful separation).</p>
+
+        <h3>3. Algorithm Steps</h3>
+        <ol>
+          <li>Choose the number of clusters K and fuzziness parameter m.</li>
+          <li>Initialise the membership matrix randomly, ensuring each row sums to 1.</li>
+          <li>Calculate fuzzy centroids as weighted means based on membership values.</li>
+          <li>Update membership values based on distances to centroids — points closer to a centroid get higher
+            membership for that cluster.</li>
+          <li>Repeat steps 3–4 until the change in membership values falls below a threshold.</li>
+        </ol>
+
+        <h3>4. Differences from Traditional K-Means</h3>
+        <table>
+          <tr>
+            <th>Aspect</th>
+            <th>K-Means</th>
+            <th>Fuzzy K-Means</th>
+          </tr>
+          <tr>
+            <td>Cluster Assignment</td>
+            <td>Hard (one cluster per point)</td>
+            <td>Soft (partial membership in all clusters)</td>
+          </tr>
+          <tr>
+            <td>Membership Value</td>
+            <td>0 or 1 only</td>
+            <td>Any value between 0 and 1</td>
+          </tr>
+          <tr>
+            <td>Centroid Calculation</td>
+            <td>Simple mean of assigned points</td>
+            <td>Weighted mean using membership values</td>
+          </tr>
+          <tr>
+            <td>Boundary Points</td>
+            <td>Forced into exactly one cluster</td>
+            <td>Can straddle multiple clusters</td>
+          </tr>
+          <tr>
+            <td>Objective Function</td>
+            <td>Minimises WCSS</td>
+            <td>Minimises fuzzy weighted WCSS</td>
+          </tr>
+          <tr>
+            <td>Computational Cost</td>
+            <td>Lower</td>
+            <td>Higher (more parameters to update)</td>
+          </tr>
+        </table>
+
+        <div class="note">When to use Fuzzy K-Means: when data points naturally lie near cluster boundaries, when
+          overlapping clusters are expected (e.g., a customer exhibiting traits of multiple segments), or in
+          applications like medical imaging where partial class membership is meaningful.</div>
+
+      </div>
+    </section>
+
+    <!-- ════════════════ Q40 ════════════════ -->
+    <section class="q-panel" id="panel-40" role="tabpanel">
+      <p class="q-label">Question 40</p>
+      <div class="q-title">Propose a novel method for combining both K-Means and hierarchical clustering to improve the
+        robustness of unsupervised learning algorithms. Justify your approach.</div>
+      <div class="q-body">
+
+        <p>Both K-Means and hierarchical clustering have distinct strengths and weaknesses. K-Means is fast but
+          sensitive to initialisation and requires K to be known. Hierarchical clustering is robust and reveals
+          structure but is computationally expensive on large datasets. A hybrid approach can exploit the best of both.
+        </p>
+
+        <h3>1. Proposed Method: Hierarchical Initialisation for K-Means</h3>
+        <p>The core idea is a two-phase algorithm:</p>
+        <ol>
+          <li><strong>Phase 1 — Hierarchical Sampling:</strong> Apply agglomerative hierarchical clustering on a
+            <em>representative sample</em> of the full dataset (e.g., 5–10%). Cut the dendrogram at a height that
+            produces K clusters. Extract the K centroids from these initial clusters.</li>
+          <li><strong>Phase 2 — K-Means Refinement:</strong> Use the K centroids derived from Phase 1 as the <em>initial
+              seed centroids</em> for K-Means. Run K-Means on the full dataset with these intelligent starting points
+            until convergence.</li>
+        </ol>
+
+        <h3>2. Why This Works</h3>
+        <p>The fundamental problem with vanilla K-Means is dependence on random initialisation — poor starting centroids
+          can trap the algorithm in a local optimum. By using hierarchical clustering to find structurally meaningful
+          starting points, we eliminate this randomness and guide K-Means toward a globally better solution.</p>
+        <p>Running hierarchical clustering on only a sample rather than the full dataset keeps the computational cost
+          manageable — the expensive O(n² log n) step applies to only a small fraction of the data. K-Means then handles
+          the full dataset efficiently.</p>
+
+        <h3>3. Advantages of the Hybrid Method</h3>
+        <table>
+          <tr>
+            <th>Advantage</th>
+            <th>Explanation</th>
+          </tr>
+          <tr>
+            <td>Robustness</td>
+            <td>Hierarchical phase provides initialisation that reflects true data structure, making the result far less
+              dependent on chance.</td>
+          </tr>
+          <tr>
+            <td>Scalability</td>
+            <td>By limiting hierarchical clustering to a sample, the method remains feasible for large datasets where
+              pure hierarchical clustering would fail.</td>
+          </tr>
+          <tr>
+            <td>Better Convergence</td>
+            <td>Smart initialisation means K-Means converges in fewer iterations, saving computation time.</td>
+          </tr>
+          <tr>
+            <td>Automatic K Guidance</td>
+            <td>The dendrogram from Phase 1 can help determine a good value of K by examining where large jumps in merge
+              distance occur.</td>
+          </tr>
+          <tr>
+            <td>Reduced SSE</td>
+            <td>Better starting centroids lead to lower final WCSS, producing higher-quality clusters.</td>
+          </tr>
+        </table>
+
+        <h3>4. Limitations</h3>
+        <ul>
+          <li>Hierarchical clustering is still computationally expensive for very large samples.</li>
+          <li>Choosing the correct K can still be challenging despite dendrogram guidance.</li>
+          <li>Two-phase complexity adds implementation overhead.</li>
+        </ul>
+
+        <h3>5. Conclusion</h3>
+        <p>This hybrid method leverages hierarchical clustering's strength in uncovering natural structure with K-Means'
+          scalability and speed. It is particularly well-suited for large, messy real-world datasets where the number of
+          clusters is uncertain and random initialisation of K-Means tends to be unreliable.</p>
+
+      </div>
+    </section>
+
+  </div><!-- .page -->
+  <nav class="page-nav">
+    <a href="unit3.html">← Unit 3</a>
+    <a class="home" href="index.html">↑ Home</a>
+    <a href="unit5.html">Unit 5 →</a>
   </nav>
 
-  <!-- ════════════════ Q31 ════════════════ -->
-  <section class="q-panel active" id="panel-31" role="tabpanel">
-    <p class="q-label">Question 31 · Numerical</p>
-    <div class="q-title">Given the dataset of six objects with two attributes (X and Y), apply K-Means clustering to form 2 clusters using X1 and X2 as initial centroids. Perform one complete iteration using Euclidean distance and recalculate the centroids after assignment.</div>
-    <div class="q-body">
-
-      <h3>Given Data</h3>
-      <table>
-        <tr><th>Object</th><th>Attribute 1 (X)</th><th>Attribute 2 (Y)</th></tr>
-        <tr><td>X1</td><td>2</td><td>3</td></tr>
-        <tr><td>X2</td><td>5</td><td>4</td></tr>
-        <tr><td>X3</td><td>1</td><td>2</td></tr>
-        <tr><td>X4</td><td>4</td><td>5</td></tr>
-        <tr><td>X5</td><td>6</td><td>3</td></tr>
-        <tr><td>X6</td><td>3</td><td>2</td></tr>
-      </table>
-
-      <p><strong>Initial centroids:</strong> C1 = X1 = (2, 3) and C2 = X2 = (5, 4).</p>
-
-      <h3>Step 1 — Euclidean Distance Formula</h3>
-      <div class="formula formula-block">d(A, B) = √( (x₁ − x₂)² + (y₁ − y₂)² )</div>
-
-      <h3>Step 2 — Distance Calculations &amp; Assignments</h3>
-
-      <p><strong>X1 (2,3):</strong> to C1 = √0 = 0 &nbsp;|&nbsp; to C2 = √((2−5)²+(3−4)²) = √10 ≈ 3.16 → <strong>C1</strong></p>
-      <p><strong>X2 (5,4):</strong> to C1 = √10 ≈ 3.16 &nbsp;|&nbsp; to C2 = √0 = 0 → <strong>C2</strong></p>
-      <p><strong>X3 (1,2):</strong> to C1 = √((1−2)²+(2−3)²) = √2 ≈ 1.41 &nbsp;|&nbsp; to C2 = √((1−5)²+(2−4)²) = √20 ≈ 4.47 → <strong>C1</strong></p>
-      <p><strong>X4 (4,5):</strong> to C1 = √((4−2)²+(5−3)²) = √8 ≈ 2.83 &nbsp;|&nbsp; to C2 = √((4−5)²+(5−4)²) = √2 ≈ 1.41 → <strong>C2</strong></p>
-      <p><strong>X5 (6,3):</strong> to C1 = √((6−2)²+(3−3)²) = 4.00 &nbsp;|&nbsp; to C2 = √((6−5)²+(3−4)²) = √2 ≈ 1.41 → <strong>C2</strong></p>
-      <p><strong>X6 (3,2):</strong> to C1 = √((3−2)²+(2−3)²) = √2 ≈ 1.41 &nbsp;|&nbsp; to C2 = √((3−5)²+(2−4)²) = √8 ≈ 2.83 → <strong>C1</strong></p>
-
-      <h3>Step 3 — Summary Table</h3>
-      <table>
-        <tr><th>Object</th><th>Point</th><th>Distance to C1(2,3)</th><th>Distance to C2(5,4)</th><th>Assigned to</th></tr>
-        <tr><td>X1</td><td>(2,3)</td><td>0</td><td>√10 ≈ 3.16</td><td><strong>C1</strong></td></tr>
-        <tr><td>X2</td><td>(5,4)</td><td>√10 ≈ 3.16</td><td>0</td><td><strong>C2</strong></td></tr>
-        <tr><td>X3</td><td>(1,2)</td><td>√2 ≈ 1.41</td><td>√20 ≈ 4.47</td><td><strong>C1</strong></td></tr>
-        <tr><td>X4</td><td>(4,5)</td><td>√8 ≈ 2.83</td><td>√2 ≈ 1.41</td><td><strong>C2</strong></td></tr>
-        <tr><td>X5</td><td>(6,3)</td><td>4.00</td><td>√2 ≈ 1.41</td><td><strong>C2</strong></td></tr>
-        <tr><td>X6</td><td>(3,2)</td><td>√2 ≈ 1.41</td><td>√8 ≈ 2.83</td><td><strong>C1</strong></td></tr>
-      </table>
-
-      <h3>Step 4 — Cluster Assignments</h3>
-      <p><strong>Cluster 1 (C1):</strong> X1(2,3), X3(1,2), X6(3,2)</p>
-      <p><strong>Cluster 2 (C2):</strong> X2(5,4), X4(4,5), X5(6,3)</p>
-
-      <h3>Step 5 — Recalculate Centroids</h3>
-      <p><strong>New C1:</strong> x = (2+1+3)/3 = 6/3 = 2 &nbsp;|&nbsp; y = (3+2+2)/3 = 7/3 ≈ 2.33</p>
-      <div class="formula formula-block">New C1 = (2, 2.33)</div>
-      <p><strong>New C2:</strong> x = (5+4+6)/3 = 15/3 = 5 &nbsp;|&nbsp; y = (4+5+3)/3 = 12/3 = 4</p>
-      <div class="formula formula-block">New C2 = (5, 4)</div>
-
-      <figure class="fig-wrap">
-        <img src="images/unit4/img1.png" alt="search: k-means clustering 2D scatter plot two clusters centroid assignment iteration">
-        <figcaption class="fig-caption">Fig. 1 — K-Means cluster assignments after one iteration. C1 (lower-left group) and C2 (upper-right group) with updated centroids marked.</figcaption>
-      </figure>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q32 ════════════════ -->
-  <section class="q-panel" id="panel-32" role="tabpanel">
-    <p class="q-label">Question 32</p>
-    <div class="q-title">Explain the differences between K-Means and K-Medoid clustering techniques and when each is most appropriate.</div>
-    <div class="q-body">
-
-      <p>Both K-Means and K-Medoid are centroid-based clustering algorithms that partition data into K clusters. While they share a similar iterative structure, they differ fundamentally in how the cluster centre is defined and updated.</p>
-
-      <h3>1. K-Means Clustering</h3>
-      <p>In K-Means, the centre of each cluster is the <strong>computed mean</strong> of all data points assigned to it. This mean may not correspond to any actual data point. The algorithm minimises the Within-Cluster Sum of Squares (WCSS).</p>
-      <div class="formula formula-block">Objective: minimise Σ Σ ||xᵢ − μⱼ||²</div>
-      <ol>
-        <li><strong>Initialize:</strong> Randomly select K data points as initial centroids.</li>
-        <li><strong>Assign:</strong> Each data point goes to the nearest centroid.</li>
-        <li><strong>Update:</strong> Recompute each centroid as the mean of assigned points.</li>
-        <li><strong>Repeat:</strong> Until convergence.</li>
-      </ol>
-      <p>K-Means is computationally efficient with O(nkt) complexity and is well-suited for large datasets. However, it is <strong>highly sensitive to outliers</strong> — a single extreme point can drag the centroid far from the true cluster centre.</p>
-
-      <h3>2. K-Medoid Clustering</h3>
-      <p>K-Medoid requires that the cluster centre be an <strong>actual data point</strong> called a medoid. The most widely used implementation is PAM (Partitioning Around Medoids). The algorithm selects the point within a cluster that minimises total dissimilarity to all other cluster members.</p>
-      <ol>
-        <li><strong>Initialize:</strong> Randomly select K data points as initial medoids.</li>
-        <li><strong>Assign:</strong> Each point goes to the cluster of its nearest medoid.</li>
-        <li><strong>Swap:</strong> For each medoid m and non-medoid o, if swapping reduces total cost, perform the swap.</li>
-        <li><strong>Repeat:</strong> Until no cost-reducing swap exists.</li>
-      </ol>
-      <p>Because the centre is always a real data point, K-Medoid is significantly more <strong>robust to outliers and noise</strong>. It can also work with non-Euclidean distance measures, making it applicable to categorical data. The trade-off is higher computational cost: O(k(n−k)²) per iteration.</p>
-
-      <h3>3. Comparison</h3>
-      <table>
-        <tr><th>Aspect</th><th>K-Means</th><th>K-Medoid</th></tr>
-        <tr><td>Cluster Centre</td><td>Computed mean (may not be a real point)</td><td>Actual data point (medoid)</td></tr>
-        <tr><td>Sensitivity to Outliers</td><td>High — outliers skew the mean</td><td>Low — real point resists extremes</td></tr>
-        <tr><td>Time Complexity</td><td>O(nkt) — faster</td><td>O(k(n−k)²) — slower</td></tr>
-        <tr><td>Distance Metric</td><td>Typically Euclidean</td><td>Any dissimilarity measure</td></tr>
-        <tr><td>Data Types</td><td>Numeric only</td><td>Numeric, categorical, mixed</td></tr>
-        <tr><td>Best Used When</td><td>Large, clean, numeric datasets</td><td>Noisy data, outliers present, non-Euclidean space</td></tr>
-      </table>
-
-      <h3>4. When to Use Which</h3>
-      <p>K-Means is preferred when the dataset is large, clean, and numeric, and speed is a priority. K-Medoid is preferred when data contains outliers or noise, when interpretability of the cluster centre matters (the medoid is a real, recognisable object from the dataset), or when dealing with non-numeric data where computing a mean is not meaningful.</p>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q33 ════════════════ -->
-  <section class="q-panel" id="panel-33" role="tabpanel">
-    <p class="q-label">Question 33</p>
-    <div class="q-title">Evaluate the effectiveness of dimensionality reduction techniques, such as Principal Component Analysis, in preserving the key features of a dataset while reducing its dimensionality.</div>
-    <div class="q-body">
-
-      <p>Real-world datasets often contain hundreds of features. Many are redundant or correlated, carrying overlapping information. Dimensionality reduction is the process of reducing the number of features while retaining as much useful information as possible, reducing the curse of dimensionality and lowering computational cost.</p>
-
-      <h3>1. Introduction to PCA</h3>
-      <p>Principal Component Analysis (PCA) is the most widely used dimensionality reduction technique. It identifies the directions — called <strong>principal components</strong> — along which the data varies the most, and projects the data onto those directions. The components are linear combinations of the original features and are ordered by the amount of variance they capture.</p>
-
-      <h3>2. Steps of PCA</h3>
-      <ol>
-        <li><strong>Standardise the data</strong> — subtract the mean and scale to unit variance so all features are comparable.</li>
-        <li><strong>Compute the covariance matrix</strong> — captures how features vary together.</li>
-        <li><strong>Calculate eigenvectors and eigenvalues</strong> — eigenvectors define the directions of maximum variance; eigenvalues indicate how much variance each direction explains.</li>
-        <li><strong>Select top K components</strong> — choose the K eigenvectors with the highest eigenvalues.</li>
-        <li><strong>Project the data</strong> — transform the original data onto the new K-dimensional space.</li>
-      </ol>
-
-      <figure class="fig-wrap">
-        <img src="images/unit4/img2.png" alt="search: PCA principal component analysis 2D scatter plot PC1 PC2 orthogonal axes maximum variance direction">
-        <figcaption class="fig-caption">Fig. 2 — PCA identifies orthogonal principal components. PC1 captures the direction of maximum variance; PC2 is perpendicular to PC1.</figcaption>
-      </figure>
-
-      <h3>3. Effectiveness in Preserving Key Features</h3>
-      <table>
-        <tr><th>Aspect</th><th>How PCA Addresses It</th></tr>
-        <tr><td>Variance Preservation</td><td>Selecting components that explain 95%+ of variance retains most data structure while cutting dimensions.</td></tr>
-        <tr><td>Redundancy Removal</td><td>Correlated features are transformed into uncorrelated principal components, eliminating overlapping information.</td></tr>
-        <tr><td>Noise Reduction</td><td>Lower-variance components often represent noise; discarding them denoises the dataset.</td></tr>
-        <tr><td>Data Compression</td><td>High-dimensional data is compressed while preserving essential patterns — useful in image processing.</td></tr>
-        <tr><td>Visualisation</td><td>PCA reduces data from 10D, 100D, etc. to 2D or 3D for human inspection.</td></tr>
-      </table>
-
-      <h3>4. Limitations of PCA</h3>
-      <ul>
-        <li><strong>Loss of Information:</strong> Some information is inevitably lost when dimensions are reduced; features with low variance may be discarded even if meaningful.</li>
-        <li><strong>Interpretability:</strong> Principal components are linear combinations of original features, not the features themselves — harder to interpret.</li>
-        <li><strong>Assumes Linearity:</strong> PCA only captures linear relationships; unsuitable for complex non-linear data.</li>
-        <li><strong>Sensitive to Scaling:</strong> Requires normalisation/standardisation before application.</li>
-      </ul>
-
-      <h3>5. Evaluation Metrics</h3>
-      <table>
-        <tr><th>Metric</th><th>Description</th></tr>
-        <tr><td>Explained Variance Ratio</td><td>Proportion of total variance captured by each component. A cumulative ratio of 95% is typically a good cut-off.</td></tr>
-        <tr><td>Reconstruction Error</td><td>Measures how well the original data can be reconstructed from the reduced representation. Lower is better.</td></tr>
-        <tr><td>Downstream Model Performance</td><td>Compare ML model accuracy before and after PCA. If performance is similar, the reduction is effective.</td></tr>
-      </table>
-
-      <h3>6. Applications</h3>
-      <ul>
-        <li>Image compression and face recognition</li>
-        <li>Feature extraction as a preprocessing step for classification and clustering</li>
-        <li>Noise reduction in signal processing</li>
-        <li>Visualisation of high-dimensional datasets</li>
-      </ul>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q34 ════════════════ -->
-  <section class="q-panel" id="panel-34" role="tabpanel">
-    <p class="q-label">Question 34</p>
-    <div class="q-title">Analyze the impact of using different linkage methods (single-linkage, multiple linkage) in hierarchical clustering, highlighting scenarios where each method is advantageous.</div>
-    <div class="q-body">
-
-      <p>In hierarchical clustering, after individual data points are placed into singleton clusters, we need a rule to measure the distance between clusters (not just individual points) as merging proceeds. This is the role of linkage methods. Different linkage rules lead to very different cluster shapes and structures.</p>
-
-      <h3>1. Single-Linkage (Minimum Linkage)</h3>
-      <p>The distance between two clusters is defined as the <strong>minimum distance</strong> between any single pair of points, one from each cluster.</p>
-      <div class="formula formula-block">d(A, B) = min { d(a, b) : a ∈ A, b ∈ B }</div>
-      <p>Single-linkage tends to produce <strong>elongated, chain-like clusters</strong> due to the chaining effect — if one point from cluster A is close to one point from cluster B, the clusters merge even if most of their points are far apart. It is highly sensitive to outliers and noise.</p>
-      <p><strong>Best for:</strong> Detecting non-convex, elongated, or irregular cluster shapes. Useful when clusters are expected to be connected in chains.</p>
-
-      <h3>2. Complete-Linkage (Maximum Linkage)</h3>
-      <p>The distance between two clusters is the <strong>maximum distance</strong> between any pair of points across the two clusters — the distance between the two farthest points.</p>
-      <div class="formula formula-block">d(A, B) = max { d(a, b) : a ∈ A, b ∈ B }</div>
-      <p>Complete-linkage produces <strong>compact, roughly spherical clusters</strong> of similar diameter. It avoids chaining but can break large natural clusters unnecessarily. Less sensitive to outliers than single-linkage.</p>
-      <p><strong>Best for:</strong> Compact, well-separated clusters where cluster diameter needs to be controlled.</p>
-
-      <h3>3. Average-Linkage</h3>
-      <p>The distance between clusters is the <strong>average of all pairwise distances</strong> between points in the two clusters. It is a middle-ground approach, generally more robust than both single and complete linkage.</p>
-      <p><strong>Best for:</strong> Balanced clusters, datasets with moderate noise, general-purpose hierarchical clustering.</p>
-
-      <figure class="fig-wrap">
-        <img src="images/unit4/img3.png" alt="search: hierarchical clustering single linkage complete linkage average linkage comparison diagram">
-        <figcaption class="fig-caption">Fig. 3 — Linkage method comparison. Single-linkage uses the minimum pair distance; complete-linkage uses the maximum pair distance.</figcaption>
-      </figure>
-
-      <h3>4. Comparison</h3>
-      <table>
-        <tr><th>Linkage Method</th><th>Distance Used</th><th>Cluster Shape</th><th>Outlier Sensitivity</th><th>Best Scenario</th></tr>
-        <tr><td>Single</td><td>Minimum</td><td>Chain-like, elongated</td><td>High</td><td>Irregular, non-convex shapes</td></tr>
-        <tr><td>Complete</td><td>Maximum</td><td>Compact, spherical</td><td>Lower</td><td>Well-separated, compact clusters</td></tr>
-        <tr><td>Average</td><td>Mean of all pairs</td><td>Balanced</td><td>Moderate</td><td>General use, moderate noise</td></tr>
-      </table>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q35 ════════════════ -->
-  <section class="q-panel" id="panel-35" role="tabpanel">
-    <p class="q-label">Question 35</p>
-    <div class="q-title">Propose a scenario where K-Means clustering would outperform hierarchical clustering, providing a rationale and potential benefits.</div>
-    <div class="q-body">
-
-      <p>Both K-Means and hierarchical clustering are valid unsupervised learning approaches. K-Means becomes the clearly better choice under specific conditions related to dataset size, cluster geometry, and prior knowledge of K.</p>
-
-      <h3>1. Proposed Scenario</h3>
-      <p>A retail company wants to segment 500,000 customers into 5 distinct groups based on purchase frequency, average spend, and product category preferences, for targeted marketing campaigns. The number of segments (K = 5) is known in advance from business requirements.</p>
-
-      <h3>2. Why K-Means Outperforms Here</h3>
-
-      <p><strong>Scalability:</strong> Hierarchical clustering has O(n² log n) time complexity and requires an n×n distance matrix — computationally infeasible for 500,000 records. K-Means operates at O(nkt), linear in the number of data points, making it vastly more scalable.</p>
-
-      <p><strong>Known K:</strong> The business has already defined 5 customer segments. Hierarchical clustering's strength is in discovering K through the dendrogram, which adds unnecessary overhead when K is predetermined.</p>
-
-      <p><strong>Compact, Globular Clusters:</strong> Customer segments in retail tend to be relatively well-separated and roughly spherical in feature space after preprocessing. K-Means performs optimally in this geometry.</p>
-
-      <p><strong>Iterative Refinement:</strong> K-Means allows continuous re-clustering as new customer data arrives — simply re-run using existing centroids as starting points. Hierarchical clustering would require rebuilding the entire dendrogram from scratch.</p>
-
-      <h3>3. Potential Benefits</h3>
-      <ul>
-        <li>Clusters can be directly interpreted as customer personas for targeted marketing.</li>
-        <li>Centroids can be profiled as "typical customers" within each segment.</li>
-        <li>Low computational cost enables real-time segmentation updates.</li>
-        <li>Fast convergence allows rapid experimentation with different values of K.</li>
-      </ul>
-
-      <h3>4. Conclusion</h3>
-      <p>K-Means is preferred over hierarchical clustering when the dataset is large, K is known in advance, clusters are expected to be compact and spherical, and scalability or real-time processing is a requirement.</p>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q36 ════════════════ -->
-  <section class="q-panel" id="panel-36" role="tabpanel">
-    <p class="q-label">Question 36 · Numerical</p>
-    <div class="q-title">Given the one-dimensional data points 15, 28, 34, 21, 39, and 45, apply the agglomerative hierarchical clustering algorithm using single-linkage. Show the proximity matrix at each step, merge the closest clusters, and draw the dendrogram.</div>
-    <div class="q-body">
-
-      <p>Data points (sorted): <strong>15, 21, 28, 34, 39, 45</strong>. For 1D data, distance = |a − b|.</p>
-
-      <h3>Step 1 — Initial Proximity Matrix</h3>
-      <table>
-        <tr><th></th><th>15</th><th>21</th><th>28</th><th>34</th><th>39</th><th>45</th></tr>
-        <tr><th>15</th><td>0</td><td>6</td><td>13</td><td>19</td><td>24</td><td>30</td></tr>
-        <tr><th>21</th><td>6</td><td>0</td><td>7</td><td>13</td><td>18</td><td>24</td></tr>
-        <tr><th>28</th><td>13</td><td>7</td><td>0</td><td>6</td><td>11</td><td>17</td></tr>
-        <tr><th>34</th><td>19</td><td>13</td><td>6</td><td>0</td><td class="hl">5</td><td>11</td></tr>
-        <tr><th>39</th><td>24</td><td>18</td><td>11</td><td class="hl">5</td><td>0</td><td>6</td></tr>
-        <tr><th>45</th><td>30</td><td>24</td><td>17</td><td>11</td><td>6</td><td>0</td></tr>
-      </table>
-      <p>Minimum = <strong>5</strong> (between 34 and 39) → Merge <strong>{34, 39}</strong></p>
-
-      <h3>Step 2 — Updated Matrix</h3>
-      <p>Clusters: {15}, {21}, {28}, <strong>{34,39}</strong>, {45}. Distance to {34,39} = min(dist to 34, dist to 39).</p>
-      <table>
-        <tr><th></th><th>15</th><th>21</th><th>28</th><th>{34,39}</th><th>45</th></tr>
-        <tr><th>15</th><td>0</td><td>6</td><td>13</td><td>min(19,24)=19</td><td>30</td></tr>
-        <tr><th>21</th><td>6</td><td>0</td><td class="hl">7</td><td>min(13,18)=13</td><td>24</td></tr>
-        <tr><th>28</th><td>13</td><td class="hl">7</td><td>0</td><td>min(6,11)=6</td><td>17</td></tr>
-        <tr><th>{34,39}</th><td>19</td><td>13</td><td>6</td><td>0</td><td>min(11,6)=6</td></tr>
-        <tr><th>45</th><td>30</td><td>24</td><td>17</td><td>6</td><td>0</td></tr>
-      </table>
-      <p>Minimum = <strong>6</strong> (between 28 and {34,39}) → Merge <strong>{28, 34, 39}</strong></p>
-
-      <h3>Step 3 — Updated Matrix</h3>
-      <p>Clusters: {15}, {21}, <strong>{28,34,39}</strong>, {45}</p>
-      <table>
-        <tr><th></th><th>15</th><th>21</th><th>{28,34,39}</th><th>45</th></tr>
-        <tr><th>15</th><td>0</td><td>6</td><td>min(13,19,24)=13</td><td>30</td></tr>
-        <tr><th>21</th><td>6</td><td>0</td><td>min(7,13,18)=7</td><td>24</td></tr>
-        <tr><th>{28,34,39}</th><td>13</td><td>7</td><td>0</td><td class="hl">min(17,11,6)=6</td></tr>
-        <tr><th>45</th><td>30</td><td>24</td><td class="hl">6</td><td>0</td></tr>
-      </table>
-      <p>Minimum = <strong>6</strong> (between {28,34,39} and 45) → Merge <strong>{28, 34, 39, 45}</strong></p>
-
-      <h3>Step 4 — Updated Matrix</h3>
-      <p>Clusters: {15}, {21}, <strong>{28,34,39,45}</strong></p>
-      <table>
-        <tr><th></th><th>15</th><th>21</th><th>{28,34,39,45}</th></tr>
-        <tr><th>15</th><td>0</td><td class="hl">6</td><td>min(13,19,24,30)=13</td></tr>
-        <tr><th>21</th><td class="hl">6</td><td>0</td><td>min(7,13,18,24)=7</td></tr>
-        <tr><th>{28,34,39,45}</th><td>13</td><td>7</td><td>0</td></tr>
-      </table>
-      <p>Minimum = <strong>6</strong> (between 15 and 21) → Merge <strong>{15, 21}</strong></p>
-
-      <h3>Step 5 — Final Merge</h3>
-      <p>Clusters: <strong>{15,21}</strong> and <strong>{28,34,39,45}</strong>. Distance = min(dist 15 to {28,34,39,45}, dist 21 to {28,34,39,45}) = min(13, 7) = <strong>7</strong>.</p>
-      <p>Merge everything → one cluster at distance <strong>7</strong>.</p>
-
-      <h3>Merge Summary</h3>
-      <table>
-        <tr><th>Step</th><th>Clusters Merged</th><th>Distance</th></tr>
-        <tr><td>1</td><td>{34} + {39}</td><td>5</td></tr>
-        <tr><td>2</td><td>{28} + {34,39}</td><td>6</td></tr>
-        <tr><td>3</td><td>{28,34,39} + {45}</td><td>6</td></tr>
-        <tr><td>4</td><td>{15} + {21}</td><td>6</td></tr>
-        <tr><td>5</td><td>{15,21} + {28,34,39,45}</td><td>7</td></tr>
-      </table>
-
-      <figure class="fig-wrap">
-        <img src="images/unit4/img4.jpeg" alt="search: agglomerative hierarchical clustering dendrogram 1D data points single linkage y-axis distance">
-        <figcaption class="fig-caption">Fig. 4 — Dendrogram for agglomerative clustering on {15, 21, 28, 34, 39, 45}. Merges at d=5, d=6, and d=7. Final cluster formed at height 7.</figcaption>
-      </figure>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q37 ════════════════ -->
-  <section class="q-panel" id="panel-37" role="tabpanel">
-    <p class="q-label">Question 37</p>
-    <div class="q-title">Define and explain the concept of centroid-based clustering in the context of K-Means clustering.</div>
-    <div class="q-body">
-
-      <p>Centroid-based clustering is a category of clustering algorithms where each cluster is represented by a central point called a <strong>centroid</strong>. Every data point in the dataset is assigned to the cluster whose centroid it is closest to, based on a defined distance metric. K-Means is the most prominent example of this paradigm.</p>
-
-      <h3>1. The Centroid Concept</h3>
-      <p>A centroid is a virtual representative point for a cluster — typically the <strong>mean of all data points</strong> currently assigned to that cluster. It may or may not correspond to an actual data point. The centroid captures the "centre of gravity" of the cluster in the feature space.</p>
-
-      <h3>2. K-Means Algorithm Steps</h3>
-      <ol>
-        <li><strong>Initialization:</strong> Randomly select K data points as the initial centroids (or use K-Means++ for smarter selection).</li>
-        <li><strong>Assignment:</strong> Assign each data point to the nearest centroid based on Euclidean distance.</li>
-        <li><strong>Update:</strong> Recalculate each centroid as the mean of all points assigned to it.</li>
-        <li><strong>Repeat:</strong> Repeat steps 2 and 3 until centroids no longer change significantly (convergence).</li>
-      </ol>
-
-      <h3>3. Objective Function</h3>
-      <p>K-Means minimises the <strong>Within-Cluster Sum of Squares (WCSS)</strong> — the total squared distance between every point and its assigned cluster centroid. This is also called <em>inertia</em>.</p>
-      <div class="formula formula-block">WCSS = Σᵢ Σₓ∈Cᵢ ||x − μᵢ||²</div>
-      <div class="formula formula-block">Centroid: μₖ = (1/|Cₖ|) Σ xᵢ</div>
-
-      <h3>4. Properties and Limitations</h3>
-      <table>
-        <tr><th>Property</th><th>Detail</th></tr>
-        <tr><td>Cluster shape assumption</td><td>Convex and isotropic (roughly spherical) — struggles with elongated or irregular shapes</td></tr>
-        <tr><td>Requires K in advance</td><td>Number of clusters must be specified before running</td></tr>
-        <tr><td>Initialisation sensitivity</td><td>Bad starting points can lead to poor local optima; K-Means++ mitigates this</td></tr>
-        <tr><td>Scalability</td><td>Computationally efficient O(nkt); scales well to large datasets</td></tr>
-        <tr><td>Outlier sensitivity</td><td>Outliers distort the mean centroid; K-Medoid is more robust</td></tr>
-      </table>
-
-      <h3>5. Applications</h3>
-      <ul>
-        <li>Customer segmentation</li>
-        <li>Image compression (colour quantisation)</li>
-        <li>Pattern recognition and document clustering</li>
-        <li>Anomaly detection (points far from any centroid)</li>
-      </ul>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q38 ════════════════ -->
-  <section class="q-panel" id="panel-38" role="tabpanel">
-    <p class="q-label">Question 38</p>
-    <div class="q-title">Describe the differences between top-down and bottom-up hierarchical clustering approaches and their implications on the resulting clusters.</div>
-    <div class="q-body">
-
-      <p>Hierarchical clustering builds a tree of clusters called a <strong>dendrogram</strong>. This tree can be constructed in two opposite directions, leading to two fundamentally different approaches: agglomerative (bottom-up) and divisive (top-down).</p>
-
-      <h3>1. Bottom-Up: Agglomerative Clustering</h3>
-      <p>This is the more common approach. It starts with each data point as its own individual cluster and <strong>progressively merges</strong> the two closest clusters at each step, until all points form a single cluster.</p>
-      <ol>
-        <li>Start: N clusters (each point is its own cluster)</li>
-        <li>Compute pairwise distances between all clusters</li>
-        <li>Merge the two closest clusters (using chosen linkage method)</li>
-        <li>Update the distance matrix and repeat until 1 cluster remains</li>
-      </ol>
-      <p><strong>Implication:</strong> Agglomerative clustering builds from fine-grained detail upward. Local structure (close neighbours) is captured early and accurately. Better at identifying small, tight clusters within larger groups. O(n² log n) complexity. More commonly used in practice.</p>
-
-      <h3>2. Top-Down: Divisive Clustering</h3>
-      <p>Divisive clustering takes the opposite approach. It begins with all data points in a <strong>single cluster</strong> and recursively splits the most heterogeneous cluster into two sub-clusters, continuing until each point is its own cluster.</p>
-      <ol>
-        <li>Start: 1 cluster (all points together)</li>
-        <li>Find the cluster with the highest internal dissimilarity</li>
-        <li>Split it into two sub-clusters (e.g., using K-Means with K=2)</li>
-        <li>Repeat until desired number of clusters is reached</li>
-      </ol>
-      <p><strong>Implication:</strong> Divisive clustering captures global structure first — the major distinctions between large groups are made at the top of the dendrogram. More computationally expensive (O(2ⁿ) worst case) but tends to produce more accurate top-level splits.</p>
-
-      <figure class="fig-wrap">
-        <img src="images/unit4/img5.png" alt="search: agglomerative vs divisive hierarchical clustering diagram dendrogram bottom-up top-down comparison">
-        <figcaption class="fig-caption">Fig. 5 — Agglomerative (bottom-up) merges singleton clusters upward; Divisive (top-down) splits the full dataset downward.</figcaption>
-      </figure>
-
-      <h3>3. Comparison</h3>
-      <table>
-        <tr><th>Aspect</th><th>Agglomerative (Bottom-Up)</th><th>Divisive (Top-Down)</th></tr>
-        <tr><td>Starting point</td><td>N singleton clusters</td><td>1 all-encompassing cluster</td></tr>
-        <tr><td>Operation</td><td>Merge similar clusters iteratively</td><td>Split dissimilar clusters iteratively</td></tr>
-        <tr><td>Time complexity</td><td>O(n² log n)</td><td>O(2ⁿ) worst case</td></tr>
-        <tr><td>Captures</td><td>Local structure first</td><td>Global structure first</td></tr>
-        <tr><td>Practical usage</td><td>Much more commonly used</td><td>More complex to implement</td></tr>
-      </table>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q39 ════════════════ -->
-  <section class="q-panel" id="panel-39" role="tabpanel">
-    <p class="q-label">Question 39</p>
-    <div class="q-title">Explain the working of Fuzzy K-Means clustering and discuss how it differs from traditional K-Means clustering in terms of cluster assignment and objective function.</div>
-    <div class="q-body">
-
-      <p>In traditional K-Means, each data point is assigned to <strong>exactly one cluster</strong> — this is called hard or crisp assignment. Fuzzy K-Means (also called Fuzzy C-Means, or FCM) relaxes this constraint by allowing each point to <strong>belong to multiple clusters simultaneously</strong>, with a degree of membership for each.</p>
-
-      <h3>1. Membership Degrees</h3>
-      <p>Instead of a binary cluster assignment, each data point xᵢ is given a <strong>membership value</strong> μᵢⱼ for each cluster j, where 0 ≤ μᵢⱼ ≤ 1. A value of 1 means the point fully belongs to that cluster; values between 0 and 1 represent partial membership. The membership values for a given point must sum to 1 across all clusters:</p>
-      <div class="formula formula-block">Σⱼ μᵢⱼ = 1, for all data points xᵢ</div>
-
-      <h3>2. Objective Function</h3>
-      <p>Fuzzy K-Means minimises a weighted version of WCSS, where distances are weighted by membership values raised to a fuzziness parameter <strong>m</strong> (typically m = 2):</p>
-      <div class="formula formula-block">J = Σᵢ Σⱼ (μᵢⱼ)ᵐ · ||xᵢ − cⱼ||²</div>
-      <p>The fuzziness parameter m controls the degree of cluster overlap. When m = 1, the algorithm approaches hard K-Means. As m → ∞, all memberships converge to 1/K (complete fuzziness with no meaningful separation).</p>
-
-      <h3>3. Algorithm Steps</h3>
-      <ol>
-        <li>Choose the number of clusters K and fuzziness parameter m.</li>
-        <li>Initialise the membership matrix randomly, ensuring each row sums to 1.</li>
-        <li>Calculate fuzzy centroids as weighted means based on membership values.</li>
-        <li>Update membership values based on distances to centroids — points closer to a centroid get higher membership for that cluster.</li>
-        <li>Repeat steps 3–4 until the change in membership values falls below a threshold.</li>
-      </ol>
-
-      <h3>4. Differences from Traditional K-Means</h3>
-      <table>
-        <tr><th>Aspect</th><th>K-Means</th><th>Fuzzy K-Means</th></tr>
-        <tr><td>Cluster Assignment</td><td>Hard (one cluster per point)</td><td>Soft (partial membership in all clusters)</td></tr>
-        <tr><td>Membership Value</td><td>0 or 1 only</td><td>Any value between 0 and 1</td></tr>
-        <tr><td>Centroid Calculation</td><td>Simple mean of assigned points</td><td>Weighted mean using membership values</td></tr>
-        <tr><td>Boundary Points</td><td>Forced into exactly one cluster</td><td>Can straddle multiple clusters</td></tr>
-        <tr><td>Objective Function</td><td>Minimises WCSS</td><td>Minimises fuzzy weighted WCSS</td></tr>
-        <tr><td>Computational Cost</td><td>Lower</td><td>Higher (more parameters to update)</td></tr>
-      </table>
-
-      <div class="note">When to use Fuzzy K-Means: when data points naturally lie near cluster boundaries, when overlapping clusters are expected (e.g., a customer exhibiting traits of multiple segments), or in applications like medical imaging where partial class membership is meaningful.</div>
-
-    </div>
-  </section>
-
-  <!-- ════════════════ Q40 ════════════════ -->
-  <section class="q-panel" id="panel-40" role="tabpanel">
-    <p class="q-label">Question 40</p>
-    <div class="q-title">Propose a novel method for combining both K-Means and hierarchical clustering to improve the robustness of unsupervised learning algorithms. Justify your approach.</div>
-    <div class="q-body">
-
-      <p>Both K-Means and hierarchical clustering have distinct strengths and weaknesses. K-Means is fast but sensitive to initialisation and requires K to be known. Hierarchical clustering is robust and reveals structure but is computationally expensive on large datasets. A hybrid approach can exploit the best of both.</p>
-
-      <h3>1. Proposed Method: Hierarchical Initialisation for K-Means</h3>
-      <p>The core idea is a two-phase algorithm:</p>
-      <ol>
-        <li><strong>Phase 1 — Hierarchical Sampling:</strong> Apply agglomerative hierarchical clustering on a <em>representative sample</em> of the full dataset (e.g., 5–10%). Cut the dendrogram at a height that produces K clusters. Extract the K centroids from these initial clusters.</li>
-        <li><strong>Phase 2 — K-Means Refinement:</strong> Use the K centroids derived from Phase 1 as the <em>initial seed centroids</em> for K-Means. Run K-Means on the full dataset with these intelligent starting points until convergence.</li>
-      </ol>
-
-      <h3>2. Why This Works</h3>
-      <p>The fundamental problem with vanilla K-Means is dependence on random initialisation — poor starting centroids can trap the algorithm in a local optimum. By using hierarchical clustering to find structurally meaningful starting points, we eliminate this randomness and guide K-Means toward a globally better solution.</p>
-      <p>Running hierarchical clustering on only a sample rather than the full dataset keeps the computational cost manageable — the expensive O(n² log n) step applies to only a small fraction of the data. K-Means then handles the full dataset efficiently.</p>
-
-      <h3>3. Advantages of the Hybrid Method</h3>
-      <table>
-        <tr><th>Advantage</th><th>Explanation</th></tr>
-        <tr><td>Robustness</td><td>Hierarchical phase provides initialisation that reflects true data structure, making the result far less dependent on chance.</td></tr>
-        <tr><td>Scalability</td><td>By limiting hierarchical clustering to a sample, the method remains feasible for large datasets where pure hierarchical clustering would fail.</td></tr>
-        <tr><td>Better Convergence</td><td>Smart initialisation means K-Means converges in fewer iterations, saving computation time.</td></tr>
-        <tr><td>Automatic K Guidance</td><td>The dendrogram from Phase 1 can help determine a good value of K by examining where large jumps in merge distance occur.</td></tr>
-        <tr><td>Reduced SSE</td><td>Better starting centroids lead to lower final WCSS, producing higher-quality clusters.</td></tr>
-      </table>
-
-      <h3>4. Limitations</h3>
-      <ul>
-        <li>Hierarchical clustering is still computationally expensive for very large samples.</li>
-        <li>Choosing the correct K can still be challenging despite dendrogram guidance.</li>
-        <li>Two-phase complexity adds implementation overhead.</li>
-      </ul>
-
-      <h3>5. Conclusion</h3>
-      <p>This hybrid method leverages hierarchical clustering's strength in uncovering natural structure with K-Means' scalability and speed. It is particularly well-suited for large, messy real-world datasets where the number of clusters is uncertain and random initialisation of K-Means tends to be unreliable.</p>
-
-    </div>
-  </section>
-
-</div><!-- .page -->
-<nav class="page-nav">
-  <a href="unit3.html">← Unit 3</a>
-  <a class="home" href="index.html">↑ Home</a>
-  <a href="unit5.html">Unit 5 →</a>
-</nav>
-
-<script>
-  var questions = [31,32,33,34,35,36,37,38,39,40];
-  function show(n) {
-    document.querySelectorAll('.q-panel').forEach(function(p) { p.classList.remove('active'); });
-    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
-    document.getElementById('panel-' + n).classList.add('active');
-    var idx = questions.indexOf(n);
-    var tabs = document.querySelectorAll('.tab-btn');
-    if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
-  }
-</script>
+  <script>
+    var questions = [31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
+    function show(n) {
+      document.querySelectorAll('.q-panel').forEach(function (p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function (t) { t.classList.remove('active'); });
+      document.getElementById('panel-' + n).classList.add('active');
+      var idx = questions.indexOf(n);
+      var tabs = document.querySelectorAll('.tab-btn');
+      if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+    }
+  </script>
 </body>
+
 </html>
