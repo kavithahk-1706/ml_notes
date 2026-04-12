@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 3 — Classification (Q26–30)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <p class="page-kicker">Machine Learning — Examination Preparation</p>
+    <h1 class="page-title">Unit 3: Classification</h1>
+    <p class="page-sub">Questions 26 – 30</p>
+  </header>
+
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="show(26)">Q26 — Naïve Bayes</button>
+    <button class="tab-btn" role="tab" onclick="show(27)">Q27 — Multi-label Classification</button>
+    <button class="tab-btn" role="tab" onclick="show(28)">Q28 — Multi-class Classification</button>
+    <button class="tab-btn" role="tab" onclick="show(29)">Q29 — Logistic Regression</button>
+    <button class="tab-btn" role="tab" onclick="show(30)">Q30 — Precision / Recall</button>
+  </nav>
+
+  <!-- ════════════════ Q26 ════════════════ -->
+  <section class="q-panel active" id="panel-26" role="tabpanel">
+    <p class="q-label">Question 26</p>
+    <div class="q-title">Discuss about the Naïve Bayes classifier in detail.</div>
+    <div class="q-body">
+
+      <p>Naïve Bayes is a probabilistic classification algorithm based on Bayes' Theorem. It assumes that all features are conditionally independent of each other given the class label. Despite this simplifying assumption, the algorithm performs well in practice, particularly for text classification and spam filtering tasks. It computes the posterior probability of each class given the input features and selects the class with the highest probability as the prediction.</p>
+
+      <h3>1. Bayes' Theorem</h3>
+      <p>The mathematical foundation of Naïve Bayes is:</p>
+      <div class="formula formula-block">P(C | X) = [ P(X | C) · P(C) ] / P(X)</div>
+      <table>
+        <tr><th>Term</th><th>Name</th><th>Meaning</th></tr>
+        <tr><td>P(C | X)</td><td>Posterior probability</td><td>Probability of class C given input data X</td></tr>
+        <tr><td>P(X | C)</td><td>Likelihood</td><td>Probability of observing X if the class is C</td></tr>
+        <tr><td>P(C)</td><td>Prior probability</td><td>Inherent probability of class C in the dataset</td></tr>
+        <tr><td>P(X)</td><td>Evidence</td><td>Total probability of X; constant across all classes</td></tr>
+      </table>
+
+      <h3>2. The Naïve Independence Assumption</h3>
+      <p>Naïve Bayes assumes that all features x₁, x₂, …, xₙ are conditionally independent given the class label C. This allows the likelihood to be decomposed as a product of individual feature likelihoods:</p>
+      <div class="formula formula-block">P(X | C) = P(x₁ | C) · P(x₂ | C) · ... · P(xₙ | C)</div>
+      <p>In practice, this assumption is rarely strictly true. For example, in email spam detection, the words "offer" and "free" are treated as independent even though they frequently co-occur. Nonetheless, the assumption greatly simplifies computation and still yields competitive accuracy.</p>
+
+      <h3>3. Working of Naïve Bayes</h3>
+      <ol>
+        <li>Calculate the prior probability P(C) for each class from the training data.</li>
+        <li>Calculate the likelihood P(xᵢ | C) for each feature value given each class.</li>
+        <li>Multiply likelihoods across all features to obtain P(X | C).</li>
+        <li>Apply Bayes' theorem to compute the posterior P(C | X) for each class.</li>
+        <li>Select the class with the highest posterior probability as the predicted label.</li>
+      </ol>
+
+      <h3>4. Types of Naïve Bayes Classifiers</h3>
+      <table>
+        <tr><th>Type</th><th>Data Type</th><th>Assumption</th><th>Common Use Case</th></tr>
+        <tr><td>Gaussian Naïve Bayes</td><td>Continuous</td><td>Features follow a normal (Gaussian) distribution</td><td>Medical diagnosis, iris classification</td></tr>
+        <tr><td>Multinomial Naïve Bayes</td><td>Discrete (counts)</td><td>Features represent event frequencies or word counts</td><td>Text classification, document categorisation</td></tr>
+        <tr><td>Bernoulli Naïve Bayes</td><td>Binary (0 or 1)</td><td>Each feature is a binary indicator of presence or absence</td><td>Spam detection using word presence/absence flags</td></tr>
+      </table>
+
+      <h3>5. Advantages and Limitations</h3>
+      <table>
+        <tr><th>Advantages</th><th>Limitations</th></tr>
+        <tr><td>Computationally efficient; fast to train and predict</td><td>The independence assumption is often unrealistic</td></tr>
+        <tr><td>Performs well with small training datasets</td><td>Cannot capture feature correlations or interactions</td></tr>
+        <tr><td>Scales well to high-dimensional data</td><td>Sensitive to zero-frequency problem (requires smoothing)</td></tr>
+        <tr><td>Well-suited for text and document classification</td><td>Not suitable for regression or complex non-linear problems</td></tr>
+      </table>
+
+      <h3>6. Applications</h3>
+      <ul>
+        <li>Email spam filtering</li>
+        <li>Sentiment analysis</li>
+        <li>News article classification</li>
+        <li>Medical diagnosis systems</li>
+        <li>Recommendation systems</li>
+      </ul>
+
+      <h3>7. Conclusion</h3>
+      <p>Naïve Bayes is a simple yet effective probabilistic classifier that leverages Bayes' theorem with the assumption of conditional feature independence. It is particularly suitable for text-based and high-dimensional classification problems, offering fast training, low computational cost, and reasonable accuracy. It remains a foundational algorithm in machine learning despite the naïvety of its core assumption.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q27 ════════════════ -->
+  <section class="q-panel" id="panel-27" role="tabpanel">
+    <p class="q-label">Question 27</p>
+    <div class="q-title">Explain the multi-label classification methods and techniques in detail.</div>
+    <div class="q-body">
+
+      <p>Multi-label classification is a type of supervised learning problem in which each instance can be assigned to multiple class labels simultaneously. This is in contrast to single-label classification, where each instance belongs to exactly one class. The output of a multi-label model is a set of labels rather than a single label.</p>
+
+      <figure class="fig-wrap">
+        <img src="images/unit3/img1.png" alt="Screenshot from page 22 of UNIT_3_UNIT_5.pdf — diagram showing single-label classification (a dog image labelled only 'Dog') versus multi-label classification (a group image of a cat, dog, and rabbit labelled 'Cat, Dog, Rabbit').">
+        <figcaption class="fig-caption">Fig. 1 — Single-label vs. multi-label classification. Screenshot from p. 22 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <h3>1. Characteristics of Multi-label Problems</h3>
+      <ul>
+        <li>Each instance is associated with a set of labels rather than a single label.</li>
+        <li>Labels may be correlated or independent of one another.</li>
+        <li>The output space is large and potentially exponential in size.</li>
+        <li>Standard single-label evaluation metrics do not apply directly; specialised metrics are required.</li>
+      </ul>
+
+      <h3>2. Problem Transformation Methods</h3>
+      <p>These methods convert a multi-label problem into one or more standard single-label classification problems, allowing conventional algorithms to be applied.</p>
+
+      <p><strong>(a) Binary Relevance (BR)</strong></p>
+      <p>Binary Relevance decomposes the multi-label problem into a set of independent binary classification tasks, one per label. Each binary classifier independently predicts whether its corresponding label is present or absent. The final predicted label set is the union of all positive predictions.</p>
+      <ul>
+        <li><strong>Advantages:</strong> Simple to implement; computationally scalable to large label sets.</li>
+        <li><strong>Disadvantages:</strong> Ignores dependencies and correlations between labels, which can reduce accuracy when labels are related.</li>
+      </ul>
+
+      <p><strong>(b) Classifier Chains (CC)</strong></p>
+      <p>Classifier Chains extends Binary Relevance by arranging the binary classifiers in a sequential chain. Each classifier receives the original feature vector along with the binary predictions of all preceding classifiers as additional input features. This allows the model to capture inter-label dependencies by conditioning each prediction on the outcomes of prior classifiers in the chain.</p>
+      <ul>
+        <li><strong>Advantages:</strong> Explicitly models label correlations; generally outperforms BR when labels are dependent.</li>
+        <li><strong>Disadvantages:</strong> Errors made by earlier classifiers propagate through the chain; performance depends on the ordering of classifiers.</li>
+      </ul>
+
+      <p><strong>(c) Label Powerset (LP)</strong></p>
+      <p>Label Powerset treats each unique combination of labels present in the training data as a distinct class, converting the multi-label problem into a standard multi-class classification problem over label subsets.</p>
+      <ul>
+        <li><strong>Advantages:</strong> Fully captures label correlations, as label combinations are modelled holistically.</li>
+        <li><strong>Disadvantages:</strong> The number of distinct classes grows exponentially with the number of labels; cannot predict label combinations not seen during training.</li>
+      </ul>
+
+      <h3>3. Algorithm Adaptation Methods</h3>
+      <p>Rather than transforming the problem, these methods modify existing classification algorithms to natively handle multi-label output.</p>
+
+      <p><strong>(a) ML-kNN (Multi-Label k-Nearest Neighbours)</strong></p>
+      <p>ML-kNN adapts the k-Nearest Neighbours algorithm for multi-label settings. For a new instance, the k nearest neighbours are identified. The algorithm uses the label frequencies among those neighbours along with Bayesian priors to estimate the posterior probability for each label. Labels whose posterior probability exceeds a set threshold are predicted as positive.</p>
+
+      <p><strong>(b) RAKEL (RAndom k-labELsets)</strong></p>
+      <p>RAKEL randomly partitions the full label set into small overlapping subsets. A Label Powerset classifier is trained on each subset. During prediction, the outputs of all subset classifiers are aggregated by voting to produce the final label set. This approach manages the exponential label-combination problem of LP while partially preserving label dependencies.</p>
+
+      <p><strong>(c) Deep Learning Models</strong></p>
+      <p>Neural networks are highly suitable for multi-label classification. The output layer is configured with one neuron per label, each with a sigmoid activation function so that each output is an independent probability in [0, 1]. Labels whose predicted probability exceeds a threshold (typically 0.5) are assigned as positive. The model is trained using binary cross-entropy loss computed independently for each label.</p>
+
+      <h3>4. Evaluation Metrics</h3>
+      <table>
+        <tr><th>Metric</th><th>Description</th></tr>
+        <tr><td>Hamming Loss</td><td>Fraction of labels incorrectly predicted (false positives and false negatives) averaged across all instances.</td></tr>
+        <tr><td>Subset Accuracy</td><td>Proportion of instances for which the predicted label set exactly matches the true label set; the strictest metric.</td></tr>
+        <tr><td>Precision / Recall / F1</td><td>Standard metrics extended to multi-label settings, computed per label and then macro- or micro-averaged.</td></tr>
+        <tr><td>Jaccard Index</td><td>Intersection of predicted and true label sets divided by their union.</td></tr>
+      </table>
+
+      <h3>5. Applications</h3>
+      <ul>
+        <li>Image tagging (detecting multiple objects in a single image)</li>
+        <li>Text categorisation (assigning multiple topics to a document)</li>
+        <li>Music genre classification</li>
+        <li>Medical diagnosis (a patient may present multiple co-occurring conditions)</li>
+        <li>Video scene labelling</li>
+      </ul>
+
+      <h3>6. Conclusion</h3>
+      <p>Multi-label classification is an important paradigm for problems where instances belong to several categories simultaneously. Methods such as Binary Relevance, Classifier Chains, and Label Powerset offer different trade-offs between simplicity and the ability to model label dependencies. Algorithm adaptation approaches such as ML-kNN and deep learning models provide powerful alternatives. The choice of method depends on the number of labels, the degree of inter-label dependency, and the available computational resources.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q28 ════════════════ -->
+  <section class="q-panel" id="panel-28" role="tabpanel">
+    <p class="q-label">Question 28</p>
+    <div class="q-title">Describe multi-class classification in detail.</div>
+    <div class="q-body">
+
+      <p>Multi-class classification is a type of supervised learning in which a model must assign each input instance to one of three or more mutually exclusive classes. Unlike binary classification, which involves only two classes, and multi-label classification, where multiple labels may be assigned simultaneously, each data point in a multi-class problem belongs to exactly one class.</p>
+
+      <h3>1. Comparison of Classification Types</h3>
+      <table>
+        <tr><th>Type</th><th>Number of Classes</th><th>Labels per Instance</th><th>Example</th></tr>
+        <tr><td>Binary</td><td>2</td><td>Exactly 1</td><td>Spam / Not Spam</td></tr>
+        <tr><td>Multi-class</td><td>&gt; 2 (mutually exclusive)</td><td>Exactly 1</td><td>Classify fruit as apple, banana, or orange</td></tr>
+        <tr><td>Multi-label</td><td>&gt; 2 (non-exclusive)</td><td>One or more</td><td>A movie tagged as Action, Comedy, and Thriller</td></tr>
+      </table>
+
+      <figure class="fig-wrap">
+        <img src="images/unit3/img2.png" alt="Screenshot from page 23 of UNIT_3_UNIT_5.pdf — diagram comparing Multi-Class (C=3; each sample receives exactly one label from [0 0 1], [1 0 0], [0 1 0]) versus Multi-Label (samples can carry multiple labels such as [1 0 1], [0 1 0], [1 1 1]).">
+        <figcaption class="fig-caption">Fig. 2 — Multi-class vs. multi-label label vector representations. Screenshot from p. 23 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <figure class="fig-wrap">
+        <img src="images/unit3/img3.png" alt="Screenshot from page 24 of UNIT_3_UNIT_5.pdf — two scatter plots side by side: left shows binary classification with a single decision boundary separating two classes (circles and crosses); right shows multi-class classification with multiple decision boundaries separating three classes (circles, triangles, and squares).">
+        <figcaption class="fig-caption">Fig. 3 — Binary classification (left) vs. multi-class classification (right): decision boundary comparison. Screenshot from p. 24 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <h3>2. Techniques for Multi-class Classification</h3>
+
+      <p><strong>(a) One-vs-All (OvA) / One-vs-Rest (OvR)</strong></p>
+      <p>For a dataset with N classes, N separate binary classifiers are trained. Each classifier learns to distinguish one class from all remaining classes combined. For a new instance, all N classifiers produce a confidence score and the class whose classifier produces the highest score is selected as the prediction.</p>
+      <p>Example with three classes — Green, Blue, Red (N = 3):</p>
+      <ul>
+        <li>Classifier 1: [Green] vs [Red, Blue]</li>
+        <li>Classifier 2: [Blue] vs [Green, Red]</li>
+        <li>Classifier 3: [Red] vs [Blue, Green]</li>
+      </ul>
+      <div class="formula">Number of classifiers = N</div>
+
+      <p><strong>(b) One-vs-One (OvO)</strong></p>
+      <p>A separate binary classifier is trained for every unique pair of classes. A new instance is passed through all classifiers; each votes for one of its two classes, and the class receiving the most votes overall is the final prediction.</p>
+      <p>Using the same three-class example (N = 3):</p>
+      <ul>
+        <li>Classifier 1: Green vs Blue</li>
+        <li>Classifier 2: Green vs Red</li>
+        <li>Classifier 3: Blue vs Red</li>
+      </ul>
+      <div class="formula">Number of classifiers = N × (N − 1) / 2 &nbsp;→&nbsp; for N=3: 3 classifiers</div>
+
+      <table>
+        <tr><th>Aspect</th><th>One-vs-All (OvA)</th><th>One-vs-One (OvO)</th></tr>
+        <tr><td>Classifiers required</td><td>N</td><td>N(N−1)/2</td></tr>
+        <tr><td>Training data per classifier</td><td>Full dataset (class imbalance possible)</td><td>Subset of two classes only</td></tr>
+        <tr><td>Prediction method</td><td>Highest confidence score</td><td>Majority vote</td></tr>
+        <tr><td>Preferred when</td><td>N is large</td><td>Each binary subproblem is simpler</td></tr>
+      </table>
+
+      <p><strong>(c) Softmax Regression (Multinomial Logistic Regression)</strong></p>
+      <p>Softmax regression generalises logistic regression directly to the multi-class setting without binary decomposition. It computes a probability distribution over all K classes simultaneously using the softmax function:</p>
+      <div class="formula formula-block">P(y = k | x) = exp(zₖ) / Σⱼ exp(zⱼ)</div>
+      <p>where zₖ is the linear score for class k. The class with the highest probability is selected as the prediction. Softmax regression is widely used as the output layer of neural networks for multi-class classification tasks, and is trained using categorical cross-entropy loss.</p>
+
+      <h3>3. Common Algorithms</h3>
+      <ul>
+        <li>Decision Trees and Random Forests — natively multi-class</li>
+        <li>k-Nearest Neighbours — natively multi-class</li>
+        <li>Support Vector Machines — extended via OvA or OvO decomposition</li>
+        <li>Logistic Regression — extended via Softmax</li>
+        <li>Neural Networks — Softmax output layer with categorical cross-entropy</li>
+      </ul>
+
+      <h3>4. Conclusion</h3>
+      <p>Multi-class classification extends binary classification to problems involving three or more mutually exclusive categories. Techniques such as One-vs-All, One-vs-One, and Softmax regression provide different strategies for managing the increased complexity of multiple classes. With appropriate algorithm selection, feature engineering, and evaluation, multi-class classification can be applied effectively to a wide range of real-world problems including handwritten digit recognition, image categorisation, and natural language processing.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q29 ════════════════ -->
+  <section class="q-panel" id="panel-29" role="tabpanel">
+    <p class="q-label">Question 29</p>
+    <div class="q-title">Elucidate Logistic Regression and mention the importance of the sigmoid function. Apply logistic regression to predict the probability of a student passing an exam based on the number of hours studied, using the data provided.</div>
+    <div class="q-body">
+
+      <h3>1. Logistic Regression</h3>
+      <p>Logistic Regression is a supervised machine learning algorithm used primarily for binary classification problems, where the dependent variable takes one of two possible values (e.g., 0 or 1, Pass or Fail). Unlike linear regression, which produces unbounded continuous outputs, logistic regression predicts the probability that a given input belongs to a particular class, ensuring the output remains within the valid range of [0, 1].</p>
+      <p>The model establishes a linear combination of input features, which is then passed through the sigmoid (logistic) function to produce a probability. A decision threshold — typically 0.5 — is applied to convert the probability into a discrete class label.</p>
+
+      <h3>2. The Sigmoid Function</h3>
+      <p>The sigmoid function is defined as:</p>
+      <div class="formula formula-block">σ(z) = 1 / (1 + e<sup>−z</sup>)</div>
+      <p>where z = β₀ + β₁x₁ + β₂x₂ + … is the linear combination of input features and model parameters (weights).</p>
+
+      <h3>3. Importance of the Sigmoid Function</h3>
+      <table>
+        <tr><th>Property</th><th>Significance</th></tr>
+        <tr><td>Bounded output [0, 1]</td><td>Ensures all predictions are valid probabilities; the output is never negative or greater than 1.</td></tr>
+        <tr><td>Non-linear mapping</td><td>Converts the linear decision function into a smooth probabilistic output suitable for classification.</td></tr>
+        <tr><td>Differentiable everywhere</td><td>Enables gradient-based optimisation (e.g., gradient descent) for efficient parameter learning.</td></tr>
+        <tr><td>S-shaped (sigmoidal) curve</td><td>Provides a smooth, monotonically increasing transition from 0 to 1, with the steepest gradient near z = 0.</td></tr>
+        <tr><td>Natural decision boundary</td><td>At z = 0, σ(z) = 0.5, naturally defining the classification threshold point.</td></tr>
+        <tr><td>Foundation for neural networks</td><td>The sigmoid serves as an activation function in neural network layers and is the basis for the softmax function used in multi-class output layers.</td></tr>
+      </table>
+
+      <h3>4. Numerical Application</h3>
+      <p>The following data records the study hours and exam outcomes for five students.</p>
+
+      <table>
+        <tr><th>Student ID</th><th>Study Hours (x)</th><th>Exam Result (y)</th></tr>
+        <tr><td>1</td><td>2</td><td>0 (Fail)</td></tr>
+        <tr><td>2</td><td>4</td><td>0 (Fail)</td></tr>
+        <tr><td>3</td><td>6</td><td>1 (Pass)</td></tr>
+        <tr><td>4</td><td>8</td><td>1 (Pass)</td></tr>
+        <tr><td>5</td><td>10</td><td>1 (Pass)</td></tr>
+      </table>
+
+      <p><strong>Step 1 — Define the model.</strong> By inspection, students studying fewer than 5 hours failed and those studying more than 5 hours passed. A simple linear model is assumed:</p>
+      <div class="formula formula-block">z = x − 5</div>
+
+      <p><strong>Step 2 — Apply the sigmoid function</strong> to each data point to compute the predicted probability of passing.</p>
+
+      <table>
+        <tr><th>x (hours)</th><th>z = x − 5</th><th>e<sup>−z</sup></th><th>σ(z) = P(Pass)</th><th>Prediction</th></tr>
+        <tr><td>2</td><td>−3</td><td>e³ ≈ 20.085</td><td>1/21.085 ≈ 0.047</td><td>Fail (0)</td></tr>
+        <tr><td>4</td><td>−1</td><td>e¹ ≈ 2.718</td><td>1/3.718 ≈ 0.269</td><td>Fail (0)</td></tr>
+        <tr><td>6</td><td>1</td><td>e<sup>−1</sup> ≈ 0.368</td><td>1/1.368 ≈ 0.731</td><td>Pass (1)</td></tr>
+        <tr><td>8</td><td>3</td><td>e<sup>−3</sup> ≈ 0.0498</td><td>1/1.0498 ≈ 0.952</td><td>Pass (1)</td></tr>
+        <tr><td>10</td><td>5</td><td>e<sup>−5</sup> ≈ 0.0067</td><td>1/1.0067 ≈ 0.993</td><td>Pass (1)</td></tr>
+      </table>
+
+      <p><strong>Step 3 — Decision rule:</strong></p>
+      <ul>
+        <li>If σ(z) ≥ 0.5 → Predict Pass (1)</li>
+        <li>If σ(z) &lt; 0.5 → Predict Fail (0)</li>
+      </ul>
+
+      <h3>5. Conclusion</h3>
+      <p>The results demonstrate that as study hours increase, the predicted probability of passing increases monotonically. Students who studied 2 or 4 hours were predicted to fail (P(Pass) &lt; 0.5), while those who studied 6, 8, or 10 hours were predicted to pass. This confirms that logistic regression, through the sigmoid function, successfully identifies a threshold — here approximately 5 study hours — beyond which the probability of passing exceeds 0.5. All five predictions are consistent with the actual outcomes, confirming the validity of the assumed model.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q30 ════════════════ -->
+  <section class="q-panel" id="panel-30" role="tabpanel">
+    <p class="q-label">Question 30</p>
+    <div class="q-title">Discuss about Precision, Recall, and their Trade-offs in detail.</div>
+    <div class="q-body">
+
+      <p>Precision and Recall are two fundamental evaluation metrics used in classification problems, particularly when the dataset is imbalanced or when the costs associated with different types of misclassification are unequal. Both metrics are derived from the confusion matrix, which records the counts of True Positives (TP), True Negatives (TN), False Positives (FP), and False Negatives (FN).</p>
+
+      <figure class="fig-wrap">
+        <img src="images/unit3/img4.png" alt="Screenshot from page 29 of UNIT_3_UNIT_5.pdf — colour-coded confusion matrix with TP and TN cells in green and FP and FN cells in red, with the formulas Precision = ΣTP/(ΣTP+FP), Recall = ΣTP/(ΣTP+FN), and Accuracy = Σ(TP+TN)/(ΣTP+FP+FN+TN) labelled.">
+        <figcaption class="fig-caption">Fig. 4 — Confusion matrix with Precision, Recall, and Accuracy formulas. Screenshot from p. 29 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <h3>1. Precision</h3>
+      <p>Precision measures the proportion of instances predicted as positive that are actually positive. It answers the question: <em>Of all the instances labelled positive by the model, how many were correct?</em></p>
+      <div class="formula formula-block">Precision = TP / (TP + FP)</div>
+      <p>A high precision value indicates that the model produces few false positives — when it predicts the positive class, it is likely to be correct. This property is critical in applications such as spam detection, where incorrectly classifying a legitimate email as spam is undesirable.</p>
+      <p><strong>Example:</strong> In a spam detection system, if 100 emails are predicted as spam and 80 are actually spam: Precision = 80 / 100 = 0.80 (80%).</p>
+
+      <h3>2. Recall (Sensitivity)</h3>
+      <p>Recall measures the proportion of actual positive instances that were correctly identified by the model. It answers the question: <em>Of all instances that are truly positive, how many did the model successfully identify?</em></p>
+      <div class="formula formula-block">Recall = TP / (TP + FN)</div>
+      <p>A high recall value indicates that the model misses few actual positive cases. This is critical in applications such as medical diagnosis, where failing to detect a disease (a false negative) can have serious consequences.</p>
+      <p><strong>Example:</strong> In a disease detection system with 100 sick patients, if the model correctly identifies 90: Recall = 90 / 100 = 0.90 (90%).</p>
+
+      <h3>3. Precision vs. Recall — Key Differences</h3>
+      <table>
+        <tr><th>Metric</th><th>Focus</th><th>Minimises</th><th>Critical When</th></tr>
+        <tr><td>Precision</td><td>Correctness of positive predictions</td><td>False Positives (FP)</td><td>False alarms are costly</td></tr>
+        <tr><td>Recall</td><td>Coverage of actual positive cases</td><td>False Negatives (FN)</td><td>Missing a positive case is dangerous</td></tr>
+      </table>
+
+      <h3>4. The Precision–Recall Trade-off</h3>
+      <p>In most classification systems, precision and recall cannot be simultaneously maximised. This trade-off arises from the decision threshold used to classify instances:</p>
+      <ul>
+        <li>Lowering the decision threshold causes the model to predict the positive class more liberally, increasing recall (fewer true positives are missed) but decreasing precision (more false positives are introduced).</li>
+        <li>Raising the decision threshold causes the model to predict the positive class more conservatively, increasing precision (fewer false positives) but decreasing recall (more true positives are missed).</li>
+      </ul>
+
+      <figure class="fig-wrap">
+        <img src="images/unit3/img5.png" alt="Screenshot from page 31 of UNIT_3_UNIT_5.pdf — two line graphs showing Precision and Recall as functions of the decision threshold. In both graphs, Precision increases as the threshold increases while Recall decreases, with the two curves crossing, illustrating the trade-off.">
+        <figcaption class="fig-caption">Fig. 5 — Precision and Recall as functions of the decision threshold, illustrating the trade-off. Screenshot from p. 31 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <p><strong>Scenario 1 — High Precision, Low Recall:</strong> The model is conservative and only predicts positive when highly certain. This results in few false positives but many missed actual positives. Typical use case: fraud detection, where falsely flagging a legitimate transaction is costly.</p>
+      <p><strong>Scenario 2 — High Recall, Low Precision:</strong> The model is lenient and predicts positive broadly. This captures most actual positives but introduces many false alarms. Typical use case: cancer screening, where missing a positive diagnosis is dangerous.</p>
+
+      <h3>5. F1 Score — Balancing Both Metrics</h3>
+      <p>The F1 Score is the harmonic mean of Precision and Recall, providing a single metric that balances both concerns. It is especially useful when there is an unequal class distribution or when both false positives and false negatives carry significant costs.</p>
+      <div class="formula formula-block">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
+      <p>The harmonic mean penalises extreme imbalances between precision and recall more severely than the arithmetic mean, making it a reliable balanced metric.</p>
+
+      <h3>6. Real-world Applications</h3>
+      <table>
+        <tr><th>Domain</th><th>Preferred Metric</th><th>Reason</th></tr>
+        <tr><td>Medical screening / disease detection</td><td>High Recall</td><td>Missing a positive diagnosis can be life-threatening.</td></tr>
+        <tr><td>Spam detection</td><td>High Precision</td><td>Marking a legitimate email as spam is disruptive.</td></tr>
+        <tr><td>Fraud detection</td><td>Balanced F1</td><td>Both missed fraud and false accusations carry costs.</td></tr>
+        <tr><td>Information retrieval</td><td>Precision–Recall curve</td><td>Overall model performance is evaluated across thresholds.</td></tr>
+      </table>
+
+      <h3>7. Conclusion</h3>
+      <p>Precision and Recall are complementary metrics that capture different aspects of a classifier's performance. Precision reflects how reliable positive predictions are, while Recall reflects how completely the model identifies all actual positive instances. Because improving one typically reduces the other, practitioners must select the appropriate metric — or use the F1 Score as a balanced measure — based on the specific costs and risks associated with false positives and false negatives in the given application domain.</p>
+
+    </div>
+  </section>
+
+</div><!-- .page -->
+
+<nav class="page-nav">
+  <span></span>
+  <a class="home" href="index.html">↑ Home</a>
+  <a href="unit4.html">Unit 4 →</a>
+</nav>
+
+<script>
+  function show(n) {
+    document.querySelectorAll('.q-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
+    document.getElementById('panel-' + n).classList.add('active');
+    var tabs = document.querySelectorAll('.tab-btn');
+    var idx = [26, 27, 28, 29, 30].indexOf(n);
+    if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  }
+</script>
+</body>
+</html>

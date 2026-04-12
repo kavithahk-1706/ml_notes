@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 5 — Ensemble Methods, Decision Trees &amp; SVM (Q41–50)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <p class="page-kicker">Machine Learning — Examination Preparation</p>
+    <h1 class="page-title">Unit 5: Ensemble Methods, Decision Trees &amp; SVM</h1>
+    <p class="page-sub">Questions 41 – 50</p>
+  </header>
+
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="show(41)">Q41 — Ensemble Methods</button>
+    <button class="tab-btn" role="tab" onclick="show(42)">Q42 — ID3 Tree</button>
+    <button class="tab-btn" role="tab" onclick="show(43)">Q43 — Entropy / Gini / IG</button>
+    <button class="tab-btn" role="tab" onclick="show(44)">Q44 — AdaBoost</button>
+    <button class="tab-btn" role="tab" onclick="show(45)">Q45 — Random Forest</button>
+    <button class="tab-btn" role="tab" onclick="show(46)">Q46 — SVM</button>
+    <button class="tab-btn" role="tab" onclick="show(47)">Q47 — XGBoost</button>
+    <button class="tab-btn" role="tab" onclick="show(48)">Q48 — DT vs Random Forest</button>
+    <button class="tab-btn" role="tab" onclick="show(49)">Q49 — SVM Example</button>
+    <button class="tab-btn" role="tab" onclick="show(50)">Q50 — Bagging vs Boosting</button>
+  </nav>
+
+  <!-- ════════════════ Q41 ════════════════ -->
+  <section class="q-panel active" id="panel-41" role="tabpanel">
+    <p class="q-label">Question 41</p>
+    <div class="q-title">Discuss ensemble methods in detail. Explain how techniques like bagging, boosting, and stacking combine multiple models to improve accuracy and reduce overfitting.</div>
+    <div class="q-body">
+
+      <p>Ensemble methods are machine learning techniques that combine multiple models — called base learners — to produce a single, more accurate and robust model. The core principle is: <em>many weak learners together form a strong learner</em>. Ensemble methods address variance (overfitting), bias (underfitting), or both, depending on the technique used.</p>
+
+      <figure class="fig-wrap">
+        <img src="images/unit5/img1.png" alt="search: ensemble learning bagging boosting stacking diagram multiple models combining predictions">
+        <figcaption class="fig-caption">Fig. 1 — Overview of ensemble methods: Bagging trains models in parallel on different data subsets; Boosting trains sequentially with focus on errors; Stacking uses a meta-learner to combine diverse model outputs.</figcaption>
+      </figure>
+
+      <h3>1. Bagging (Bootstrap Aggregating)</h3>
+      <p>Bagging creates multiple models by training each on a different random sample of the training data drawn <strong>with replacement</strong> (bootstrap sampling). The final prediction is made by averaging outputs (regression) or majority voting (classification). Since models are trained independently, bagging is <strong>parallelisable</strong>.</p>
+      <ol>
+        <li>Draw B bootstrap samples from the training data.</li>
+        <li>Train a separate model (usually a decision tree) on each sample.</li>
+        <li>Combine predictions by averaging (regression) or voting (classification).</li>
+      </ol>
+      <p><strong>Effect:</strong> Primarily reduces <em>variance</em>. Works well with high-variance models like unpruned decision trees. The popular algorithm is <strong>Random Forest</strong>.</p>
+
+      <h3>2. Boosting</h3>
+      <p>Boosting builds models <strong>sequentially</strong>, where each new model focuses on correcting the errors of the previous one. Misclassified samples are given higher weights so the next model pays more attention to them. The final prediction is a <strong>weighted combination</strong> of all models.</p>
+      <ol>
+        <li>Train the first weak learner on the full dataset with equal weights.</li>
+        <li>Identify misclassified samples and increase their weights.</li>
+        <li>Train the next model on the re-weighted data.</li>
+        <li>Repeat for T iterations; combine all models using weighted sum.</li>
+      </ol>
+      <p><strong>Effect:</strong> Primarily reduces <em>bias</em>. Converts weak learners into a strong learner. Popular algorithms: <strong>AdaBoost</strong>, <strong>Gradient Boosting</strong>, <strong>XGBoost</strong>.</p>
+
+      <h3>3. Stacking (Stacked Generalisation)</h3>
+      <p>Stacking trains multiple <strong>different types of models</strong> (base learners) and then trains a second-level model called a <strong>meta-learner</strong> to learn the optimal way to combine their predictions.</p>
+      <ol>
+        <li>Train multiple diverse base models (e.g., Decision Tree, SVM, Logistic Regression).</li>
+        <li>Use cross-validation to generate out-of-fold predictions from each base model.</li>
+        <li>Use these predictions as input features to train the meta-learner.</li>
+        <li>The meta-learner produces the final prediction.</li>
+      </ol>
+      <p><strong>Effect:</strong> Combines the strengths of diverse models. Often achieves higher accuracy than any single model or homogeneous ensemble.</p>
+
+      <h3>4. Comparison</h3>
+      <table>
+        <tr><th>Aspect</th><th>Bagging</th><th>Boosting</th><th>Stacking</th></tr>
+        <tr><td>Training order</td><td>Parallel</td><td>Sequential</td><td>Parallel (then meta-learner)</td></tr>
+        <tr><td>Model type</td><td>Same model type</td><td>Same model type</td><td>Different model types</td></tr>
+        <tr><td>Focus</td><td>Reduces variance</td><td>Reduces bias</td><td>Combines strengths</td></tr>
+        <tr><td>Overfitting risk</td><td>Lower</td><td>Higher (if not tuned)</td><td>Moderate</td></tr>
+        <tr><td>Example</td><td>Random Forest</td><td>AdaBoost, XGBoost</td><td>Custom meta-learner</td></tr>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q42 ════════════════ -->
+  <section class="q-panel" id="panel-42" role="tabpanel">
+    <p class="q-label">Question 42 · Numerical</p>
+    <div class="q-title">Using the ID3 algorithm, build a decision tree from the training data. Show entropy and information gain calculations. Then classify the test patterns and predict PlayFootball.</div>
+    <div class="q-body">
+
+      <h3>Training Data</h3>
+      <table>
+        <tr><th>ID</th><th>Outlook</th><th>Humidity</th><th>PlayFootball</th></tr>
+        <tr><td>T1</td><td>Sunny</td><td>High</td><td>No</td></tr>
+        <tr><td>T2</td><td>Sunny</td><td>Normal</td><td>Yes</td></tr>
+        <tr><td>T3</td><td>Overcast</td><td>High</td><td>Yes</td></tr>
+        <tr><td>T4</td><td>Rain</td><td>High</td><td>Yes</td></tr>
+      </table>
+
+      <h3>Test Data</h3>
+      <table>
+        <tr><th>ID</th><th>Outlook</th><th>Humidity</th><th>Prediction</th></tr>
+        <tr><td>X1</td><td>Overcast</td><td>Normal</td><td>?</td></tr>
+        <tr><td>X2</td><td>Rain</td><td>Normal</td><td>?</td></tr>
+      </table>
+
+      <h3>Step 1 — Entropy of the Full Training Set</h3>
+      <p>Classes: Yes = 3, No = 1 (total = 4).</p>
+      <div class="formula formula-block">Entropy(S) = −p(Yes)·log₂(p(Yes)) − p(No)·log₂(p(No))</div>
+      <div class="formula formula-block">= −(3/4)·log₂(3/4) − (1/4)·log₂(1/4) = 0.3113 + 0.5 ≈ 0.8113</div>
+
+      <h3>Step 2 — Information Gain for Outlook</h3>
+      <p>Outlook subsets:</p>
+      <ul>
+        <li><strong>Sunny</strong> (T1, T2): Yes=1, No=1 → Entropy = −(1/2)log₂(1/2) − (1/2)log₂(1/2) = 1.0</li>
+        <li><strong>Overcast</strong> (T3): Yes=1, No=0 → Entropy = 0 (pure)</li>
+        <li><strong>Rain</strong> (T4): Yes=1, No=0 → Entropy = 0 (pure)</li>
+      </ul>
+      <div class="formula formula-block">IG(Outlook) = 0.8113 − [(2/4)×1.0 + (1/4)×0 + (1/4)×0] = 0.8113 − 0.5 = <strong>0.3113</strong></div>
+
+      <h3>Step 3 — Information Gain for Humidity</h3>
+      <p>Humidity subsets:</p>
+      <ul>
+        <li><strong>High</strong> (T1, T3, T4): Yes=2, No=1 → Entropy = −(2/3)log₂(2/3) − (1/3)log₂(1/3) ≈ 0.9183</li>
+        <li><strong>Normal</strong> (T2): Yes=1, No=0 → Entropy = 0 (pure)</li>
+      </ul>
+      <div class="formula formula-block">IG(Humidity) = 0.8113 − [(3/4)×0.9183 + (1/4)×0] = 0.8113 − 0.6887 = <strong>0.1226</strong></div>
+
+      <h3>Step 4 — Root Node Selection</h3>
+      <p>Outlook has the highest Information Gain (0.3113 > 0.1226), so <strong>Outlook</strong> is the root node.</p>
+
+      <h3>Step 5 — Build the Tree</h3>
+      <ul>
+        <li><strong>Outlook = Overcast</strong> → Only T3 (Yes) → Leaf: <strong>Yes</strong></li>
+        <li><strong>Outlook = Rain</strong> → Only T4 (Yes) → Leaf: <strong>Yes</strong></li>
+        <li><strong>Outlook = Sunny</strong> → T1 (No), T2 (Yes) → Mixed. Split further on Humidity:
+          <ul>
+            <li>Humidity = High → T1 (No) → Leaf: <strong>No</strong></li>
+            <li>Humidity = Normal → T2 (Yes) → Leaf: <strong>Yes</strong></li>
+          </ul>
+        </li>
+      </ul>
+
+      <figure class="fig-wrap">
+        <img src="" alt="search: ID3 decision tree diagram Outlook root node Sunny Overcast Rain branches Humidity split leaf nodes Yes No">
+        <figcaption class="fig-caption">Fig. 2 — ID3 Decision Tree. Root = Outlook. Overcast → Yes; Rain → Yes; Sunny branches to Humidity → High=No, Normal=Yes.</figcaption>
+      </figure>
+
+      <h3>Step 6 — Classify Test Data</h3>
+      <table>
+        <tr><th>ID</th><th>Outlook</th><th>Humidity</th><th>Tree Path</th><th>Prediction</th></tr>
+        <tr><td>X1</td><td>Overcast</td><td>Normal</td><td>Outlook = Overcast → Leaf</td><td><strong>Yes</strong></td></tr>
+        <tr><td>X2</td><td>Rain</td><td>Normal</td><td>Outlook = Rain → Leaf</td><td><strong>Yes</strong></td></tr>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q43 ════════════════ -->
+  <section class="q-panel" id="panel-43" role="tabpanel">
+    <p class="q-label">Question 43</p>
+    <div class="q-title">Explain the information theory metrics used in decision trees, including Entropy, Gini Index, and Information Gain, in detail.</div>
+    <div class="q-body">
+
+      <p>Decision trees use information theory metrics to decide the best attribute for splitting data at each node. The goal is to create <strong>pure subsets</strong> — subsets where data points belong mostly to one class. The three key metrics are Entropy, Information Gain, and Gini Index.</p>
+
+      <h3>1. Entropy</h3>
+      <p>Entropy measures the <strong>impurity or uncertainty</strong> in a dataset. A dataset where all instances belong to one class has entropy = 0 (pure). A dataset evenly split between classes has maximum entropy.</p>
+      <div class="formula formula-block">Entropy(S) = −Σ pᵢ · log₂(pᵢ)</div>
+      <p>where pᵢ is the proportion of instances belonging to class i.</p>
+      <table>
+        <tr><th>Situation</th><th>Entropy Value</th></tr>
+        <tr><td>All instances in one class</td><td>0 (perfectly pure)</td></tr>
+        <tr><td>Equal split between two classes</td><td>1.0 (maximum for binary)</td></tr>
+        <tr><td>Range</td><td>0 to log₂(K), where K = number of classes</td></tr>
+      </table>
+
+      <h3>2. Information Gain</h3>
+      <p>Information Gain (IG) measures the <strong>reduction in entropy</strong> achieved by splitting the dataset on a given attribute. It helps select the best attribute for splitting — the attribute that most reduces uncertainty.</p>
+      <div class="formula formula-block">IG(S, A) = Entropy(S) − Σᵥ (|Sᵥ| / |S|) · Entropy(Sᵥ)</div>
+      <p>where A is the attribute, Sᵥ is the subset of S where A has value v, and the sum is over all values v of A.</p>
+      <ul>
+        <li><strong>Higher IG → better split</strong> — the attribute reduces more uncertainty.</li>
+        <li>IG = 0 means the attribute provides no information.</li>
+        <li>ID3 algorithm selects the attribute with the highest IG at each node.</li>
+      </ul>
+
+      <h3>3. Gini Index</h3>
+      <p>The Gini Index measures the <strong>probability of misclassifying a randomly chosen element</strong> if it were randomly labelled according to the class distribution in the subset.</p>
+      <div class="formula formula-block">Gini(S) = 1 − Σ pᵢ²</div>
+      <ul>
+        <li>Range: 0 to 0.5 for binary classification (0 = pure; 0.5 = maximally impure).</li>
+        <li><strong>Lower Gini → better split.</strong></li>
+        <li>Used in CART (Classification and Regression Trees) algorithm.</li>
+        <li>Computationally faster than Entropy (no logarithm required).</li>
+      </ul>
+
+      <figure class="fig-wrap">
+        <img src="images/unit5/img3.png" alt="search: decision tree CART gini index split visualization nodes leaf benign malignant cancer dataset">
+        <figcaption class="fig-caption">Fig. 3 — A CART decision tree split using Gini Index. Each node shows the gini value, sample count, class distribution, and majority class.</figcaption>
+      </figure>
+
+      <h3>4. Comparison of Metrics</h3>
+      <table>
+        <tr><th>Metric</th><th>Measures</th><th>Best Value</th><th>Used In</th><th>Notes</th></tr>
+        <tr><td>Entropy</td><td>Uncertainty / impurity</td><td>0</td><td>ID3, C4.5</td><td>Uses logarithm; computationally heavier</td></tr>
+        <tr><td>Information Gain</td><td>Entropy reduction from a split</td><td>High</td><td>ID3</td><td>Biased toward attributes with many values</td></tr>
+        <tr><td>Gini Index</td><td>Misclassification probability</td><td>0</td><td>CART</td><td>Faster to compute; no log needed</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>In decision trees, Entropy measures how disordered a dataset is, Information Gain selects the best feature by measuring the reduction in entropy, and the Gini Index provides a faster alternative impurity measure. All three metrics guide the construction of an efficient and accurate decision tree by identifying optimal splits at each node.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q44 ════════════════ -->
+  <section class="q-panel" id="panel-44" role="tabpanel">
+    <p class="q-label">Question 44</p>
+    <div class="q-title">Discuss the AdaBoost algorithm in the ensemble learning method in detail with an example.</div>
+    <div class="q-body">
+
+      <p>AdaBoost (Adaptive Boosting) is an ensemble learning algorithm that combines multiple <strong>weak learners</strong> — typically decision stumps (one-level decision trees) — to create a strong classifier by <strong>adaptively focusing on misclassified samples</strong>. Each new model corrects the mistakes of the previous ones by increasing the weight of misclassified instances.</p>
+
+      <h3>1. Key Concepts</h3>
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td>Weak Learner</td><td>A model that performs slightly better than random guessing (e.g., decision stump). Each one alone is insufficient.</td></tr>
+        <tr><td>Strong Learner</td><td>The final combination of all weak learners, which achieves high accuracy.</td></tr>
+        <tr><td>Sample Weights</td><td>Each training instance has a weight. Misclassified instances get higher weights; correctly classified ones get lower weights.</td></tr>
+        <tr><td>Model Weight (α)</td><td>Each weak learner is given a weight based on its accuracy — more accurate learners have higher influence.</td></tr>
+      </table>
+
+      <h3>2. Algorithm Steps</h3>
+      <ol>
+        <li><strong>Initialise weights:</strong> Assign equal weight to all N training samples: wᵢ = 1/N.</li>
+        <li><strong>Train a weak learner</strong> on the weighted training data.</li>
+        <li><strong>Calculate error:</strong> ε = Σ wᵢ for all misclassified samples.</li>
+        <li><strong>Compute model weight (alpha):</strong></li>
+      </ol>
+      <div class="formula formula-block">α = (1/2) · ln((1 − ε) / ε)</div>
+      <p>Higher accuracy (lower ε) → higher α → this model has more say in the final prediction.</p>
+      <ol start="5">
+        <li><strong>Update sample weights:</strong> Increase weights of misclassified samples, decrease weights of correctly classified ones.</li>
+      </ol>
+      <div class="formula formula-block">wᵢ = wᵢ · e^(±α)</div>
+      <ol start="6">
+        <li><strong>Normalise weights</strong> so they sum to 1.</li>
+        <li><strong>Repeat</strong> for T iterations (number of weak learners).</li>
+      </ol>
+
+      <h3>3. Final Prediction</h3>
+      <div class="formula formula-block">Final Output = sign( Σₜ αₜ · hₜ(x) )</div>
+      <p>The final output is the sign of the weighted sum of all weak learner predictions, where each prediction hₜ(x) ∈ {−1, +1}.</p>
+
+      <h3>4. Example — Spam Detection</h3>
+      <table>
+        <tr><th>Iteration</th><th>Model Focus</th><th>Action</th></tr>
+        <tr><td>1</td><td>All samples equal weight</td><td>Trains stump; misclassifies E2 → increase E2's weight</td></tr>
+        <tr><td>2</td><td>E2 has higher weight</td><td>New model focuses on E2; misclassifies E3 → increase E3's weight</td></tr>
+        <tr><td>3</td><td>E3 has higher weight</td><td>New model focuses on E3; combines with previous models</td></tr>
+        <tr><td>Final</td><td>Weighted combination of all stumps</td><td>Better accuracy than any single stump</td></tr>
+      </table>
+
+      <figure class="fig-wrap">
+        <img src="images/unit5/img4.png" alt="search: AdaBoost algorithm diagram sequential weak learners sample weight update misclassified points boosting">
+        <figcaption class="fig-caption">Fig. 4 — AdaBoost trains weak learners sequentially, increasing the weight of misclassified samples at each step. The final model is a weighted vote of all learners.</figcaption>
+      </figure>
+
+      <h3>5. Advantages and Disadvantages</h3>
+      <table>
+        <tr><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>Improves accuracy of weak models</td><td>Sensitive to noisy data and outliers</td></tr>
+        <tr><td>Works well with simple classifiers (decision stumps)</td><td>Can overfit if data is too complex or noisy</td></tr>
+        <tr><td>Reduces both bias and variance</td><td>Training is sequential → cannot be parallelised</td></tr>
+        <tr><td>No hyperparameter tuning beyond T and learning rate</td><td>Sensitive to mislabelled training data</td></tr>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q45 ════════════════ -->
+  <section class="q-panel" id="panel-45" role="tabpanel">
+    <p class="q-label">Question 45</p>
+    <div class="q-title">Describe the Random Forest algorithm and mention its pros and cons.</div>
+    <div class="q-body">
+
+      <p>Random Forest is a supervised ensemble learning algorithm used for both classification and regression. It builds <strong>multiple decision trees</strong> using bootstrap sampling and random feature selection, then combines their outputs to improve accuracy and reduce overfitting. It is based on two core concepts: <strong>Bagging</strong> and <strong>Random Feature Selection</strong>.</p>
+
+      <h3>1. Working of Random Forest</h3>
+      <ol>
+        <li><strong>Bootstrap Sampling:</strong> From the original dataset, B random samples are drawn with replacement (bootstrap). Each sample is approximately 63% of the original data.</li>
+        <li><strong>Decision Tree Construction:</strong> A full, unpruned decision tree is built for each bootstrap sample.</li>
+        <li><strong>Random Feature Selection:</strong> At each node split, only a random subset of features is considered (typically √p features for classification, where p is total features). This decorrelates the trees.</li>
+        <li><strong>Prediction:</strong> Classification → majority vote across all trees. Regression → average of all tree outputs.</li>
+      </ol>
+
+      <figure class="fig-wrap">
+        <img src="images/unit5/img5.png" alt="search: random forest algorithm multiple decision trees bootstrap sampling majority voting diagram">
+        <figcaption class="fig-caption">Fig. 5 — Random Forest: each tree is trained on a bootstrap sample with random feature subsets. Final prediction = majority vote (classification) or average (regression).</figcaption>
+      </figure>
+
+      <h3>2. Why Random Feature Selection Helps</h3>
+      <p>If all trees were trained on the same features, they would be correlated — they would make similar errors and averaging them would not help. By randomly restricting features at each split, the trees are <strong>decorrelated</strong>, so their errors are independent and averaging reduces variance significantly.</p>
+
+      <h3>3. Pros and Cons</h3>
+      <table>
+        <tr><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>High accuracy — averaging many trees reduces overfitting significantly compared to a single tree</td><td>Complex and harder to interpret than a single decision tree</td></tr>
+        <tr><td>Robust to outliers and noise — individual noisy trees are averaged out</td><td>Computationally expensive — training many trees is slow</td></tr>
+        <tr><td>Works well with large datasets and many features</td><td>High memory usage — all trees must be stored</td></tr>
+        <tr><td>Provides feature importance scores — useful for feature selection</td><td>Slower prediction compared to simpler models</td></tr>
+        <tr><td>Handles missing values reasonably well</td><td>May not perform well on very sparse or very high-dimensional data</td></tr>
+      </table>
+
+      <h3>4. Applications</h3>
+      <ul>
+        <li>Medical diagnosis and disease prediction</li>
+        <li>Fraud detection in finance</li>
+        <li>Recommendation systems</li>
+        <li>Stock market prediction</li>
+        <li>Remote sensing and image classification</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q46 ════════════════ -->
+  <section class="q-panel" id="panel-46" role="tabpanel">
+    <p class="q-label">Question 46</p>
+    <div class="q-title">Explain the classification mechanism in SVM with necessary diagrams.</div>
+    <div class="q-body">
+
+      <p>Support Vector Machine (SVM) is a supervised learning algorithm used primarily for classification. It finds the optimal <strong>hyperplane</strong> that separates data points into different classes while <strong>maximising the margin</strong> between the nearest points of each class.</p>
+
+      <h3>1. Key Concepts</h3>
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td>Hyperplane</td><td>The decision boundary that separates classes. In 2D it is a line; in 3D it is a plane; in n-D it is a hyperplane.</td></tr>
+        <tr><td>Support Vectors</td><td>The data points from each class that lie closest to the hyperplane. They are the critical points that define and support the boundary.</td></tr>
+        <tr><td>Margin</td><td>The perpendicular distance between the hyperplane and the nearest support vectors from each side. SVM maximises this margin.</td></tr>
+        <tr><td>Maximum Margin Hyperplane</td><td>The hyperplane that maximises the margin — the optimal decision boundary learned by SVM.</td></tr>
+      </table>
+
+      <figure class="fig-wrap">
+        <img src="" alt="page 60 of UNIT_3_UNIT_5.pdf — SVM classification diagram showing two classes (circles and triangles) separated by a hyperplane with dashed margin boundaries wx+b=1 and wx+b=-1, support vectors highlighted, and the margin width labelled as 2/||w||">
+        <figcaption class="fig-caption">Fig. 6 — SVM hyperplane with margin and support vectors. The optimal hyperplane maximises the distance between the two margin boundaries. Screenshot from p. 60 of UNIT_3_UNIT_5.pdf.</figcaption>
+      </figure>
+
+      <h3>2. Mathematical Representation</h3>
+      <p>A hyperplane is defined as:</p>
+      <div class="formula formula-block">w · x + b = 0</div>
+      <p>where w is the weight vector (normal to the hyperplane), x is the input feature vector, and b is the bias. The two margin boundaries are defined by w · x + b = +1 and w · x + b = −1. The margin width is:</p>
+      <div class="formula formula-block">Margin = 2 / ||w||</div>
+      <p>Maximising the margin is equivalent to minimising ||w||².</p>
+
+      <h3>3. Classification Mechanism Steps</h3>
+      <ol>
+        <li>Plot training data in feature space.</li>
+        <li>Identify all possible separating hyperplanes.</li>
+        <li>Select the hyperplane with the maximum margin (minimum ||w||²).</li>
+        <li>Identify support vectors — the points exactly on the margin boundaries.</li>
+        <li>Classify new data based on which side of the hyperplane it falls on: if w·x + b > 0 → Class +1; if w·x + b &lt; 0 → Class −1.</li>
+      </ol>
+
+      <h3>4. Non-Linear Classification — The Kernel Trick</h3>
+      <p>When data is not linearly separable in the original feature space, SVM uses <strong>kernel functions</strong> to implicitly transform data into a higher-dimensional space where a linear hyperplane can separate the classes. The transformation is implicit — the kernel computes the dot product in the high-dimensional space without explicitly computing the transformation.</p>
+      <table>
+        <tr><th>Kernel</th><th>Formula</th><th>Use Case</th></tr>
+        <tr><td>Linear</td><td>K(x, z) = x · z</td><td>Linearly separable data</td></tr>
+        <tr><td>Polynomial</td><td>K(x, z) = (x · z + c)^d</td><td>Non-linear data with polynomial boundaries</td></tr>
+        <tr><td>RBF (Gaussian)</td><td>K(x, z) = exp(−γ||x − z||²)</td><td>General non-linear classification; most widely used</td></tr>
+      </table>
+
+      <h3>5. Advantages and Disadvantages</h3>
+      <table>
+        <tr><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>Effective in high-dimensional spaces</td><td>Computationally expensive for large datasets</td></tr>
+        <tr><td>Memory efficient — uses only support vectors</td><td>Kernel selection can be complex</td></tr>
+        <tr><td>Robust to overfitting in high dimensions</td><td>Not directly interpretable</td></tr>
+        <tr><td>Handles non-linear data via kernel trick</td><td>Sensitive to feature scaling and noise</td></tr>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q47 ════════════════ -->
+  <section class="q-panel" id="panel-47" role="tabpanel">
+    <p class="q-label">Question 47</p>
+    <div class="q-title">Discuss the XGBoost algorithm in the ensemble learning method in detail with an example.</div>
+    <div class="q-body">
+
+      <p>XGBoost (Extreme Gradient Boosting) is an optimised and highly efficient implementation of the gradient boosting algorithm. It builds decision trees <strong>sequentially</strong>, where each new tree learns to predict the <strong>residual errors</strong> (gradients) of the previous ensemble. XGBoost is widely regarded as one of the best-performing algorithms for structured/tabular data.</p>
+
+      <h3>1. Core Concept</h3>
+      <p>Gradient boosting builds models by minimising a loss function using gradient descent in <strong>function space</strong>. Instead of updating model parameters directly, it trains a new decision tree to predict the negative gradient (residuals) of the loss at each step, then adds this tree to the ensemble.</p>
+      <div class="formula formula-block">Fₜ(x) = Fₜ₋₁(x) + η · hₜ(x)</div>
+      <p>where hₜ(x) is the new tree, η is the learning rate (shrinkage), and Fₜ₋₁ is the current ensemble.</p>
+
+      <h3>2. Key Features of XGBoost</h3>
+      <table>
+        <tr><th>Feature</th><th>Description</th></tr>
+        <tr><td>Regularisation (L1 &amp; L2)</td><td>Penalises model complexity to prevent overfitting — unlike basic gradient boosting.</td></tr>
+        <tr><td>Tree Pruning</td><td>Prunes branches using a depth-first approach based on gain, removing branches that don't improve the objective.</td></tr>
+        <tr><td>Handling Missing Values</td><td>Automatically learns the best direction for missing values during training.</td></tr>
+        <tr><td>Parallel Processing</td><td>Parallelises the construction of each individual tree (across features), not the boosting itself.</td></tr>
+        <tr><td>Shrinkage (Learning Rate)</td><td>Scales the contribution of each new tree to prevent overfitting.</td></tr>
+        <tr><td>Column Sampling</td><td>Randomly samples features for each tree — similar to Random Forest — to reduce variance.</td></tr>
+      </table>
+
+      <h3>3. Algorithm Steps</h3>
+      <ol>
+        <li><strong>Initialise</strong> model with a constant value (e.g., mean of target for regression).</li>
+        <li><strong>Compute gradients</strong> (residuals = actual − predicted) for all training samples.</li>
+        <li><strong>Fit a decision tree</strong> to predict the residuals.</li>
+        <li><strong>Update predictions</strong>: add the new tree (scaled by learning rate) to the current ensemble.</li>
+        <li><strong>Repeat</strong> steps 2–4 for T iterations.</li>
+      </ol>
+
+      <h3>4. Example — Student Mark Prediction</h3>
+      <table>
+        <tr><th>Hours Studied</th><th>Actual Marks</th></tr>
+        <tr><td>1</td><td>35</td></tr>
+        <tr><td>2</td><td>40</td></tr>
+        <tr><td>3</td><td>50</td></tr>
+        <tr><td>4</td><td>60</td></tr>
+        <tr><td>5</td><td>70</td></tr>
+      </table>
+      <p><strong>Iteration 1:</strong> Initial prediction = mean(35,40,50,60,70) = 51. Residuals: [−16, −11, −1, +9, +19]. Tree 1 predicts these residuals and updates predictions. <strong>Iteration 2:</strong> Compute new residuals from updated predictions. Tree 2 predicts these smaller residuals. Each iteration reduces the error further until convergence.</p>
+
+      <figure class="fig-wrap">
+        <img src="" alt="search: XGBoost gradient boosting residuals sequential trees prediction update diagram">
+        <figcaption class="fig-caption">Fig. 7 — XGBoost iteratively adds trees that predict residuals. Each iteration refines the prediction, reducing error progressively.</figcaption>
+      </figure>
+
+      <h3>5. Advantages and Disadvantages</h3>
+      <table>
+        <tr><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>High accuracy and performance on structured data</td><td>Complex algorithm with many hyperparameters</td></tr>
+        <tr><td>Handles large datasets efficiently</td><td>Requires careful parameter tuning</td></tr>
+        <tr><td>Built-in regularisation reduces overfitting</td><td>Computationally intensive for very large datasets</td></tr>
+        <tr><td>Handles missing values automatically</td><td>Less effective on unstructured data (images, text)</td></tr>
+      </table>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q48 ════════════════ -->
+  <section class="q-panel" id="panel-48" role="tabpanel">
+    <p class="q-label">Question 48</p>
+    <div class="q-title">Compare the Decision Tree and Random Forest algorithms. Explain how they work, and highlight their differences in terms of accuracy and overfitting.</div>
+    <div class="q-body">
+
+      <h3>1. Decision Tree</h3>
+      <p>A Decision Tree is a supervised machine learning algorithm that recursively splits the dataset into subsets based on the feature that provides the highest information gain (or lowest Gini impurity) at each node. The tree grows until stopping criteria are met (e.g., maximum depth, minimum samples per leaf, or pure nodes).</p>
+      <p><strong>Working:</strong> Select the best feature using IG or Gini → split dataset → repeat recursively on each child node → assign the majority class of each leaf as its prediction.</p>
+      <ul>
+        <li><strong>Advantages:</strong> Easy to understand and visualise; requires minimal data preprocessing; handles both categorical and numerical data.</li>
+        <li><strong>Disadvantages:</strong> Highly prone to overfitting (especially when grown deep); sensitive to small changes in training data — a different sample can produce a completely different tree.</li>
+      </ul>
+
+      <h3>2. Random Forest</h3>
+      <p>Random Forest is an ensemble of decision trees, each trained on a different bootstrap sample of the data with random feature selection at each split. The final prediction is made by majority vote (classification) or averaging (regression) across all trees.</p>
+      <p><strong>Working:</strong> Bootstrap sample → grow decision tree with random feature subset at each node → repeat B times → aggregate predictions.</p>
+      <ul>
+        <li><strong>Advantages:</strong> Significantly reduces overfitting through averaging; robust to outliers and noise; provides feature importance scores.</li>
+        <li><strong>Disadvantages:</strong> Less interpretable than a single tree; higher computational cost; more memory usage.</li>
+      </ul>
+
+      <h3>3. Key Differences</h3>
+      <table>
+        <tr><th>Aspect</th><th>Decision Tree</th><th>Random Forest</th></tr>
+        <tr><td>Model Count</td><td>1 tree</td><td>Many trees (ensemble)</td></tr>
+        <tr><td>Training Data</td><td>Full dataset</td><td>Bootstrap samples (with replacement)</td></tr>
+        <tr><td>Feature Selection</td><td>All features considered at each split</td><td>Random subset of features at each split</td></tr>
+        <tr><td>Accuracy</td><td>Moderate — single tree can be inaccurate</td><td>High — averaging reduces errors</td></tr>
+        <tr><td>Overfitting</td><td>High risk — easily memorises training data</td><td>Low risk — averaging decorrelated trees</td></tr>
+        <tr><td>Interpretability</td><td>High — easy to visualise and explain</td><td>Low — hard to interpret ensemble of 100+ trees</td></tr>
+        <tr><td>Computation</td><td>Fast training and prediction</td><td>Slower; requires more resources</td></tr>
+      </table>
+
+      <h3>4. Conclusion</h3>
+      <p>Decision Trees offer simplicity and interpretability but suffer from high variance and overfitting. Random Forest addresses both problems by aggregating many decorrelated trees, trading interpretability for substantially higher accuracy and robustness. In practice, Random Forest is preferred for most classification tasks where accuracy matters more than explainability.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q49 ════════════════ -->
+  <section class="q-panel" id="panel-49" role="tabpanel">
+    <p class="q-label">Question 49</p>
+    <div class="q-title">Describe the SVM algorithm with an example and mention its pros and cons.</div>
+    <div class="q-body">
+
+      <p>Support Vector Machine (SVM) is a supervised machine learning algorithm used for classification and regression that works by finding the optimal hyperplane which <strong>maximises the margin</strong> between different classes. It is particularly powerful for high-dimensional data and data where the number of features exceeds the number of samples.</p>
+
+      <h3>1. How SVM Works</h3>
+      <p><strong>Core Idea:</strong> SVM seeks the hyperplane that separates classes while maximising the distance (margin) between the nearest data points of each class — these nearest points are the <em>support vectors</em>. Maximising the margin leads to better generalisation on unseen data.</p>
+      <p><strong>Mathematical Basis:</strong> SVM solves a constrained optimisation problem: minimise (1/2)||w||² subject to yᵢ(w·xᵢ + b) ≥ 1 for all training points. This ensures all points are on the correct side of their margin boundary.</p>
+      <p><strong>Kernel Trick:</strong> When data is not linearly separable, SVM uses kernel functions to project data into a higher-dimensional space where linear separation is possible. Common kernels: Linear, Polynomial, RBF (Radial Basis Function).</p>
+
+      <h3>2. Example — Fruit Classification</h3>
+      <p>Classify fruits as Apple or Orange based on two features: weight (g) and colour intensity (0–100).</p>
+      <ul>
+        <li>Apples: lighter weight, higher colour intensity (red) → cluster on one side.</li>
+        <li>Oranges: heavier weight, lower colour intensity (orange) → cluster on the other side.</li>
+      </ul>
+      <p>SVM finds the line (hyperplane in 2D) that best separates apples from oranges while maximising the gap between them. Support vectors are the apple and orange points closest to this boundary. A new fruit is classified based on which side of the hyperplane it falls.</p>
+
+      <figure class="fig-wrap">
+        <img src="" alt="search: SVM support vector machine linearly separable classification 2D example hyperplane margin boundary two classes">
+        <figcaption class="fig-caption">Fig. 8 — SVM classifying two classes in 2D. The hyperplane (solid line) maximises the margin. Dashed lines mark the margin boundaries. Support vectors are circled.</figcaption>
+      </figure>
+
+      <h3>3. Pros and Cons</h3>
+      <table>
+        <tr><th>Aspect</th><th>Advantages</th><th>Disadvantages</th></tr>
+        <tr><td>Accuracy</td><td>High accuracy in classification tasks, especially with clear margins</td><td>Sensitive to noise and overlapping class distributions</td></tr>
+        <tr><td>Scalability</td><td>Works well with small to medium-sized datasets</td><td>Slow and memory-intensive for very large datasets</td></tr>
+        <tr><td>Flexibility</td><td>Kernel trick allows effective handling of non-linear boundaries</td><td>Kernel selection and tuning of C, γ parameters can be complex</td></tr>
+        <tr><td>Interpretability</td><td>Strong mathematical foundation; well-understood theoretically</td><td>Hard to interpret results intuitively; not easily explainable to non-experts</td></tr>
+      </table>
+
+      <h3>4. Applications</h3>
+      <ul>
+        <li>Text classification and spam detection</li>
+        <li>Image recognition and face detection</li>
+        <li>Bioinformatics (protein classification)</li>
+        <li>Handwriting recognition</li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q50 ════════════════ -->
+  <section class="q-panel" id="panel-50" role="tabpanel">
+    <p class="q-label">Question 50</p>
+    <div class="q-title">Explain the difference between Bagging and Boosting techniques in detail.</div>
+    <div class="q-body">
+
+      <p>Bagging and Boosting are both ensemble methods that combine multiple models to improve overall performance, but they differ fundamentally in <strong>how models are trained</strong>, <strong>what problem they address</strong>, and <strong>how predictions are combined</strong>.</p>
+
+      <h3>1. Bagging (Bootstrap Aggregating)</h3>
+      <p>Bagging creates multiple models by training each on a different <strong>random bootstrap sample</strong> of the training data (sampled with replacement). Models are trained <strong>independently and in parallel</strong>. The final prediction is made by <strong>averaging</strong> (regression) or <strong>majority voting</strong> (classification). All models have equal weight in the final prediction.</p>
+      <p><strong>Primary effect:</strong> Reduces <em>variance</em>. Prevents overfitting. Best suited for high-variance, low-bias models (e.g., deep decision trees).</p>
+
+      <h3>2. Boosting</h3>
+      <p>Boosting trains models <strong>sequentially</strong>, where each new model focuses on the errors made by the previous ones. It uses the <strong>original dataset</strong> but adjusts the weights of samples — misclassified samples get higher weights. Models are combined using a <strong>weighted sum</strong>, where more accurate models are given more influence.</p>
+      <p><strong>Primary effect:</strong> Reduces both <em>bias</em> and <em>variance</em>. Converts weak learners into strong ones. Examples: AdaBoost, Gradient Boosting, XGBoost.</p>
+
+      <h3>3. Detailed Comparison</h3>
+      <table>
+        <tr><th>Aspect</th><th>Bagging</th><th>Boosting</th></tr>
+        <tr><td>Data Sampling</td><td>Bootstrap samples (random, with replacement)</td><td>Original data with adjusted sample weights</td></tr>
+        <tr><td>Training Order</td><td>Parallel — models train independently</td><td>Sequential — each model depends on previous</td></tr>
+        <tr><td>Model Weights</td><td>Equal — all models contribute equally</td><td>Unequal — better models get higher weight</td></tr>
+        <tr><td>Primary Benefit</td><td>Reduces variance</td><td>Reduces bias and variance</td></tr>
+        <tr><td>Overfitting Risk</td><td>Less prone to overfitting</td><td>More prone if not tuned (noisy data)</td></tr>
+        <tr><td>Speed</td><td>Faster — parallelisable</td><td>Slower — sequential</td></tr>
+        <tr><td>Outlier Sensitivity</td><td>More stable with noisy data</td><td>Sensitive — high-weight outliers dominate</td></tr>
+        <tr><td>Best For</td><td>High-variance models (Decision Trees)</td><td>High-bias models (Weak Learners)</td></tr>
+        <tr><td>Example Algorithms</td><td>Random Forest, Bagged Trees</td><td>AdaBoost, Gradient Boosting, XGBoost</td></tr>
+      </table>
+
+      <h3>4. When to Use Which</h3>
+      <p>Use <strong>Bagging</strong> when your model is already complex and overfitting (high variance). Use <strong>Boosting</strong> when your model is too simple and underfitting (high bias), or when you need to squeeze the maximum performance from weak learners. In practice, boosting algorithms like XGBoost and LightGBM consistently outperform bagging on most structured datasets, but require more careful tuning to avoid overfitting.</p>
+
+    </div>
+  </section>
+
+</div><!-- .page -->
+<nav class="page-nav">
+  <a href="unit4.html">← Unit 4</a>
+  <a class="home" href="index.html">↑ Home</a>
+  <span></span>
+</nav>
+
+<script>
+  var questions = [41,42,43,44,45,46,47,48,49,50];
+  function show(n) {
+    document.querySelectorAll('.q-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
+    document.getElementById('panel-' + n).classList.add('active');
+    var idx = questions.indexOf(n);
+    var tabs = document.querySelectorAll('.tab-btn');
+    if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  }
+</script>
+</body>
+</html>
