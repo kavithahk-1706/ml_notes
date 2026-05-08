@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 2 — Regression Analysis (Q11–20)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <p class="page-kicker">Machine Learning — Examination Preparation</p>
+    <h1 class="page-title">Unit 2: Regression Analysis</h1>
+    <p class="page-sub">Questions 11 – 20</p>
+    <nav class="page-nav">
+      <a href="unit1.html">← Unit 1</a>
+      <a class="home" href="index.html">↑ Home</a>
+      <a href="unit3.html">Unit 3 →</a>
+    </nav>
+  </header>
+
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="show(11)">Q11 — Regression &amp; Linear Relationship</button>
+    <button class="tab-btn" role="tab" onclick="show(12)">Q12 — Significance of Coefficients</button>
+    <button class="tab-btn" role="tab" onclick="show(13)">Q13 — Performance Metrics</button>
+    <button class="tab-btn" role="tab" onclick="show(14)">Q14 — Coefficients &amp; Y-intercept</button>
+    <button class="tab-btn" role="tab" onclick="show(15)">Q15 — Simple vs Multiple LR</button>
+    <button class="tab-btn" role="tab" onclick="show(16)">Q16 — Polynomial Regression</button>
+    <button class="tab-btn" role="tab" onclick="show(17)">Q17 — Slope, Intercept &amp; Correlation</button>
+    <button class="tab-btn" role="tab" onclick="show(18)">Q18 — Overfitting</button>
+    <button class="tab-btn" role="tab" onclick="show(19)">Q19 — Simple LR vs Polynomial LR</button>
+    <button class="tab-btn" role="tab" onclick="show(20)">Q20 — Underfitting</button>
+  </nav>
+
+  <!-- ════════════════ Q11 ════════════════ -->
+  <section class="q-panel active" id="panel-11" role="tabpanel">
+    <p class="q-label">Question 11</p>
+    <div class="q-title">Explain in detail about Regression Analysis and mention the importance of the measure of linear relationship.</div>
+    <div class="q-body">
+
+      <h3>1. Definition of Regression Analysis</h3>
+      <p>Regression Analysis is a statistical process used to estimate the relationships between a <strong>dependent variable</strong> (also called the criterion or response variable) and one or more <strong>independent variables</strong> (also called predictors or features). It is used to understand how the dependent variable changes when any of the independent variables is varied, and to predict the value of the dependent variable for given values of the predictors.</p>
+
+      <h3>2. Types of Regression</h3>
+      <table>
+        <tr><th>Type</th><th>Description</th><th>Formula</th></tr>
+        <tr><td>Linear Regression</td><td>Models a straight-line relationship between one independent variable and one dependent variable.</td><td>Y' = bX + A</td></tr>
+        <tr><td>Multiple Linear Regression</td><td>Extends linear regression to two or more independent variables.</td><td>Y' = b₁X₁ + b₂X₂ + … + A</td></tr>
+        <tr><td>Polynomial Regression</td><td>Models a curved (non-linear) relationship using higher-degree terms.</td><td>Y = a₀ + a₁x + a₂x² + … + aₙxⁿ</td></tr>
+        <tr><td>Ridge Regression</td><td>Adds L2 regularisation to handle multicollinearity — penalises large coefficients.</td><td>Minimise RSS + λΣβᵢ²</td></tr>
+        <tr><td>Lasso Regression</td><td>Adds L1 regularisation — performs variable selection by shrinking some coefficients to exactly zero.</td><td>Minimise RSS + λΣ|βᵢ|</td></tr>
+        <tr><td>ElasticNet Regression</td><td>Combines L1 and L2 penalties — balances Ridge and Lasso.</td><td>Minimise RSS + λ₁Σ|βᵢ| + λ₂Σβᵢ²</td></tr>
+        <tr><td>Stepwise Regression</td><td>Automatically selects predictors by adding or removing them step by step (forward, backward, or bidirectional).</td><td>—</td></tr>
+      </table>
+
+      <h3>3. Measure of Linear Relationship</h3>
+      <p>Measuring the strength and direction of the linear relationship between variables is central to regression analysis. The key measures are:</p>
+
+      <p><strong>(a) Linear Regression as a Measure</strong></p>
+      <p>Linear regression directly quantifies the relationship between a dependent and independent variable. It shows how the response changes per unit change in the predictor. There is a risk of overfitting — the model may perform well on training data but poorly on new data if the relationship is forced to be linear when it is not.</p>
+      <div class="formula formula-block">Y' = bX + A</div>
+      <p>where b is the slope (rate of change) and A is the y-intercept (value of Y when X = 0).</p>
+
+      <p><strong>(b) Polynomial Regression</strong></p>
+      <p>Used when data shows a curved pattern. It extends linear regression by adding higher-degree terms, allowing the model to capture non-linear relationships while still using the least squares fitting method.</p>
+
+      <p><strong>(c) Ridge Regression</strong></p>
+      <p>Used when multiple predictors are highly correlated (multicollinearity problem). Adds a small bias (L2 penalty) to reduce variance and stabilise the coefficient estimates.</p>
+
+      <p><strong>(d) Lasso Regression</strong></p>
+      <p>Performs both variable selection and regularisation simultaneously. Uses soft thresholding — coefficients of less important variables are shrunk to exactly zero, effectively removing them from the model.</p>
+
+      <p><strong>(e) ElasticNet Regression</strong></p>
+      <p>Combines both Ridge (L2) and Lasso (L1) penalties. Useful when there are many correlated features and variable selection is desired. Applied in support vector machines and portfolio optimisation.</p>
+
+      <p><strong>(f) Stepwise Regression</strong></p>
+      <p>Automatically selects the most useful subset of predictors. Three methods:</p>
+      <ul>
+        <li><strong>Forward selection:</strong> Start with no variables; add the most significant one at each step.</li>
+        <li><strong>Backward elimination:</strong> Start with all variables; remove the least significant one at each step.</li>
+        <li><strong>Bidirectional elimination:</strong> Combination of both — variables can be added or removed at each step.</li>
+      </ul>
+
+      <h3>4. Conclusion</h3>
+      <p>Regression analysis is a powerful tool for modelling and predicting relationships between variables. The measure of linear relationship — through the regression equation, coefficients, and correlation metrics — quantifies how strongly and in what direction variables are related. Choosing the right type of regression (linear, polynomial, regularised, stepwise) depends on the nature of the data, the presence of multicollinearity, and the need for variable selection.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q12 ════════════════ -->
+  <section class="q-panel" id="panel-12" role="tabpanel">
+    <p class="q-label">Question 12</p>
+    <div class="q-title">Discuss the significance of coefficients in Linear Regression and compute the coefficient and Y-intercept for given values using the least squares method.</div>
+    <div class="q-body">
+
+      <h3>1. Linear Regression — Recap</h3>
+      <p>Simple linear regression models the relationship between one independent variable (X) and one dependent variable (Y) using a straight-line equation:</p>
+      <div class="formula formula-block">Y' = bX + A</div>
+      <p>where <strong>b</strong> is the regression coefficient (slope) and <strong>A</strong> is the Y-intercept.</p>
+
+      <h3>2. Significance of the Coefficient (b — Slope)</h3>
+      <ul>
+        <li>The slope b represents the <strong>rate of change</strong> in Y for a one-unit increase in X.</li>
+        <li>It quantifies the <strong>strength and direction</strong> of the relationship:
+          <ul>
+            <li>b &gt; 0 → positive relationship (Y increases as X increases)</li>
+            <li>b &lt; 0 → negative relationship (Y decreases as X increases)</li>
+            <li>b = 0 → no linear relationship between X and Y</li>
+          </ul>
+        </li>
+        <li>A larger |b| indicates a steeper line and a stronger effect of X on Y.</li>
+        <li>The coefficient is estimated from data to <strong>minimise prediction error</strong>.</li>
+      </ul>
+
+      <h3>3. Significance of the Y-Intercept (A)</h3>
+      <ul>
+        <li>The Y-intercept A is the predicted value of Y when X = 0.</li>
+        <li>It positions the regression line on the Y-axis.</li>
+        <li>In some contexts it has a direct practical interpretation; in others it is purely mathematical.</li>
+      </ul>
+
+      <h3>4. Least Squares Method</h3>
+      <p>The least squares method finds the values of b and A that <strong>minimise the sum of squared residuals</strong> (SSR) — the total squared difference between observed values and predicted values:</p>
+      <div class="formula formula-block">SSR = Σ (Yᵢ − Ŷᵢ)²</div>
+      <p>The formulas derived from this minimisation are:</p>
+      <div class="formula formula-block">b = [n·ΣXY − ΣX·ΣY] / [n·ΣX² − (ΣX)²]</div>
+      <div class="formula formula-block">A = (ΣY − b·ΣX) / n = Ȳ − b·X̄</div>
+
+      <h3>5. Worked Example</h3>
+      <p>Given the following dataset:</p>
+      <table>
+        <tr><th>X (Hours studied)</th><th>Y (Marks)</th><th>X²</th><th>XY</th></tr>
+        <tr><td>1</td><td>2</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>3</td><td>4</td><td>6</td></tr>
+        <tr><td>3</td><td>5</td><td>9</td><td>15</td></tr>
+        <tr><td>4</td><td>4</td><td>16</td><td>16</td></tr>
+        <tr><td>5</td><td>6</td><td>25</td><td>30</td></tr>
+        <tr><td><strong>ΣX = 15</strong></td><td><strong>ΣY = 20</strong></td><td><strong>ΣX² = 55</strong></td><td><strong>ΣXY = 69</strong></td></tr>
+      </table>
+      <p>n = 5</p>
+      <p><strong>Step 1 — Calculate b (slope):</strong></p>
+      <div class="formula formula-block">b = (5 × 69 − 15 × 20) / (5 × 55 − 15²) = (345 − 300) / (275 − 225) = 45 / 50 = 0.9</div>
+      <p><strong>Step 2 — Calculate A (y-intercept):</strong></p>
+      <div class="formula formula-block">A = (20 − 0.9 × 15) / 5 = (20 − 13.5) / 5 = 6.5 / 5 = 1.3</div>
+      <p><strong>Regression Equation:</strong></p>
+      <div class="formula formula-block">Y' = 0.9X + 1.3</div>
+      <p>Interpretation: For every additional hour studied, marks increase by 0.9. A student who studies 0 hours is predicted to score 1.3 marks.</p>
+
+      <h3>6. Conclusion</h3>
+      <p>The regression coefficient (slope) quantifies the effect of the independent variable on the dependent variable, while the Y-intercept fixes the baseline prediction. The least squares method provides the mathematically optimal estimates by minimising total squared prediction error, producing the best-fit straight line through the data.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q13 ════════════════ -->
+  <section class="q-panel" id="panel-13" role="tabpanel">
+    <p class="q-label">Question 13</p>
+    <div class="q-title">Discuss the different performance metrics of regression models.</div>
+    <div class="q-body">
+
+      <p>Performance metrics for regression models measure how accurately the model predicts continuous output values. Unlike classification metrics, regression metrics focus on the <strong>magnitude of prediction errors</strong> — the difference between actual values (Yᵢ) and predicted values (Ŷᵢ).</p>
+
+      <h3>1. Mean Absolute Error (MAE)</h3>
+      <p>MAE calculates the average of the absolute differences between actual and predicted values. It gives an intuitive measure of average prediction error in the same unit as the output variable.</p>
+      <div class="formula formula-block">MAE = (1/n) × Σ |Yᵢ − Ŷᵢ|</div>
+      <ul>
+        <li>All errors are weighted equally regardless of magnitude.</li>
+        <li>Less sensitive to outliers than MSE.</li>
+        <li>A lower MAE indicates better model performance.</li>
+      </ul>
+
+      <h3>2. Mean Squared Error (MSE)</h3>
+      <p>MSE calculates the average of the squared differences between actual and predicted values. Squaring the errors gives proportionally more weight to large errors.</p>
+      <div class="formula formula-block">MSE = (1/n) × Σ (Yᵢ − Ŷᵢ)²</div>
+      <ul>
+        <li>More sensitive to outliers than MAE — a single large error inflates MSE significantly.</li>
+        <li>Differentiable everywhere, making it suitable for gradient-based optimisation.</li>
+        <li>Commonly used as the loss function during model training.</li>
+      </ul>
+
+      <h3>3. Root Mean Squared Error (RMSE)</h3>
+      <p>RMSE is the square root of MSE, restoring the metric to the same unit as the output variable.</p>
+      <div class="formula formula-block">RMSE = √[ (1/n) × Σ (Yᵢ − Ŷᵢ)² ]</div>
+      <ul>
+        <li>More interpretable than MSE because it is on the same scale as Y.</li>
+        <li>Still sensitive to outliers (due to the squaring in MSE).</li>
+        <li>Widely used as the primary evaluation metric in regression tasks.</li>
+      </ul>
+
+      <h3>4. R-squared (R²) — Coefficient of Determination</h3>
+      <p>R² measures the proportion of variance in the dependent variable that is explained by the model's predictions.</p>
+      <div class="formula formula-block">R² = 1 − (SS_residual / SS_total)</div>
+      <p>where SS_residual = Σ(Yᵢ − Ŷᵢ)² and SS_total = Σ(Yᵢ − Ȳ)².</p>
+      <ul>
+        <li>Range: 0 to 1. R² = 1 → perfect fit; R² = 0 → model explains none of the variance.</li>
+        <li>Higher R² indicates a better fit.</li>
+        <li>Does not account for the number of predictors — can be artificially inflated by adding irrelevant variables.</li>
+      </ul>
+
+      <h3>5. Adjusted R-squared</h3>
+      <p>Adjusted R² improves on R² by penalising the addition of unnecessary independent variables. It only increases if a new variable genuinely improves the model.</p>
+      <div class="formula formula-block">Adj. R² = 1 − [(1 − R²)(n − 1) / (n − p − 1)]</div>
+      <p>where n is the number of observations and p is the number of predictors.</p>
+      <ul>
+        <li>Preferred over R² when comparing models with different numbers of predictors.</li>
+        <li>Helps avoid overfitting in multiple regression.</li>
+      </ul>
+
+      <h3>6. Mean Absolute Percentage Error (MAPE)</h3>
+      <p>MAPE expresses prediction error as a percentage of the actual values, making it scale-independent.</p>
+      <div class="formula formula-block">MAPE = (100/n) × Σ | (Yᵢ − Ŷᵢ) / Yᵢ |</div>
+      <ul>
+        <li>Intuitive — tells you the average percentage error of predictions.</li>
+        <li>Undefined when any actual value Yᵢ = 0.</li>
+      </ul>
+
+      <h3>7. Explained Variance Score</h3>
+      <p>Measures how much of the total variance in the data is captured by the model's predictions.</p>
+      <div class="formula formula-block">Explained Variance = 1 − Var(Y − Ŷ) / Var(Y)</div>
+      <ul>
+        <li>A higher value indicates that the model captures more of the data's variability.</li>
+        <li>Similar to R² but not identical — differs when the mean of residuals is non-zero.</li>
+      </ul>
+
+      <h3>8. Summary Table</h3>
+      <table>
+        <tr><th>Metric</th><th>Unit</th><th>Outlier Sensitivity</th><th>Best Value</th><th>Key Strength</th></tr>
+        <tr><td>MAE</td><td>Same as Y</td><td>Low</td><td>0</td><td>Robust, easy to interpret</td></tr>
+        <tr><td>MSE</td><td>Y²</td><td>High</td><td>0</td><td>Differentiable; used in training loss</td></tr>
+        <tr><td>RMSE</td><td>Same as Y</td><td>High</td><td>0</td><td>Interpretable; standard evaluation metric</td></tr>
+        <tr><td>R²</td><td>Unitless</td><td>Moderate</td><td>1</td><td>Relative model fit; easy to compare</td></tr>
+        <tr><td>Adjusted R²</td><td>Unitless</td><td>Moderate</td><td>1</td><td>Corrects for extra predictors</td></tr>
+        <tr><td>MAPE</td><td>%</td><td>Moderate</td><td>0%</td><td>Scale-independent percentage error</td></tr>
+      </table>
+
+      <h3>9. Conclusion</h3>
+      <p>Choosing the right regression performance metric depends on the application. MAE is robust to outliers and easy to interpret. RMSE is standard and widely reported but is sensitive to large errors. R² and Adjusted R² measure how well the model explains the variance in the data. MAPE is useful when a percentage-based error interpretation is needed. In practice, multiple metrics are often reported together for a complete picture of model quality.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q14 ════════════════ -->
+  <section class="q-panel" id="panel-14" role="tabpanel">
+    <p class="q-label">Question 14</p>
+    <div class="q-title">Discuss the significance of coefficients in Linear Regression and compute the coefficient and Y-intercept for the given values.</div>
+    <div class="q-body">
+
+      <p>This question combines the theory of coefficient significance with a computational problem. The least squares method is used to determine the best-fit line.</p>
+
+      <h3>1. Significance of Regression Coefficients</h3>
+      <p>In a simple linear regression model Y' = bX + A:</p>
+      <ul>
+        <li><strong>Slope (b):</strong> Measures the change in Y for each unit increase in X. Indicates the strength and direction of the linear relationship. A statistically significant b means X is a meaningful predictor of Y.</li>
+        <li><strong>Y-intercept (A):</strong> The predicted value of Y when X = 0. Anchors the regression line on the Y-axis.</li>
+        <li>Testing whether b ≠ 0 (via t-test or F-test) confirms whether the predictor has a statistically significant effect on the response.</li>
+        <li>The sign of b tells whether the relationship is positive or negative; the magnitude tells how large the effect is.</li>
+      </ul>
+
+      <h3>2. Least Squares Formulas</h3>
+      <div class="formula formula-block">b = [n·ΣXY − ΣX·ΣY] / [n·ΣX² − (ΣX)²]</div>
+      <div class="formula formula-block">A = Ȳ − b·X̄ = (ΣY − b·ΣX) / n</div>
+
+      <h3>3. Worked Example</h3>
+      <p>Given data (advertising spend X vs sales Y):</p>
+      <table>
+        <tr><th>X</th><th>Y</th><th>X²</th><th>XY</th></tr>
+        <tr><td>2</td><td>10</td><td>4</td><td>20</td></tr>
+        <tr><td>4</td><td>20</td><td>16</td><td>80</td></tr>
+        <tr><td>6</td><td>25</td><td>36</td><td>150</td></tr>
+        <tr><td>8</td><td>30</td><td>64</td><td>240</td></tr>
+        <tr><td>10</td><td>40</td><td>100</td><td>400</td></tr>
+        <tr><td><strong>ΣX = 30</strong></td><td><strong>ΣY = 125</strong></td><td><strong>ΣX² = 220</strong></td><td><strong>ΣXY = 890</strong></td></tr>
+      </table>
+      <p>n = 5</p>
+      <p><strong>Compute slope b:</strong></p>
+      <div class="formula formula-block">b = (5 × 890 − 30 × 125) / (5 × 220 − 30²) = (4450 − 3750) / (1100 − 900) = 700 / 200 = 3.5</div>
+      <p><strong>Compute intercept A:</strong></p>
+      <div class="formula formula-block">A = (125 − 3.5 × 30) / 5 = (125 − 105) / 5 = 20 / 5 = 4.0</div>
+      <p><strong>Regression Equation:</strong></p>
+      <div class="formula formula-block">Y' = 3.5X + 4.0</div>
+      <p><strong>Interpretation:</strong> For every additional unit of advertising spend, sales increase by 3.5 units. With zero advertising, predicted sales are 4.0 units.</p>
+
+      <h3>4. Conclusion</h3>
+      <p>The regression coefficient b and intercept A derived using the least squares method provide the optimal straight-line fit through the data. The coefficient is the most important parameter — it quantifies the linear effect of the predictor on the response and is the basis for inferential testing of whether that relationship is statistically meaningful.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q15 ════════════════ -->
+  <section class="q-panel" id="panel-15" role="tabpanel">
+    <p class="q-label">Question 15</p>
+    <div class="q-title">Differentiate between simple linear regression and multiple linear regression models with examples.</div>
+    <div class="q-body">
+
+      <h3>1. Simple Linear Regression (SLR)</h3>
+      <p>Simple linear regression models the relationship between <strong>one independent variable</strong> and one dependent variable. The relationship is assumed to be a straight line.</p>
+      <div class="formula formula-block">Y = β₀ + β₁X + ε</div>
+      <ul>
+        <li>β₀ = y-intercept; β₁ = slope; ε = error term</li>
+        <li>Easy to understand, visualise (2D plot), and compute.</li>
+        <li>Suitable when only one variable significantly drives the output.</li>
+      </ul>
+      <p><strong>Example:</strong> Predicting salary based on years of experience. One input (experience), one output (salary).</p>
+
+      <h3>2. Multiple Linear Regression (MLR)</h3>
+      <p>Multiple linear regression extends SLR to <strong>two or more independent variables</strong>. Each predictor has its own coefficient representing its individual contribution to the output.</p>
+      <div class="formula formula-block">Y = β₀ + β₁X₁ + β₂X₂ + … + βₙXₙ + ε</div>
+      <ul>
+        <li>More complex — the model is a hyperplane in n-dimensional space rather than a line.</li>
+        <li>Captures the combined effect of multiple factors on the dependent variable.</li>
+        <li>Higher accuracy when the outcome is influenced by several variables simultaneously.</li>
+      </ul>
+      <p><strong>Example:</strong> Predicting house price based on area, number of rooms, location, and age of building. Multiple inputs, one output.</p>
+
+      <h3>3. Comparison Table</h3>
+      <table>
+        <tr><th>Feature</th><th>Simple Linear Regression</th><th>Multiple Linear Regression</th></tr>
+        <tr><td>Independent variables</td><td>Only 1</td><td>2 or more</td></tr>
+        <tr><td>Effect captured</td><td>Effect of one factor on output</td><td>Combined effect of many factors</td></tr>
+        <tr><td>Equation complexity</td><td>One predictor term</td><td>Multiple predictor terms</td></tr>
+        <tr><td>Ease of understanding</td><td>Easy to understand and calculate</td><td>More complex</td></tr>
+        <tr><td>Computation</td><td>Less computation required</td><td>More computation required</td></tr>
+        <tr><td>Multicollinearity risk</td><td>None</td><td>Possible (correlated predictors)</td></tr>
+        <tr><td>Model complexity</td><td>Simple</td><td>Complex</td></tr>
+        <tr><td>Graph shape</td><td>Straight line (2D)</td><td>Plane or hyperplane (nD)</td></tr>
+        <tr><td>Accuracy</td><td>Lower when multiple factors matter</td><td>Usually higher</td></tr>
+        <tr><td>Interpretation</td><td>Easy</td><td>More difficult</td></tr>
+        <tr><td>Use case</td><td>Age → Blood glucose level</td><td>Area + Rooms → House price</td></tr>
+      </table>
+
+      <h3>4. Conclusion</h3>
+      <p>Simple linear regression is the appropriate choice when one predictor is sufficient to explain the output and simplicity is valued. Multiple linear regression is necessary when the outcome depends on several interacting factors and higher predictive accuracy is required. The choice between them depends on the problem domain, the available data, and the desired balance between interpretability and accuracy.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q16 ════════════════ -->
+  <section class="q-panel" id="panel-16" role="tabpanel">
+    <p class="q-label">Question 16</p>
+    <div class="q-title">Explain the need for polynomial regression in detail.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Polynomial regression is an extension of linear regression used when the relationship between the independent variable and the dependent variable is <strong>non-linear (curved)</strong> rather than a straight line. It fits a polynomial equation to the data using the least squares method. Unlike simple linear regression, the best-fit line is a curve rather than a straight line.</p>
+      <p>Polynomial regression is technically a variant of multiple linear regression, as the polynomial terms (x², x³, etc.) can be treated as additional independent variables.</p>
+      <div class="formula formula-block">Y = a₀ + a₁x + a₂x² + a₃x³ + … + aₙxⁿ</div>
+
+      <h3>2. Need for Polynomial Regression</h3>
+
+      <p><strong>(a) Limitation of Linear Regression</strong></p>
+      <p>Linear regression assumes a straight-line relationship between variables. In many real-world scenarios, however, the data follows a curved or non-linear pattern. Forcing a straight line through such data produces large errors and poor predictions. Polynomial regression overcomes this by allowing the model to bend to fit the data's actual shape.</p>
+
+      <p><strong>(b) Handles Curved (Non-linear) Data</strong></p>
+      <p>When a scatter plot of the data shows a clear curve — such as an upward-accelerating or U-shaped trend — polynomial regression can capture this by adding higher-degree terms (x², x³, …) to the model equation. These terms introduce the flexibility needed to follow the curve.</p>
+
+      <p><strong>(c) Better Accuracy</strong></p>
+      <p>Since polynomial regression fits the actual shape of the data more closely, it produces more accurate predictions than linear regression when the underlying relationship is non-linear. The model's residuals (errors) are significantly smaller.</p>
+
+      <p><strong>(d) Models Complex Relationships</strong></p>
+      <p>Many real-world phenomena — population growth, drug response curves, economic trends — follow complex non-linear patterns that no straight line can adequately model. Polynomial regression provides a principled way to fit such patterns.</p>
+
+      <p><strong>(e) Flexible Model</strong></p>
+      <p>The degree n of the polynomial can be adjusted to match the complexity of the data pattern. A degree-2 polynomial (parabola) fits simple curves; higher degrees can fit more complex shapes. This flexibility makes the model adaptable to diverse datasets.</p>
+
+      <p><strong>(f) Uses the Least Squares Method</strong></p>
+      <p>Like linear regression, polynomial regression is fitted using the least squares method, which minimises the sum of squared differences between observed and predicted values. The underlying optimisation is the same; only the model structure changes.</p>
+
+      <p><strong>(g) Real-World Applications</strong></p>
+      <ul>
+        <li>Growth rate analysis (biological or economic growth curves)</li>
+        <li>Population prediction over time</li>
+        <li>Temperature and weather forecasting</li>
+        <li>Physics — projectile motion, acceleration curves</li>
+        <li>Finance — modelling non-linear price trends</li>
+      </ul>
+
+      <h3>3. Risk — Overfitting</h3>
+      <p>A key limitation of polynomial regression is the risk of overfitting when the polynomial degree is too high. The model may fit the training data very closely — including noise — but perform poorly on new data. Cross-validation and regularisation are used to manage this risk.</p>
+
+      <h3>4. Conclusion</h3>
+      <p>Polynomial regression is essential when real-world data exhibits non-linear patterns that a simple straight line cannot capture. By incorporating higher-degree terms of the independent variable, it provides the flexibility to model curves accurately while still using the familiar and well-understood least squares optimisation framework. The appropriate polynomial degree should be selected carefully to balance accuracy and the risk of overfitting.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q17 ════════════════ -->
+  <section class="q-panel" id="panel-17" role="tabpanel">
+    <p class="q-label">Question 17 · Numerical</p>
+    <div class="q-title">Calculate the slope, intercept, regression equation, and determine the linear correlation coefficient (r) for a given dataset. Plot the best-fit line.</div>
+    <div class="q-body">
+
+      <h3>1. Formulas Required</h3>
+      <div class="formula formula-block">Slope (b) = [n·ΣXY − ΣX·ΣY] / [n·ΣX² − (ΣX)²]</div>
+      <div class="formula formula-block">Intercept (A) = Ȳ − b·X̄</div>
+      <div class="formula formula-block">r = [n·ΣXY − ΣX·ΣY] / √{[n·ΣX² − (ΣX)²] × [n·ΣY² − (ΣY)²]}</div>
+
+      <h3>2. Worked Example</h3>
+      <p>Given dataset (X = study hours, Y = test score):</p>
+      <table>
+        <tr><th>X</th><th>Y</th><th>X²</th><th>Y²</th><th>XY</th></tr>
+        <tr><td>2</td><td>50</td><td>4</td><td>2500</td><td>100</td></tr>
+        <tr><td>4</td><td>60</td><td>16</td><td>3600</td><td>240</td></tr>
+        <tr><td>6</td><td>70</td><td>36</td><td>4900</td><td>420</td></tr>
+        <tr><td>8</td><td>80</td><td>64</td><td>6400</td><td>640</td></tr>
+        <tr><td>10</td><td>90</td><td>100</td><td>8100</td><td>900</td></tr>
+        <tr><td><strong>ΣX = 30</strong></td><td><strong>ΣY = 350</strong></td><td><strong>ΣX² = 220</strong></td><td><strong>ΣY² = 25500</strong></td><td><strong>ΣXY = 2300</strong></td></tr>
+      </table>
+      <p>n = 5</p>
+
+      <p><strong>Step 1 — Calculate slope b:</strong></p>
+      <div class="formula formula-block">b = (5 × 2300 − 30 × 350) / (5 × 220 − 30²) = (11500 − 10500) / (1100 − 900) = 1000 / 200 = 5</div>
+
+      <p><strong>Step 2 — Calculate intercept A:</strong></p>
+      <div class="formula formula-block">X̄ = 30/5 = 6 &nbsp;&nbsp; Ȳ = 350/5 = 70</div>
+      <div class="formula formula-block">A = 70 − 5 × 6 = 70 − 30 = 40</div>
+
+      <p><strong>Step 3 — Regression equation:</strong></p>
+      <div class="formula formula-block">Y' = 5X + 40</div>
+
+      <p><strong>Step 4 — Correlation coefficient r:</strong></p>
+      <div class="formula formula-block">r = (5 × 2300 − 30 × 350) / √{(5 × 220 − 900) × (5 × 25500 − 350²)}</div>
+      <div class="formula formula-block">r = 1000 / √{200 × (127500 − 122500)} = 1000 / √{200 × 5000} = 1000 / √1000000 = 1000 / 1000 = 1.0</div>
+
+      <h3>3. Interpretation</h3>
+      <table>
+        <tr><th>Value</th><th>Result</th><th>Interpretation</th></tr>
+        <tr><td>Slope (b)</td><td>5</td><td>For each additional study hour, the test score increases by 5 points.</td></tr>
+        <tr><td>Intercept (A)</td><td>40</td><td>A student who studies 0 hours is predicted to score 40.</td></tr>
+        <tr><td>r</td><td>1.0</td><td>Perfect positive linear correlation — as X increases, Y increases perfectly proportionally.</td></tr>
+      </table>
+
+      <h3>4. Interpreting the Correlation Coefficient r</h3>
+      <table>
+        <tr><th>Value of r</th><th>Interpretation</th></tr>
+        <tr><td>r = +1.0</td><td>Perfect positive linear correlation</td></tr>
+        <tr><td>0.7 ≤ r &lt; 1.0</td><td>Strong positive correlation</td></tr>
+        <tr><td>0.4 ≤ r &lt; 0.7</td><td>Moderate positive correlation</td></tr>
+        <tr><td>0 &lt; r &lt; 0.4</td><td>Weak positive correlation</td></tr>
+        <tr><td>r = 0</td><td>No linear correlation</td></tr>
+        <tr><td>r = −1.0</td><td>Perfect negative linear correlation</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>The least squares method yields slope b = 5 and intercept A = 40, giving the regression equation Y' = 5X + 40. The correlation coefficient r = 1.0 confirms a perfect positive linear relationship in this dataset. In practice, r values close to ±1 indicate strong linear relationships, while values near 0 suggest no significant linear association.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q18 ════════════════ -->
+  <section class="q-panel" id="panel-18" role="tabpanel">
+    <p class="q-label">Question 18</p>
+    <div class="q-title">Discuss about overfitting in detail. List the reasons for overfitting and ways to tackle overfitting.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Overfitting occurs when a machine learning model learns the training data <strong>too well</strong> — including its noise and random fluctuations — to the extent that it performs very well on training data but <strong>generalises poorly to new, unseen data</strong>. The model has effectively memorised the training examples rather than learning the underlying pattern.</p>
+      <p>Overfitting is characterised by <strong>low bias and high variance</strong>: the model is very flexible and fits training data tightly, but its predictions vary wildly on new data.</p>
+
+      <h3>2. Analogy</h3>
+      <p>A student who memorises every answer from past papers without understanding the concepts may score perfectly on those papers but fail in the actual exam when questions are rephrased. This is analogous to an overfitted model.</p>
+
+      <h3>3. Reasons for Overfitting</h3>
+      <table>
+        <tr><th>Reason</th><th>Explanation</th></tr>
+        <tr><td>Overly complex model</td><td>Too many parameters, layers, or polynomial degree — the model learns noise as if it were signal.</td></tr>
+        <tr><td>Small training dataset</td><td>Insufficient data forces the model to memorise the few examples it has rather than generalise.</td></tr>
+        <tr><td>Too many features</td><td>Irrelevant features add noise and increase model complexity unnecessarily.</td></tr>
+        <tr><td>High-degree polynomial</td><td>High-degree curves pass through every training point, including outliers and noise.</td></tr>
+        <tr><td>Training for too many epochs</td><td>Excessive training causes the model to over-learn the training set; validation error starts increasing while training error keeps falling.</td></tr>
+        <tr><td>Noisy data</td><td>Errors and random fluctuations in the training data mislead the model into learning false patterns.</td></tr>
+        <tr><td>Lack of regularisation</td><td>Without any penalty on model complexity, the algorithm freely fits any pattern it finds.</td></tr>
+      </table>
+
+      <h3>4. Ways to Tackle Overfitting</h3>
+      <table>
+        <tr><th>Technique</th><th>How It Helps</th></tr>
+        <tr><td>Increase training data</td><td>More diverse examples help the model learn genuine patterns rather than memorising specific instances.</td></tr>
+        <tr><td>Simplify the model</td><td>Reduce parameters, layers, or polynomial degree — a simpler model has less capacity to overfit.</td></tr>
+        <tr><td>Feature selection</td><td>Remove unnecessary or irrelevant features to reduce complexity and noise.</td></tr>
+        <tr><td>Regularisation (Ridge / Lasso)</td><td>Adds a penalty term to the loss function that discourages large coefficient values, constraining model flexibility.</td></tr>
+        <tr><td>Cross-validation</td><td>k-fold cross-validation evaluates model performance on multiple held-out subsets, providing a more reliable estimate of generalisation.</td></tr>
+        <tr><td>Early stopping</td><td>Monitor validation error during training; stop when it begins to increase, preventing the model from over-learning the training set.</td></tr>
+        <tr><td>Dropout (Neural Networks)</td><td>Randomly deactivates neurons during training, preventing co-adaptation and improving generalisation.</td></tr>
+        <tr><td>Data augmentation</td><td>Artificially expand the training set by applying transformations (rotation, noise, flipping) to existing examples.</td></tr>
+        <tr><td>Reduce noise in data</td><td>Clean and preprocess data properly to remove errors and outliers that the model might learn as patterns.</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>Overfitting is one of the most common and important challenges in machine learning. A model that overfits may appear highly accurate during training but fails in real-world deployment. Prevention requires a combination of strategies — collecting more data, simplifying the model, applying regularisation, and validating performance on held-out data. The goal is always to find the right balance between fitting the training data and generalising to new examples.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q19 ════════════════ -->
+  <section class="q-panel" id="panel-19" role="tabpanel">
+    <p class="q-label">Question 19</p>
+    <div class="q-title">Differentiate between simple linear regression and polynomial regression models with examples.</div>
+    <div class="q-body">
+
+      <h3>1. Simple Linear Regression</h3>
+      <p>Simple linear regression models the relationship between <strong>one independent variable</strong> and one dependent variable as a <strong>straight line</strong>.</p>
+      <div class="formula formula-block">Y = β₀ + β₁X + ε</div>
+      <ul>
+        <li>Assumes a linear (first-degree) relationship.</li>
+        <li>Simple, fast to compute, and easy to interpret.</li>
+        <li>Appropriate when data follows a linear trend.</li>
+        <li>Low risk of overfitting.</li>
+      </ul>
+      <p><strong>Example:</strong> Predicting salary from years of experience — each additional year adds a roughly constant increment to salary.</p>
+
+      <h3>2. Polynomial Regression</h3>
+      <p>Polynomial regression uses one independent variable but includes <strong>higher-degree terms</strong> (X², X³, …) to model a curved (non-linear) relationship.</p>
+      <div class="formula formula-block">Y = a₀ + a₁X + a₂X² + a₃X³ + … + aₙXⁿ + ε</div>
+      <ul>
+        <li>Models non-linear (curved) relationships.</li>
+        <li>More flexible than simple linear regression.</li>
+        <li>Appropriate when a scatter plot shows a curved trend.</li>
+        <li>Higher risk of overfitting as degree increases.</li>
+      </ul>
+      <p><strong>Example:</strong> Predicting population growth over time — early growth is slow, then accelerates, then slows again, forming an S-curve or parabola.</p>
+
+      <h3>3. Comparison Table</h3>
+      <table>
+        <tr><th>Feature</th><th>Simple Linear Regression</th><th>Polynomial Regression</th></tr>
+        <tr><td>Type of relationship</td><td>Linear (straight line)</td><td>Non-linear (curve)</td></tr>
+        <tr><td>Degree of equation</td><td>First degree (degree 1)</td><td>Higher degree (degree ≥ 2)</td></tr>
+        <tr><td>Complexity</td><td>Simple</td><td>More complex</td></tr>
+        <tr><td>Accuracy for curved data</td><td>Low — poor fit</td><td>High — good fit</td></tr>
+        <tr><td>Flexibility</td><td>Less flexible</td><td>More flexible</td></tr>
+        <tr><td>Risk of overfitting</td><td>Low</td><td>High (for high degrees)</td></tr>
+        <tr><td>Graph shape</td><td>Straight line</td><td>Curve (parabola, cubic, etc.)</td></tr>
+        <tr><td>Usage</td><td>Linear trend in data</td><td>Curved or non-linear trend</td></tr>
+        <tr><td>Number of variables</td><td>One predictor (X)</td><td>One predictor (X) with powers</td></tr>
+        <tr><td>Fitting method</td><td>Least squares</td><td>Least squares</td></tr>
+      </table>
+
+      <h3>4. When to Choose Each</h3>
+      <ul>
+        <li>Use <strong>simple linear regression</strong> when the scatter plot shows a roughly straight-line trend and interpretability is important.</li>
+        <li>Use <strong>polynomial regression</strong> when the scatter plot shows a clear curve, linear regression gives high residuals, or the domain knowledge suggests a non-linear relationship.</li>
+        <li>Always validate with cross-validation and avoid very high polynomial degrees to prevent overfitting.</li>
+      </ul>
+
+      <h3>5. Conclusion</h3>
+      <p>Simple linear and polynomial regression are closely related — polynomial regression is literally an extension of linear regression with added terms. The key difference is flexibility: polynomial regression can capture curves that linear regression cannot. However, this flexibility comes at the cost of increased overfitting risk. Selecting the appropriate model type depends on the shape of the data distribution, the available training set size, and the desired balance between accuracy and generalisability.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q20 ════════════════ -->
+  <section class="q-panel" id="panel-20" role="tabpanel">
+    <p class="q-label">Question 20</p>
+    <div class="q-title">Discuss about underfitting in detail. List the reasons for underfitting and ways to tackle underfitting.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Underfitting is a condition in machine learning where a model is <strong>too simple</strong> to capture the underlying patterns in the data. An underfitted model performs poorly on <strong>both training data and test data</strong> — it has not learned enough from the training examples to make useful predictions.</p>
+      <p>Underfitting is characterised by <strong>high bias and low variance</strong>: the model consistently makes the same types of errors regardless of which data it is applied to, because it lacks the capacity to represent the true underlying function.</p>
+
+      <h3>2. Reasons for Underfitting</h3>
+      <table>
+        <tr><th>Reason</th><th>Explanation</th></tr>
+        <tr><td>Model is too simple</td><td>Using a linear model for data with a non-linear pattern means the model structurally cannot fit the true relationship. Example: applying linear regression to data that follows a quadratic trend.</td></tr>
+        <tr><td>Insufficient training</td><td>Training for too few epochs or iterations prevents the model from fully adjusting its parameters. The model stops learning before convergence.</td></tr>
+        <tr><td>Missing important features</td><td>Key variables that influence the output are absent from the dataset. Without the right information, the model cannot learn accurately.</td></tr>
+        <tr><td>Excessive regularisation</td><td>Too-large regularisation penalty (λ) forces coefficients so close to zero that the model cannot even fit the training data properly.</td></tr>
+        <tr><td>Poor feature engineering</td><td>Raw features may not represent the problem well. Without appropriate transformations or derived features, even a complex model may underfit.</td></tr>
+        <tr><td>Very small dataset</td><td>With extremely little data, the model may not have enough examples to learn any meaningful pattern.</td></tr>
+      </table>
+
+      <h3>3. Ways to Tackle Underfitting</h3>
+      <table>
+        <tr><th>Technique</th><th>How It Helps</th></tr>
+        <tr><td>Increase model complexity</td><td>Use a more powerful model — polynomial regression instead of linear, a deeper neural network, or a decision tree with greater depth. Allows the model to capture non-linear patterns.</td></tr>
+        <tr><td>Add relevant features</td><td>Include more informative input variables. Feature engineering (creating new features from existing ones) can significantly improve learning.</td></tr>
+        <tr><td>Reduce regularisation</td><td>Lower the regularisation parameter λ to give the model more freedom to fit the training data.</td></tr>
+        <tr><td>Train for more epochs</td><td>Allow the model more iterations to continue adjusting parameters and minimising training error.</td></tr>
+        <tr><td>Use non-linear models</td><td>Replace linear models with algorithms that can capture complex, non-linear relationships — decision trees, SVMs with RBF kernel, neural networks.</td></tr>
+        <tr><td>Improve data quality</td><td>Clean the dataset — remove noise, correct errors, handle missing values. High-quality data enables better learning even with simple models.</td></tr>
+        <tr><td>Reduce learning rate carefully</td><td>A very high learning rate can cause the model to skip over the optimal parameters. Tuning the learning rate allows more careful convergence.</td></tr>
+      </table>
+
+      <h3>4. Overfitting vs. Underfitting — Comparison</h3>
+      <table>
+        <tr><th>Aspect</th><th>Underfitting</th><th>Overfitting</th></tr>
+        <tr><td>Bias</td><td>High</td><td>Low</td></tr>
+        <tr><td>Variance</td><td>Low</td><td>High</td></tr>
+        <tr><td>Training error</td><td>High</td><td>Very low</td></tr>
+        <tr><td>Test error</td><td>High</td><td>High</td></tr>
+        <tr><td>Model complexity</td><td>Too simple</td><td>Too complex</td></tr>
+        <tr><td>Fix direction</td><td>Increase complexity</td><td>Decrease complexity</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>Underfitting results from a model that is too constrained to capture the true patterns in data. It manifests as high error on both training and test sets — the model is not useful for either. Solutions involve increasing model capacity, improving features, and reducing over-regularisation. The ideal model sits between underfitting and overfitting — achieving the right balance between bias and variance for best generalisation performance. This balance point is known as the <strong>bias-variance tradeoff</strong>.</p>
+
+    </div>
+  </section>
+
+</div><!-- .page -->
+
+<nav class="page-nav">
+  <a href="unit1.html">← Unit 1</a>
+  <a class="home" href="index.html">↑ Home</a>
+  <a href="unit3.html">Unit 3 →</a>
+</nav>
+
+<script>
+  function show(n) {
+    document.querySelectorAll('.q-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
+    document.getElementById('panel-' + n).classList.add('active');
+    var tabs = document.querySelectorAll('.tab-btn');
+    var idx = [11,12,13,14,15,16,17,18,19,20].indexOf(n);
+    if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  }
+</script>
+</body>
+</html>

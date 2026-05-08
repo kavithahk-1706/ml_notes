@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ML Unit 3 — Classification (Q26–30)</title>
+<title>ML Unit 3 — Classification (Q21–30)</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,24 +12,348 @@
   <header class="page-header">
     <p class="page-kicker">Machine Learning — Examination Preparation</p>
     <h1 class="page-title">Unit 3: Classification</h1>
-    <p class="page-sub">Questions 26 – 30</p>
+    <p class="page-sub">Questions 21 – 30</p>
     <nav class="page-nav">
-      <span></span>
+      <a href="unit2.html">← Unit 2</a>
       <a class="home" href="index.html">↑ Home</a>
       <a href="unit4.html">Unit 4 →</a>
     </nav>
   </header>
 
   <nav class="tab-bar" role="tablist">
-    <button class="tab-btn active" role="tab" onclick="show(26)">Q26 — Naïve Bayes</button>
+    <button class="tab-btn active" role="tab" onclick="show(21)">Q21 — Classification</button>
+    <button class="tab-btn" role="tab" onclick="show(22)">Q22 — Logistic Regression &amp; Logit</button>
+    <button class="tab-btn" role="tab" onclick="show(23)">Q23 — Performance Metrics</button>
+    <button class="tab-btn" role="tab" onclick="show(24)">Q24 — Confusion Matrix Numerical</button>
+    <button class="tab-btn" role="tab" onclick="show(25)">Q25 — Gradient Descent</button>
+    <button class="tab-btn" role="tab" onclick="show(26)">Q26 — Naïve Bayes</button>
     <button class="tab-btn" role="tab" onclick="show(27)">Q27 — Multi-label Classification</button>
     <button class="tab-btn" role="tab" onclick="show(28)">Q28 — Multi-class Classification</button>
     <button class="tab-btn" role="tab" onclick="show(29)">Q29 — Logistic Regression</button>
     <button class="tab-btn" role="tab" onclick="show(30)">Q30 — Precision / Recall</button>
   </nav>
 
+  <!-- ════════════════ Q21 ════════════════ -->
+  <section class="q-panel active" id="panel-21" role="tabpanel">
+    <p class="q-label">Question 21</p>
+    <div class="q-title">Explain about classification problem with an example.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>A classification problem is a type of supervised machine learning task in which a model is trained to assign each input data point to one of a set of predefined categories (classes or labels). The model learns the mapping from input features to output labels from labelled training data and then applies this mapping to classify unseen instances.</p>
+
+      <h3>2. Key Characteristics</h3>
+      <ul>
+        <li>The output is always categorical (discrete values) — e.g., Yes/No, Spam/Not Spam, Dog/Cat/Bird.</li>
+        <li>It uses a labelled dataset where the correct output is already known for each training example.</li>
+        <li>It is a part of supervised learning — the algorithm learns from ground-truth labels.</li>
+        <li>The model learns decision boundaries from training data and applies them to new, unseen data.</li>
+      </ul>
+
+      <h3>3. Types of Classification</h3>
+      <table>
+        <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+        <tr><td>Binary Classification</td><td>Only two possible output classes.</td><td>Spam / Not Spam; Pass / Fail</td></tr>
+        <tr><td>Multi-class Classification</td><td>More than two mutually exclusive classes.</td><td>Classifying animals → Dog, Cat, Cow</td></tr>
+        <tr><td>Multi-label Classification</td><td>One input can belong to multiple classes simultaneously.</td><td>A movie tagged as Action + Comedy + Drama</td></tr>
+      </table>
+
+      <h3>4. Working Process of Classification</h3>
+      <ol>
+        <li><strong>Data Collection</strong> — Gather labelled data (training dataset).</li>
+        <li><strong>Data Preprocessing</strong> — Clean and prepare data: remove noise, handle missing values.</li>
+        <li><strong>Model Training</strong> — Use a classification algorithm to learn patterns from the labelled data.</li>
+        <li><strong>Model Testing</strong> — Evaluate accuracy using a held-out test dataset.</li>
+        <li><strong>Prediction</strong> — Classify new, unseen data into the appropriate category.</li>
+      </ol>
+
+      <h3>5. Example — Email Spam Detection</h3>
+      <p>Email spam detection is a classic binary classification problem. The input features include email content, subject line, sender details, and keyword frequency. The model is trained on labelled emails (Spam / Not Spam) and learns to distinguish between them based on these features.</p>
+      <ul>
+        <li><strong>Input:</strong> Email content (text, subject, sender details).</li>
+        <li><strong>Process:</strong> The model checks for keywords like "free", "offer", "win money" and other patterns.</li>
+        <li><strong>Output:</strong> Spam → routed to Spam folder; Not Spam → delivered to Inbox.</li>
+      </ul>
+
+      <h3>6. Common Classification Algorithms</h3>
+      <ul>
+        <li>Naïve Bayes</li>
+        <li>Logistic Regression</li>
+        <li>Decision Trees and Random Forests</li>
+        <li>Support Vector Machines (SVM)</li>
+        <li>k-Nearest Neighbours (k-NN)</li>
+        <li>Neural Networks</li>
+      </ul>
+
+      <h3>7. Conclusion</h3>
+      <p>A classification problem involves learning a function that maps input features to discrete output labels. It is one of the most fundamental tasks in supervised machine learning, with applications ranging from email filtering and medical diagnosis to image recognition and sentiment analysis. The choice of algorithm depends on the nature of the data, the number of classes, and the performance requirements of the application.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q22 ════════════════ -->
+  <section class="q-panel" id="panel-22" role="tabpanel">
+    <p class="q-label">Question 22</p>
+    <div class="q-title">Elucidate Logistic Regression and mention the importance of the logit function.</div>
+    <div class="q-body">
+
+      <h3>1. Logistic Regression</h3>
+      <p>Logistic Regression is a supervised machine learning algorithm widely used for binary classification problems where the dependent variable can take only two possible outcomes (e.g., 0 and 1, Pass/Fail, Spam/Not Spam). Unlike linear regression, which predicts a continuous unbounded value, logistic regression predicts the <strong>probability</strong> that a given input belongs to a particular class, keeping the output within [0, 1].</p>
+      <ul>
+        <li>It does not directly predict class labels; instead it predicts probabilities, which are then converted into class labels using a threshold value (typically 0.5).</li>
+        <li>It uses the <strong>sigmoid function</strong> to map any real-valued input into the range (0, 1).</li>
+        <li>It establishes a relationship between the independent variables and the <strong>log-odds</strong> of the dependent variable.</li>
+      </ul>
+
+      <h3>2. Working Principle</h3>
+      <p>The model computes a linear combination of input features:</p>
+      <div class="formula formula-block">z = β₀ + β₁x₁ + β₂x₂ + … + βₙxₙ</div>
+      <p>This value z is then passed through the sigmoid function to produce a probability:</p>
+      <div class="formula formula-block">P(Y = 1) = σ(z) = 1 / (1 + e<sup>−z</sup>)</div>
+      <p>If P(Y=1) ≥ 0.5, the instance is classified as class 1; otherwise class 0.</p>
+
+      <h3>3. The Logit Function</h3>
+      <p>The <strong>logit function</strong> is defined as the natural logarithm of the odds ratio (log-odds):</p>
+      <div class="formula formula-block">logit(p) = ln(p / (1 − p))</div>
+      <p>where p is the probability of the positive outcome. The logit is the <strong>inverse of the sigmoid function</strong> — it maps a probability in (0, 1) back to the real number line (−∞, +∞).</p>
+
+      <h3>4. Importance of the Logit Function</h3>
+      <table>
+        <tr><th>Property</th><th>Explanation</th></tr>
+        <tr><td>Linearises the relationship</td><td>The log-odds are a linear function of the input features: logit(p) = β₀ + β₁x₁ + … + βₙxₙ. This is what makes logistic regression a linear model.</td></tr>
+        <tr><td>Interpretability</td><td>Each coefficient βᵢ represents the change in log-odds for a one-unit increase in xᵢ, making the model interpretable.</td></tr>
+        <tr><td>Converts probabilities to unbounded scale</td><td>Probabilities are bounded in [0,1]. The logit maps them to (−∞, +∞), allowing standard linear modelling techniques to be applied.</td></tr>
+        <tr><td>Foundation of log-likelihood</td><td>The logit is used in the derivation of the log-likelihood function, which is maximised during training via gradient ascent.</td></tr>
+        <tr><td>Prevents trivial outputs</td><td>Without the logit transformation, a linear model could predict probabilities outside [0,1], which is mathematically invalid.</td></tr>
+      </table>
+
+      <h3>5. Advantages and Limitations</h3>
+      <table>
+        <tr><th>Advantages</th><th>Limitations</th></tr>
+        <tr><td>Simple and computationally efficient</td><td>Cannot handle complex non-linear relationships</td></tr>
+        <tr><td>Outputs calibrated probability estimates</td><td>Sensitive to outliers</td></tr>
+        <tr><td>Interpretable coefficients (log-odds)</td><td>Assumes a linear relationship between features and log-odds</td></tr>
+        <tr><td>Works well for linearly separable data</td><td>Requires features to be independent (multicollinearity is problematic)</td></tr>
+      </table>
+
+      <h3>6. Applications</h3>
+      <ul>
+        <li>Email spam detection</li>
+        <li>Medical diagnosis (disease/no disease)</li>
+        <li>Credit risk assessment (default/no default)</li>
+        <li>Customer churn prediction</li>
+        <li>Sentiment analysis (positive/negative)</li>
+      </ul>
+
+      <h3>7. Conclusion</h3>
+      <p>Logistic Regression is a powerful and widely used classification algorithm that models the probability of a binary outcome using the sigmoid function. The logit function is central to this method — it transforms probabilities into log-odds, enabling a linear relationship between features and the output. This transformation allows logistic regression to be both mathematically valid and interpretable, forming the backbone of many real-world predictive systems.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q23 ════════════════ -->
+  <section class="q-panel" id="panel-23" role="tabpanel">
+    <p class="q-label">Question 23</p>
+    <div class="q-title">Elaborate in detail about performance metrics in classification problems.</div>
+    <div class="q-body">
+
+      <p>Performance metrics in classification problems are used to evaluate how effectively a machine learning model predicts class labels by comparing predicted values with actual values. These metrics are primarily derived from the <strong>confusion matrix</strong>.</p>
+
+      <h3>1. Confusion Matrix</h3>
+      <p>The confusion matrix is a table that summarises the prediction results of a classification model. It records four values:</p>
+      <table>
+        <tr><th>Term</th><th>Full Form</th><th>Meaning</th></tr>
+        <tr><td>TP</td><td>True Positive</td><td>Correctly predicted positive cases.</td></tr>
+        <tr><td>TN</td><td>True Negative</td><td>Correctly predicted negative cases.</td></tr>
+        <tr><td>FP</td><td>False Positive</td><td>Incorrectly predicted as positive (Type I Error).</td></tr>
+        <tr><td>FN</td><td>False Negative</td><td>Incorrectly predicted as negative (Type II Error).</td></tr>
+      </table>
+
+      <h3>2. Accuracy</h3>
+      <p>Accuracy measures the overall correctness of the model — the proportion of all predictions that were correct.</p>
+      <div class="formula formula-block">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+      <p>It may give misleading results when the dataset is imbalanced (e.g., 95% negative class).</p>
+
+      <h3>3. Precision</h3>
+      <p>Precision measures how many of the predicted positives are actually correct. It answers: <em>Of all instances the model labelled positive, how many truly were?</em></p>
+      <div class="formula formula-block">Precision = TP / (TP + FP)</div>
+      <p>High precision → few false positives. Critical when false alarms are costly (e.g., spam detection).</p>
+
+      <h3>4. Recall (Sensitivity)</h3>
+      <p>Recall measures how many of the actual positives were correctly identified. It answers: <em>Of all instances that were truly positive, how many did the model catch?</em></p>
+      <div class="formula formula-block">Recall = TP / (TP + FN)</div>
+      <p>High recall → few missed positives. Critical when missing a positive is dangerous (e.g., disease diagnosis).</p>
+
+      <h3>5. F1 Score</h3>
+      <p>The F1 Score is the harmonic mean of Precision and Recall. It provides a single balanced metric, especially useful when class distribution is unequal.</p>
+      <div class="formula formula-block">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
+
+      <h3>6. Specificity</h3>
+      <p>Specificity measures how well the model identifies actual negatives.</p>
+      <div class="formula formula-block">Specificity = TN / (TN + FP)</div>
+
+      <h3>7. ROC Curve (Receiver Operating Characteristic)</h3>
+      <p>The ROC curve is a graphical representation of the trade-off between the True Positive Rate (Recall) and the False Positive Rate across different classification thresholds.</p>
+      <ul>
+        <li>X-axis: False Positive Rate = FP / (FP + TN)</li>
+        <li>Y-axis: True Positive Rate (Recall) = TP / (TP + FN)</li>
+        <li>A curve closer to the top-left corner indicates better performance.</li>
+        <li>Helps in selecting the best threshold for classification.</li>
+      </ul>
+
+      <h3>8. AUC (Area Under the Curve)</h3>
+      <p>AUC represents the area under the ROC curve. It measures the overall ability of the model to distinguish between classes across all thresholds.</p>
+      <ul>
+        <li>AUC = 1.0 → Perfect model</li>
+        <li>AUC = 0.5 → Random guessing (no discriminative ability)</li>
+        <li>Higher AUC → better model performance</li>
+      </ul>
+
+      <h3>9. Summary Table</h3>
+      <table>
+        <tr><th>Metric</th><th>Formula</th><th>Focus</th><th>Best Value</th></tr>
+        <tr><td>Accuracy</td><td>(TP+TN) / Total</td><td>Overall correctness</td><td>1.0</td></tr>
+        <tr><td>Precision</td><td>TP / (TP+FP)</td><td>Quality of positive predictions</td><td>1.0</td></tr>
+        <tr><td>Recall</td><td>TP / (TP+FN)</td><td>Coverage of actual positives</td><td>1.0</td></tr>
+        <tr><td>F1 Score</td><td>2×P×R / (P+R)</td><td>Balance of precision &amp; recall</td><td>1.0</td></tr>
+        <tr><td>Specificity</td><td>TN / (TN+FP)</td><td>Coverage of actual negatives</td><td>1.0</td></tr>
+        <tr><td>AUC</td><td>Area under ROC</td><td>Overall discriminative ability</td><td>1.0</td></tr>
+      </table>
+
+      <h3>10. Conclusion</h3>
+      <p>Performance metrics allow practitioners to evaluate classification models beyond simple accuracy. Precision, Recall, F1, and AUC each capture different aspects of model quality. The choice of metric depends on the application: recall is prioritised when missing positives is costly, precision when false alarms are costly, and F1 when balance is required. The ROC curve and AUC provide a threshold-independent view of overall model discrimination ability.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q24 ════════════════ -->
+  <section class="q-panel" id="panel-24" role="tabpanel">
+    <p class="q-label">Question 24 · Numerical</p>
+    <div class="q-title">Discuss the confusion matrix in machine learning in detail. Calculate performance metrics: accuracy, precision, recall, and F1 score. Use the following confusion matrix for a spam email classifier.</div>
+    <div class="q-body">
+
+      <h3>1. Given Confusion Matrix</h3>
+      <table>
+        <tr><th></th><th>Predicted: Spam (1)</th><th>Predicted: Not Spam (0)</th></tr>
+        <tr><td><strong>Actual: Spam (1)</strong></td><td>48 (TP)</td><td>12 (FN)</td></tr>
+        <tr><td><strong>Actual: Not Spam (0)</strong></td><td>7 (FP)</td><td>98 (TN)</td></tr>
+      </table>
+      <p>Total observations = 48 + 12 + 7 + 98 = <strong>165</strong></p>
+
+      <h3>2. The Confusion Matrix — Key Terms</h3>
+      <table>
+        <tr><th>Cell</th><th>Value</th><th>Meaning</th></tr>
+        <tr><td>True Positive (TP)</td><td>48</td><td>Spam emails correctly identified as spam.</td></tr>
+        <tr><td>False Negative (FN)</td><td>12</td><td>Spam emails missed — predicted as not spam (Type II Error).</td></tr>
+        <tr><td>False Positive (FP)</td><td>7</td><td>Legitimate emails incorrectly flagged as spam (Type I Error).</td></tr>
+        <tr><td>True Negative (TN)</td><td>98</td><td>Legitimate emails correctly identified as not spam.</td></tr>
+      </table>
+
+      <h3>3. Metrics Calculation</h3>
+
+      <p><strong>(a) Accuracy</strong> — Overall correctness of the model.</p>
+      <div class="formula formula-block">Accuracy = (TP + TN) / (TP + TN + FP + FN) = (48 + 98) / 165 = 146 / 165 ≈ 0.885 (88.5%)</div>
+
+      <p><strong>(b) Precision</strong> — Of all emails flagged as spam, how many actually were?</p>
+      <div class="formula formula-block">Precision = TP / (TP + FP) = 48 / (48 + 7) = 48 / 55 ≈ 0.873 (87.3%)</div>
+
+      <p><strong>(c) Recall (Sensitivity)</strong> — Of all actual spam emails, how many were caught?</p>
+      <div class="formula formula-block">Recall = TP / (TP + FN) = 48 / (48 + 12) = 48 / 60 = 0.800 (80.0%)</div>
+
+      <p><strong>(d) F1 Score</strong> — Harmonic mean of Precision and Recall.</p>
+      <div class="formula formula-block">F1 = 2 × (0.873 × 0.800) / (0.873 + 0.800) = 2 × 0.698 / 1.673 ≈ 0.835 (83.5%)</div>
+
+      <p><strong>(e) Specificity</strong> — Of all legitimate emails, how many were correctly identified?</p>
+      <div class="formula formula-block">Specificity = TN / (TN + FP) = 98 / (98 + 7) = 98 / 105 ≈ 0.933 (93.3%)</div>
+
+      <h3>4. Interpretation of Results</h3>
+      <table>
+        <tr><th>Metric</th><th>Value</th><th>Interpretation</th></tr>
+        <tr><td>Accuracy</td><td>88.5%</td><td>Overall performance is strong.</td></tr>
+        <tr><td>Precision</td><td>87.3%</td><td>When the model predicts spam, it is correct 87.3% of the time — few false alarms.</td></tr>
+        <tr><td>Recall</td><td>80.0%</td><td>The model catches 80% of actual spam — 12 spam emails slip through.</td></tr>
+        <tr><td>F1 Score</td><td>83.5%</td><td>Good balance between precision and recall.</td></tr>
+        <tr><td>Specificity</td><td>93.3%</td><td>The model is very good at identifying legitimate emails — rare false positives.</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>The confusion matrix provides a detailed breakdown of a classifier's performance beyond simple accuracy. For this spam classifier, the high precision (87.3%) means legitimate emails are rarely flagged — important for user trust. The recall of 80% indicates that some spam does slip through; in applications requiring higher spam recall, the decision threshold could be lowered, trading some precision for improved recall.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q25 ════════════════ -->
+  <section class="q-panel" id="panel-25" role="tabpanel">
+    <p class="q-label">Question 25</p>
+    <div class="q-title">Explain about the gradient descent algorithm and its variants.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Gradient Descent is an optimisation algorithm used in machine learning to minimise a loss (cost) function by iteratively updating model parameters in the direction of the <strong>negative gradient</strong>, thereby reducing the error step by step until convergence.</p>
+      <ul>
+        <li>The algorithm begins by initialising parameters randomly, then computes the gradient of the loss function with respect to those parameters.</li>
+        <li>Parameters are updated using a <strong>learning rate</strong> α, which controls the step size of each update.</li>
+        <li>This process repeats until convergence — i.e., until the cost function reaches (or approaches) its minimum.</li>
+      </ul>
+
+      <h3>2. Basic Idea</h3>
+      <p>Imagine a hill-shaped curve representing the cost function. The goal is to reach the lowest point (minimum). Gradient Descent takes steps downhill by calculating the slope (gradient) at the current position and moving in the opposite direction.</p>
+
+      <h3>3. Mathematical Formula</h3>
+      <p>The parameter update rule is:</p>
+      <div class="formula formula-block">θ = θ − α · (dJ(θ) / dθ)</div>
+      <table>
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td>θ</td><td>Model parameters (weights)</td></tr>
+        <tr><td>α</td><td>Learning rate — controls step size</td></tr>
+        <tr><td>J(θ)</td><td>Cost function to be minimised</td></tr>
+        <tr><td>dJ(θ)/dθ</td><td>Gradient (slope) of the cost function with respect to θ</td></tr>
+      </table>
+
+      <h3>4. Steps of Gradient Descent</h3>
+      <ol>
+        <li>Initialise parameters (weights) randomly.</li>
+        <li>Compute the cost function J(θ).</li>
+        <li>Calculate the gradient (partial derivatives) of J with respect to each parameter.</li>
+        <li>Update all parameters using the update rule: θ = θ − α · ∇J(θ).</li>
+        <li>Repeat steps 2–4 until convergence (minimum reached or change is negligibly small).</li>
+      </ol>
+
+      <h3>5. Variants of Gradient Descent</h3>
+
+      <p><strong>(a) Batch Gradient Descent</strong></p>
+      <p>Uses the entire training dataset to compute the gradient at each step. Produces stable, accurate updates but is computationally expensive for large datasets.</p>
+
+      <p><strong>(b) Stochastic Gradient Descent (SGD)</strong></p>
+      <p>Updates parameters using only a single randomly selected data point at each step. Much faster but noisy — the cost function fluctuates considerably during training.</p>
+
+      <p><strong>(c) Mini-Batch Gradient Descent</strong></p>
+      <p>Uses a small random subset (mini-batch) of the data at each step. Balances the stability of Batch GD and the speed of SGD. This is the most widely used variant in practice (used in deep learning frameworks by default).</p>
+
+      <p><strong>(d) Advanced Variants</strong></p>
+      <ul>
+        <li><strong>Momentum</strong> — Accumulates a velocity vector in the direction of persistent gradients, helping to accelerate convergence and reduce oscillations.</li>
+        <li><strong>RMSProp</strong> — Adapts the learning rate for each parameter by dividing by a running average of recent gradient magnitudes, stabilising updates.</li>
+        <li><strong>Adam (Adaptive Moment Estimation)</strong> — Combines Momentum and RMSProp. Maintains both a running mean and a running variance of gradients. Widely used as the default optimiser in deep learning.</li>
+      </ul>
+
+      <h3>6. Comparison of Variants</h3>
+      <table>
+        <tr><th>Variant</th><th>Data Used Per Step</th><th>Speed</th><th>Stability</th><th>Best For</th></tr>
+        <tr><td>Batch GD</td><td>Full dataset</td><td>Slow</td><td>High</td><td>Small datasets</td></tr>
+        <tr><td>SGD</td><td>1 sample</td><td>Fast</td><td>Low (noisy)</td><td>Large datasets</td></tr>
+        <tr><td>Mini-Batch GD</td><td>Small subset</td><td>Medium</td><td>Medium</td><td>Large datasets (default choice)</td></tr>
+        <tr><td>Adam</td><td>Mini-batch</td><td>Very fast</td><td>High</td><td>Deep learning, very large datasets</td></tr>
+      </table>
+
+      <h3>7. Conclusion</h3>
+      <p>Gradient Descent is the backbone of training in most machine learning and deep learning models. It minimises the cost function by iteratively adjusting model parameters in the direction of steepest descent. The choice of variant depends on dataset size, required convergence speed, and computational constraints. In practice, Adam or Mini-Batch SGD are the most commonly used variants due to their balance of speed and stability.</p>
+
+    </div>
+  </section>
+
   <!-- ════════════════ Q26 ════════════════ -->
-  <section class="q-panel active" id="panel-26" role="tabpanel">
+  <section class="q-panel" id="panel-26" role="tabpanel">
     <p class="q-label">Question 26</p>
     <div class="q-title">Discuss about the Naïve Bayes classifier in detail.</div>
     <div class="q-body">
@@ -384,7 +708,7 @@
 </div><!-- .page -->
 
 <nav class="page-nav">
-  <span></span>
+  <a href="unit2.html">← Unit 2</a>
   <a class="home" href="index.html">↑ Home</a>
   <a href="unit4.html">Unit 4 →</a>
 </nav>
@@ -395,7 +719,7 @@
     document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
     document.getElementById('panel-' + n).classList.add('active');
     var tabs = document.querySelectorAll('.tab-btn');
-    var idx = [26, 27, 28, 29, 30].indexOf(n);
+    var idx = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30].indexOf(n);
     if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
   }
 </script>

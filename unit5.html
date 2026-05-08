@@ -241,8 +241,72 @@
         </ul>
 
         <figure class="fig-wrap">
-          <img src=""
-            alt="search: ID3 decision tree diagram Outlook root node Sunny Overcast Rain branches Humidity split leaf nodes Yes No">
+          <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:720px;display:block;margin:0 auto;font-family:inherit;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#555"/>
+              </marker>
+            </defs>
+
+            <!-- ── ROOT: Outlook ── -->
+            <rect x="270" y="20" width="180" height="48" rx="8" fill="#e8f0fe" stroke="#4a6fa5" stroke-width="2"/>
+            <text x="360" y="40" text-anchor="middle" font-size="13" font-weight="700" fill="#1a2f5e">Outlook</text>
+            <text x="360" y="57" text-anchor="middle" font-size="11" fill="#4a6fa5">Root Node</text>
+
+            <!-- ── BRANCH LINES from Outlook ── -->
+            <!-- to Overcast leaf -->
+            <line x1="290" y1="68" x2="110" y2="168" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="175" y="115" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-27,175,115)">Overcast</text>
+
+            <!-- to Sunny sub-node -->
+            <line x1="360" y1="68" x2="360" y2="168" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="375" y="125" text-anchor="start" font-size="11" fill="#333">Sunny</text>
+
+            <!-- to Rain leaf -->
+            <line x1="430" y1="68" x2="610" y2="168" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="545" y="115" text-anchor="middle" font-size="11" fill="#333" transform="rotate(27,545,115)">Rain</text>
+
+            <!-- ── OVERCAST LEAF → Yes ── -->
+            <ellipse cx="100" cy="192" rx="68" ry="26" fill="#d4edda" stroke="#28a745" stroke-width="2"/>
+            <text x="100" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#155724">Yes</text>
+            <text x="100" y="204" text-anchor="middle" font-size="10" fill="#155724">PlayFootball</text>
+
+            <!-- ── SUNNY → HUMIDITY sub-node ── -->
+            <rect x="278" y="168" width="164" height="44" rx="8" fill="#fff3cd" stroke="#e6a817" stroke-width="2"/>
+            <text x="360" y="185" text-anchor="middle" font-size="13" font-weight="700" fill="#7d4e00">Humidity</text>
+            <text x="360" y="201" text-anchor="middle" font-size="10" fill="#7d4e00">Sub-node (Sunny only)</text>
+
+            <!-- Humidity → High -->
+            <line x1="320" y1="212" x2="230" y2="294" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="257" y="255" text-anchor="middle" font-size="11" fill="#333" transform="rotate(-40,257,255)">High</text>
+
+            <!-- Humidity → Normal -->
+            <line x1="400" y1="212" x2="490" y2="294" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+            <text x="463" y="255" text-anchor="middle" font-size="11" fill="#333" transform="rotate(40,463,255)">Normal</text>
+
+            <!-- ── HUMIDITY=HIGH LEAF → No ── -->
+            <ellipse cx="220" cy="318" rx="68" ry="26" fill="#f8d7da" stroke="#dc3545" stroke-width="2"/>
+            <text x="220" y="314" text-anchor="middle" font-size="13" font-weight="700" fill="#721c24">No</text>
+            <text x="220" y="330" text-anchor="middle" font-size="10" fill="#721c24">PlayFootball</text>
+
+            <!-- ── HUMIDITY=NORMAL LEAF → Yes ── -->
+            <ellipse cx="500" cy="318" rx="68" ry="26" fill="#d4edda" stroke="#28a745" stroke-width="2"/>
+            <text x="500" y="314" text-anchor="middle" font-size="13" font-weight="700" fill="#155724">Yes</text>
+            <text x="500" y="330" text-anchor="middle" font-size="10" fill="#155724">PlayFootball</text>
+
+            <!-- ── RAIN LEAF → Yes ── -->
+            <ellipse cx="620" cy="192" rx="68" ry="26" fill="#d4edda" stroke="#28a745" stroke-width="2"/>
+            <text x="620" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#155724">Yes</text>
+            <text x="620" y="204" text-anchor="middle" font-size="10" fill="#155724">PlayFootball</text>
+
+            <!-- ── LEGEND ── -->
+            <rect x="20" y="310" width="12" height="12" rx="2" fill="#e8f0fe" stroke="#4a6fa5" stroke-width="1.5"/>
+            <text x="38" y="321" font-size="10" fill="#333">Decision Node</text>
+            <ellipse cx="26" cy="340" rx="8" ry="6" fill="#d4edda" stroke="#28a745" stroke-width="1.5"/>
+            <text x="38" y="344" font-size="10" fill="#333">Leaf — Yes</text>
+            <ellipse cx="26" cy="356" rx="8" ry="6" fill="#f8d7da" stroke="#dc3545" stroke-width="1.5"/>
+            <text x="38" y="360" font-size="10" fill="#333">Leaf — No</text>
+          </svg>
           <figcaption class="fig-caption">Fig. 2 — ID3 Decision Tree. Root = Outlook. Overcast → Yes; Rain → Yes; Sunny
             branches to Humidity → High=No, Normal=Yes.</figcaption>
         </figure>

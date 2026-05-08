@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML Unit 1 — Foundations of Machine Learning (Q1–10)</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="page-header">
+    <p class="page-kicker">Machine Learning — Examination Preparation</p>
+    <h1 class="page-title">Unit 1: Foundations of Machine Learning</h1>
+    <p class="page-sub">Questions 1 – 10</p>
+    <nav class="page-nav">
+      <span></span>
+      <a class="home" href="index.html">↑ Home</a>
+      <a href="unit2.html">Unit 2 →</a>
+    </nav>
+  </header>
+
+  <nav class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" onclick="show(1)">Q1 — ML Definition &amp; Applications</button>
+    <button class="tab-btn" role="tab" onclick="show(2)">Q2 — Perspectives &amp; Issues</button>
+    <button class="tab-btn" role="tab" onclick="show(3)">Q3 — Types of Learning</button>
+    <button class="tab-btn" role="tab" onclick="show(4)">Q4 — Components of Learning</button>
+    <button class="tab-btn" role="tab" onclick="show(5)">Q5 — Design Steps</button>
+    <button class="tab-btn" role="tab" onclick="show(6)">Q6 — Supervised vs Unsupervised</button>
+    <button class="tab-btn" role="tab" onclick="show(7)">Q7 — Usage of ML</button>
+    <button class="tab-btn" role="tab" onclick="show(8)">Q8 — Function Approximation</button>
+    <button class="tab-btn" role="tab" onclick="show(9)">Q9 — Data Preprocessing</button>
+    <button class="tab-btn" role="tab" onclick="show(10)">Q10 — Evaluation Metrics</button>
+  </nav>
+
+  <!-- ════════════════ Q1 ════════════════ -->
+  <section class="q-panel active" id="panel-1" role="tabpanel">
+    <p class="q-label">Question 1</p>
+    <div class="q-title">Define Machine Learning and explain its applications.</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Machine Learning is a branch of Artificial Intelligence concerned with building systems that improve their performance through experience. Tom Mitchell's formal definition states:</p>
+      <p><em>"A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E."</em></p>
+      <p>A well-defined learning problem is therefore specified by the triple <strong>&lt;P, T, E&gt;</strong>.</p>
+
+      <h3>2. Key Characteristics</h3>
+      <ul>
+        <li>ML algorithms <strong>improve their performance P</strong> — the system gets better over time.</li>
+        <li>At <strong>some task T</strong> — a well-defined goal such as classification, prediction, or decision-making.</li>
+        <li>With <strong>experience E</strong> — data, examples, or interactions from which the system learns.</li>
+        <li>Unlike traditional programming, rules are not hard-coded; the system discovers them from data.</li>
+      </ul>
+
+      <h3>3. Examples of Learning Problems</h3>
+      <table>
+        <tr><th>Example</th><th>Task (T)</th><th>Performance (P)</th><th>Experience (E)</th></tr>
+        <tr><td>Robot Driving</td><td>Driving on highways using vision sensors</td><td>Average distance before an error</td><td>Road images + steering commands from a human driver</td></tr>
+        <tr><td>Chess Program</td><td>Playing chess</td><td>Percentage of games won</td><td>Practice games played against itself</td></tr>
+        <tr><td>Email Spam Filter</td><td>Classifying emails as spam or not</td><td>Percentage correctly classified</td><td>Labelled email dataset</td></tr>
+      </table>
+
+      <h3>4. Applications of Machine Learning</h3>
+      <table>
+        <tr><th>Application</th><th>How ML is Used</th></tr>
+        <tr><td>Email Spam Filtering</td><td>Learns patterns from past emails to identify and separate spam from legitimate messages.</td></tr>
+        <tr><td>Recommendation Systems</td><td>YouTube, Netflix, and Amazon suggest content based on past viewing, ratings, and purchase history.</td></tr>
+        <tr><td>Voice Assistants</td><td>Alexa, Siri, and Google Assistant use ML to interpret natural language and provide accurate responses.</td></tr>
+        <tr><td>Face &amp; Image Recognition</td><td>Identifies faces in phones, cameras, and security systems; classifies objects in images.</td></tr>
+        <tr><td>Medical Diagnosis</td><td>Analyses scans, reports, and patient data to detect diseases early and assist diagnosis.</td></tr>
+        <tr><td>Fraud Detection</td><td>Banks learn normal spending patterns and flag transactions that deviate significantly.</td></tr>
+        <tr><td>Self-Driving Cars</td><td>Processes sensor and camera data to recognise roads, traffic, and obstacles in real time.</td></tr>
+        <tr><td>Chatbots &amp; Customer Support</td><td>Automatically answers questions and improves over time from interaction history.</td></tr>
+        <tr><td>Weather Forecasting</td><td>Analyses historical weather data to improve prediction accuracy.</td></tr>
+        <tr><td>Social Media</td><td>Platforms like Instagram and Facebook use ML to personalise feeds, suggest friends, and target ads.</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>Machine Learning enables systems to learn from experience and improve over time without being explicitly reprogrammed. The &lt;P, T, E&gt; framework provides a precise way to define any learning problem. Its applications span virtually every domain — from healthcare and finance to entertainment and transportation — making it one of the most impactful technologies of the modern era.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q2 ════════════════ -->
+  <section class="q-panel" id="panel-2" role="tabpanel">
+    <p class="q-label">Question 2</p>
+    <div class="q-title">Describe perspectives and issues in Machine Learning.</div>
+    <div class="q-body">
+
+      <h3>1. Perspectives in Machine Learning</h3>
+      <p>One important way to understand machine learning is to view it as a <strong>search problem</strong>. The learner searches through a large space of possible solutions — called the <strong>hypothesis space</strong> — to find the best one that fits the training data and generalises to new data.</p>
+
+      <p><strong>Hypothesis Space:</strong> The set of all possible functions or models that the learning algorithm considers as candidate solutions. It is defined by the chosen representation — for example:</p>
+      <ul>
+        <li>Linear functions — straight-line boundaries, used in regression and linear classifiers.</li>
+        <li>Decision trees — hierarchical splits based on feature values.</li>
+        <li>Logical descriptions — rule-based representations.</li>
+        <li>Artificial Neural Networks — networks of connected nodes that can represent highly complex functions.</li>
+      </ul>
+
+      <p><strong>Representation and Learning Algorithm:</strong> For every type of hypothesis representation, there is a corresponding learning algorithm that exploits the structure of that representation to search the hypothesis space efficiently.</p>
+      <p>For example, the <strong>Least Mean Squares (LMS) algorithm</strong> searches the hypothesis space of linear functions by gradually adjusting weight values. Whenever the predicted output differs from the actual training value, the weights are updated by a small amount to reduce the error — this is called gradient descent.</p>
+
+      <h3>2. Issues in Machine Learning</h3>
+      <p>The field of machine learning addresses several fundamental questions and challenges:</p>
+
+      <table>
+        <tr><th>#</th><th>Issue</th><th>Key Questions</th></tr>
+        <tr><td>1</td><td>Algorithm availability and convergence</td><td>What learning algorithms can learn general target functions from training examples? Under what conditions do they converge to the correct function when sufficient data is provided? Which algorithms perform best for different problem types?</td></tr>
+        <tr><td>2</td><td>Training data requirements</td><td>How much training data is needed to learn a function accurately? What are the limits on confidence in a learned hypothesis relative to the amount of experience and the size of the hypothesis space?</td></tr>
+        <tr><td>3</td><td>Using prior knowledge</td><td>When and how can existing knowledge be incorporated to guide learning? Can prior knowledge still be useful if it is only approximately correct?</td></tr>
+        <tr><td>4</td><td>Selecting training examples</td><td>What is the best strategy for choosing the next training example? How does the distribution and quality of training data affect the difficulty and efficiency of learning?</td></tr>
+        <tr><td>5</td><td>Overfitting and generalisation</td><td>How can a model that performs well on training data be prevented from performing poorly on new data? What regularisation and validation techniques address this?</td></tr>
+        <tr><td>6</td><td>Computational complexity</td><td>How computationally expensive is the learning process? Can efficient algorithms be designed for large-scale problems?</td></tr>
+      </table>
+
+      <h3>3. Conclusion</h3>
+      <p>Machine learning can be understood as a guided search through a hypothesis space. The key challenge is to design algorithms that find good hypotheses efficiently, using sufficient training data, and producing models that generalise well to unseen examples. Addressing the fundamental issues — convergence, data requirements, prior knowledge, and overfitting — is central to the theoretical and practical progress of the field.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q3 ════════════════ -->
+  <section class="q-panel" id="panel-3" role="tabpanel">
+    <p class="q-label">Question 3</p>
+    <div class="q-title">Explain different types of learning techniques with an example.</div>
+    <div class="q-body">
+
+      <p>Machine learning can be classified into different types based on how the system learns from data — specifically, whether labelled outputs are provided, and how feedback is given during training. The four main types are:</p>
+
+      <h3>1. Supervised Learning</h3>
+      <p>In supervised learning, the machine is trained on a <strong>labelled dataset</strong> — each input example is paired with the correct output. The algorithm learns the mapping from inputs to outputs and uses this knowledge to predict the output for new, unseen inputs.</p>
+      <ul>
+        <li>The model learns by comparing its predictions with the correct labels and minimising the error.</li>
+        <li>Used for <strong>classification</strong> (discrete output) and <strong>regression</strong> (continuous output) problems.</li>
+      </ul>
+      <p><strong>Examples:</strong> Email spam detection (spam or not spam); predicting student marks based on study hours.</p>
+      <p><strong>Algorithms:</strong> Linear Regression, Logistic Regression, Decision Tree, SVM, k-NN, Naïve Bayes.</p>
+
+      <h3>2. Unsupervised Learning</h3>
+      <p>In unsupervised learning, the machine is given <strong>unlabelled data</strong> — no correct output is provided. The algorithm automatically discovers hidden patterns, similarities, or groupings in the data.</p>
+      <ul>
+        <li>No predefined output; the model groups or describes data based on its own structure.</li>
+        <li>Mainly used for <strong>clustering</strong> and <strong>pattern discovery</strong>.</li>
+      </ul>
+      <p><strong>Examples:</strong> Grouping customers by purchasing behaviour; clustering similar documents or images.</p>
+      <p><strong>Algorithms:</strong> K-Means Clustering, Hierarchical Clustering, DBSCAN, PCA.</p>
+
+      <h3>3. Reinforcement Learning</h3>
+      <p>In reinforcement learning, the machine learns by <strong>trial and error</strong> through interaction with an environment. The system receives a <strong>reward</strong> for correct actions and a <strong>penalty</strong> for incorrect ones. The goal is to learn a policy that maximises the total reward over time.</p>
+      <ul>
+        <li>No labelled dataset is required — learning is driven by feedback from the environment.</li>
+        <li>Suitable for <strong>sequential decision-making</strong> problems.</li>
+      </ul>
+      <p><strong>Examples:</strong> A robot learning to walk; a computer program learning to play chess or video games.</p>
+      <p><strong>Algorithms:</strong> Q-Learning, Deep Q-Network (DQN), Policy Gradient methods.</p>
+
+      <h3>4. Semi-Supervised Learning</h3>
+      <p>Semi-supervised learning uses a combination of a <strong>small amount of labelled data</strong> and a <strong>large amount of unlabelled data</strong>. The labelled data guides learning while the unlabelled data provides additional structure to improve performance.</p>
+      <ul>
+        <li>Useful when labelling data is expensive or time-consuming.</li>
+        <li>Combines the benefits of both supervised and unsupervised approaches.</li>
+      </ul>
+      <p><strong>Examples:</strong> Image recognition where only some images are labelled; speech recognition systems.</p>
+
+      <h3>5. Comparison Summary</h3>
+      <table>
+        <tr><th>Type</th><th>Data</th><th>Feedback</th><th>Primary Use</th></tr>
+        <tr><td>Supervised</td><td>Labelled</td><td>Direct (correct output given)</td><td>Classification, Regression</td></tr>
+        <tr><td>Unsupervised</td><td>Unlabelled</td><td>None</td><td>Clustering, Pattern discovery</td></tr>
+        <tr><td>Reinforcement</td><td>Environment interaction</td><td>Reward / Penalty</td><td>Decision-making, Control</td></tr>
+        <tr><td>Semi-Supervised</td><td>Mostly unlabelled, some labelled</td><td>Partial (from labelled subset)</td><td>Labelling-constrained tasks</td></tr>
+      </table>
+
+      <h3>6. Conclusion</h3>
+      <p>The choice of learning technique depends on the availability of labelled data, the nature of the problem, and the type of feedback available. Supervised learning is the most widely used for classification and regression. Unsupervised learning is powerful for exploratory data analysis. Reinforcement learning excels in interactive, sequential environments, and semi-supervised learning bridges the gap when full labelling is impractical.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q4 ════════════════ -->
+  <section class="q-panel" id="panel-4" role="tabpanel">
+    <p class="q-label">Question 4</p>
+    <div class="q-title">Explain the components in the learning process.</div>
+    <div class="q-body">
+
+      <p>The learning process — whether performed by a human or a machine — can be divided into four fundamental components: <strong>data storage, abstraction, generalisation, and evaluation</strong>. Together these components form a complete cycle that takes raw data and transforms it into actionable, reusable knowledge.</p>
+
+      <h3>1. Data Storage</h3>
+      <p>The first component is the ability to store and retrieve large amounts of data. Both humans and computers rely on data storage as the foundation for all higher-level reasoning.</p>
+      <ul>
+        <li>For machines, this involves databases, file systems, and in-memory data structures that hold training examples, feature representations, and model parameters.</li>
+        <li>Without sufficient and accessible data, learning cannot begin — the quality and quantity of stored data directly determines the upper bound of what can be learned.</li>
+        <li>Examples: Training datasets, feature matrices, image repositories, text corpora.</li>
+      </ul>
+
+      <h3>2. Abstraction</h3>
+      <p>Abstraction is the process of extracting meaningful knowledge and patterns from stored data. It moves from raw, individual data points to general concepts that describe the data as a whole.</p>
+      <ul>
+        <li>This involves applying known models or creating new ones to represent underlying structure in the data.</li>
+        <li>The process of fitting a model to a dataset is called <strong>training</strong>.</li>
+        <li>After training, the data is transformed into an abstract form — weights, parameters, rules, or tree structures — that summarises the original information in a compact, usable way.</li>
+        <li>Example: A decision tree constructed from labelled training examples represents the abstract decision-making logic extracted from that data.</li>
+      </ul>
+
+      <h3>3. Generalisation</h3>
+      <p>Generalisation is the process of converting the abstract knowledge obtained from training data into a form that can be applied to new, previously unseen situations.</p>
+      <ul>
+        <li>A model that only memorises training data is not useful — it must generalise to perform well on tasks that are similar to but not identical to what it has seen.</li>
+        <li>Good generalisation means the model captures the true underlying pattern rather than noise or specific quirks of the training set.</li>
+        <li>Overfitting (too much memorisation) and underfitting (too little learning) are the two failure modes that prevent effective generalisation.</li>
+        <li>Example: A spam filter trained on past emails should correctly classify new, never-seen emails as spam or not spam.</li>
+      </ul>
+
+      <h3>4. Evaluation</h3>
+      <p>Evaluation is the final component. It provides feedback on how well the learned knowledge performs, which is then used to drive improvements.</p>
+      <ul>
+        <li>The model is tested against held-out data (data not seen during training) to measure its real-world performance.</li>
+        <li>Metrics such as accuracy, precision, recall, and mean squared error quantify model quality.</li>
+        <li>Evaluation feedback is fed back into earlier stages — prompting more data collection, model refinement, or a different algorithm choice.</li>
+        <li>Example: Testing a trained spam filter on new emails and measuring what fraction are correctly classified.</li>
+      </ul>
+
+      <h3>5. Relationship Between Components</h3>
+      <table>
+        <tr><th>Component</th><th>Input</th><th>Output</th><th>Analogy</th></tr>
+        <tr><td>Data Storage</td><td>Raw data</td><td>Organised, accessible dataset</td><td>Library of experience</td></tr>
+        <tr><td>Abstraction</td><td>Dataset</td><td>Trained model / learned patterns</td><td>Forming mental concepts</td></tr>
+        <tr><td>Generalisation</td><td>Trained model</td><td>Knowledge applicable to new cases</td><td>Applying lessons learned</td></tr>
+        <tr><td>Evaluation</td><td>Model + test data</td><td>Performance metrics + feedback</td><td>Exam / real-world test</td></tr>
+      </table>
+
+      <h3>6. Conclusion</h3>
+      <p>The four components — data storage, abstraction, generalisation, and evaluation — form an iterative learning cycle. Data is stored, patterns are abstracted from it, the learned knowledge is generalised to new situations, and evaluation feedback drives continuous improvement. This cycle mirrors the way humans learn from experience and underpins all machine learning systems.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q5 ════════════════ -->
+  <section class="q-panel" id="panel-5" role="tabpanel">
+    <p class="q-label">Question 5</p>
+    <div class="q-title">Explain about the design steps of a learning system in detail.</div>
+    <div class="q-body">
+
+      <p>Designing a machine learning system involves a series of well-defined steps that take a problem from a high-level description to a working, trained model. Tom Mitchell used the example of a spam email detector and a chess-playing program to illustrate these steps. The task (T), performance measure (P), and experience (E) must all be carefully chosen before training begins.</p>
+
+      <h3>Step 1: Choosing the Training Experience</h3>
+      <p>The first and most important design decision is selecting the training data — the experience from which the system will learn. The quality and nature of this experience largely determines whether the model will succeed.</p>
+      <ul>
+        <li>Training data should provide <strong>direct or indirect feedback</strong> about the task. Direct feedback means labelled examples; indirect means the system must infer from outcomes.</li>
+        <li>The learner ideally has <strong>control over the data it generates</strong> through its actions (e.g., a chess program that plays many games to improve).</li>
+        <li>The <strong>performance measure must be clearly defined</strong> so that the quality of training experience can be assessed.</li>
+        <li>More and better-quality experience leads to higher accuracy and faster learning. Poor or insufficient data leads to wrong or incomplete learning.</li>
+      </ul>
+      <p><strong>Example:</strong> For spam detection, the training experience is a labelled dataset of emails marked as spam or not spam.</p>
+
+      <h3>Step 2: Choosing the Target Function</h3>
+      <p>The target function defines precisely what the system needs to learn — the mapping from inputs to correct outputs.</p>
+      <ul>
+        <li>It represents the <strong>goal of the learning system</strong>; the algorithm attempts to discover or approximate this function from data.</li>
+        <li>A clear, well-specified target function is essential for the system to make correct decisions.</li>
+        <li>The accuracy of learning depends heavily on how well this function is defined.</li>
+      </ul>
+      <p><strong>Example:</strong> In chess, the target function maps a board state to the best legal move. In spam detection, it maps email features to a binary label (Spam / Not Spam).</p>
+
+      <h3>Step 3: Choosing the Representation for the Target Function</h3>
+      <p>The representation determines how the target function is stored and expressed within the system.</p>
+      <ul>
+        <li>Common representations: polynomial functions, decision trees, sets of rules, neural network weight matrices.</li>
+        <li>A good representation reduces computation time and makes the learning problem tractable.</li>
+        <li>The choice of representation affects which learning algorithms can be applied and how efficiently the hypothesis space can be searched.</li>
+      </ul>
+      <p><strong>Example:</strong> In chess, the board state might be represented as a feature vector of piece positions; the function could be represented as a weighted linear combination of features.</p>
+
+      <h3>Step 4: Choosing the Function Approximation Algorithm</h3>
+      <p>Exact solutions to learning problems are often not achievable, so the system uses an <strong>approximation algorithm</strong> to find the best available hypothesis.</p>
+      <ul>
+        <li>The algorithm iteratively adjusts model parameters using training data.</li>
+        <li>It improves based on success (low error) and failure (high error) — tuning parameters to reduce the gap between predicted and actual outputs.</li>
+        <li>More training data and iterations lead to better approximations.</li>
+        <li>This step enables the system to generalise to new situations beyond the training set.</li>
+      </ul>
+      <p><strong>Example:</strong> Gradient descent adjusts weights in a neural network to minimise prediction error step by step. In chess, the system learns which moves lead to wins and which to losses.</p>
+
+      <h3>Step 5: Final Design</h3>
+      <p>The final design is produced after multiple rounds of training, evaluation, and refinement.</p>
+      <ul>
+        <li>Errors identified during evaluation are corrected through additional training.</li>
+        <li>The system becomes increasingly accurate and reliable as experience accumulates.</li>
+        <li>The final model is efficient, generalisable, and ready for deployment.</li>
+      </ul>
+      <p><strong>Example:</strong> IBM's Deep Blue chess system was refined over years of training and evaluation, ultimately defeating world champion Garry Kasparov in 1997.</p>
+
+      <h3>Summary of Design Steps</h3>
+      <table>
+        <tr><th>Step</th><th>Decision</th><th>Key Question</th></tr>
+        <tr><td>1</td><td>Choose Training Experience</td><td>What data will the system learn from?</td></tr>
+        <tr><td>2</td><td>Choose Target Function</td><td>What exactly should the system learn to compute?</td></tr>
+        <tr><td>3</td><td>Choose Representation</td><td>How will the target function be expressed and stored?</td></tr>
+        <tr><td>4</td><td>Choose Approximation Algorithm</td><td>How will the system search for the best hypothesis?</td></tr>
+        <tr><td>5</td><td>Final Design</td><td>How is the complete system assembled, tested, and deployed?</td></tr>
+      </table>
+
+      <h3>Conclusion</h3>
+      <p>Designing a learning system is a structured, iterative process. Each step builds on the previous one — the training experience defines what can be learned, the target function defines the goal, the representation constrains the search space, and the approximation algorithm drives parameter tuning. Repeated evaluation and refinement produce a final system that is accurate, robust, and deployable.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q6 ════════════════ -->
+  <section class="q-panel" id="panel-6" role="tabpanel">
+    <p class="q-label">Question 6</p>
+    <div class="q-title">Discuss about supervised and unsupervised learning with applications and list some algorithms for each.</div>
+    <div class="q-body">
+
+      <h3>1. Supervised Learning</h3>
+      <p>Supervised learning is a type of machine learning in which the model is trained on a <strong>labelled dataset</strong> — each input example is associated with a known, correct output. The algorithm learns by comparing its predictions with the true labels and adjusting its parameters to minimise the error.</p>
+
+      <p><strong>How It Works:</strong></p>
+      <ol>
+        <li>Input data along with corresponding output labels are provided to the algorithm.</li>
+        <li>The model learns the relationship between input features and output labels.</li>
+        <li>It iteratively corrects its errors using the training feedback.</li>
+        <li>The trained model is then used to predict outputs for new, unseen inputs.</li>
+      </ol>
+
+      <p><strong>Applications of Supervised Learning:</strong></p>
+      <ul>
+        <li>Email spam detection (binary classification)</li>
+        <li>House price prediction (regression)</li>
+        <li>Student result prediction</li>
+        <li>Medical disease diagnosis</li>
+        <li>Face recognition and image classification</li>
+        <li>Credit risk assessment</li>
+      </ul>
+
+      <p><strong>Supervised Learning Algorithms:</strong></p>
+      <table>
+        <tr><th>Algorithm</th><th>Type</th><th>Use Case</th></tr>
+        <tr><td>Linear Regression</td><td>Regression</td><td>Predicting continuous values (e.g., house prices)</td></tr>
+        <tr><td>Logistic Regression</td><td>Classification</td><td>Binary classification (e.g., spam / not spam)</td></tr>
+        <tr><td>Decision Tree</td><td>Both</td><td>Rule-based classification and regression</td></tr>
+        <tr><td>Support Vector Machine (SVM)</td><td>Classification</td><td>High-dimensional data, image classification</td></tr>
+        <tr><td>k-Nearest Neighbours (k-NN)</td><td>Both</td><td>Pattern recognition, recommendation</td></tr>
+        <tr><td>Naïve Bayes</td><td>Classification</td><td>Text classification, spam filtering</td></tr>
+        <tr><td>Random Forest</td><td>Both</td><td>Ensemble method for improved accuracy</td></tr>
+      </table>
+
+      <h3>2. Unsupervised Learning</h3>
+      <p>Unsupervised learning is a type of machine learning in which the model is trained on <strong>unlabelled data</strong>. No correct outputs are provided. The algorithm autonomously discovers hidden patterns, groupings, or structures within the data.</p>
+
+      <p><strong>How It Works:</strong></p>
+      <ol>
+        <li>Only input data is provided — no labels or target outputs.</li>
+        <li>The model groups similar data points together (clustering) or identifies underlying structure (dimensionality reduction).</li>
+        <li>Patterns are discovered without external guidance.</li>
+      </ol>
+
+      <p><strong>Applications of Unsupervised Learning:</strong></p>
+      <ul>
+        <li>Customer segmentation for targeted marketing</li>
+        <li>Market basket analysis (finding product associations)</li>
+        <li>Anomaly detection in network security</li>
+        <li>Image compression</li>
+        <li>Document and news article clustering</li>
+        <li>Gene expression analysis in bioinformatics</li>
+      </ul>
+
+      <p><strong>Unsupervised Learning Algorithms:</strong></p>
+      <table>
+        <tr><th>Algorithm</th><th>Type</th><th>Use Case</th></tr>
+        <tr><td>K-Means Clustering</td><td>Clustering</td><td>Customer segmentation, image quantisation</td></tr>
+        <tr><td>Hierarchical Clustering</td><td>Clustering</td><td>Gene analysis, document grouping</td></tr>
+        <tr><td>DBSCAN</td><td>Clustering</td><td>Outlier detection, irregular-shaped clusters</td></tr>
+        <tr><td>Apriori Algorithm</td><td>Association</td><td>Market basket analysis</td></tr>
+        <tr><td>Principal Component Analysis (PCA)</td><td>Dimensionality Reduction</td><td>Feature extraction, visualisation</td></tr>
+      </table>
+
+      <h3>3. Key Differences</h3>
+      <table>
+        <tr><th>Aspect</th><th>Supervised Learning</th><th>Unsupervised Learning</th></tr>
+        <tr><td>Training data</td><td>Labelled (input + output)</td><td>Unlabelled (input only)</td></tr>
+        <tr><td>Goal</td><td>Learn input-to-output mapping</td><td>Discover hidden structure/patterns</td></tr>
+        <tr><td>Output</td><td>Predefined class or value</td><td>Clusters or reduced representations</td></tr>
+        <tr><td>Human effort</td><td>High (labelling required)</td><td>Low (no labelling required)</td></tr>
+        <tr><td>Common tasks</td><td>Classification, Regression</td><td>Clustering, Association, Compression</td></tr>
+      </table>
+
+      <h3>4. Conclusion</h3>
+      <p>Supervised and unsupervised learning are the two most fundamental paradigms in machine learning. Supervised learning excels when labelled training data is available and the goal is prediction or classification. Unsupervised learning is indispensable when labels are unavailable or when the goal is exploratory analysis, pattern discovery, or data compression. In practice, many real-world systems combine both approaches.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q7 ════════════════ -->
+  <section class="q-panel" id="panel-7" role="tabpanel">
+    <p class="q-label">Question 7</p>
+    <div class="q-title">Elaborate the usage of machine learning and list out the tasks that are best solved by using a learning algorithm.</div>
+    <div class="q-body">
+
+      <h3>1. Usage of Machine Learning</h3>
+      <p>Machine Learning (ML) enables computers to learn from data and improve their performance over time without being explicitly reprogrammed for each new scenario. Instead of writing fixed rules, an ML system discovers patterns from past experience and uses them to make predictions or decisions on new data.</p>
+      <p>ML is most valuable when the problem is complex, the data is large and high-dimensional, or the environment changes over time. It is widely deployed in:</p>
+      <ul>
+        <li>Speech and natural language processing</li>
+        <li>Computer vision and image analysis</li>
+        <li>Medical diagnosis and drug discovery</li>
+        <li>Recommendation and personalisation systems</li>
+        <li>Fraud and anomaly detection</li>
+        <li>Autonomous systems and robotics</li>
+        <li>Financial modelling and forecasting</li>
+      </ul>
+
+      <h3>2. Tasks Best Solved Using a Learning Algorithm</h3>
+
+      <p><strong>1. Tasks Where Rules Are Hard to Define</strong></p>
+      <p>Some problems — such as handwriting recognition, speech recognition, and face detection — have no clear, manually definable rules. ML learns these rules automatically from examples. A human expert cannot articulate all the patterns that distinguish a "2" from a "7" in handwriting, but a trained model can.</p>
+
+      <p><strong>2. Tasks That Require Adaptation to a Changing Environment</strong></p>
+      <p>In dynamic environments like stock markets, user behaviour analytics, and network security, conditions change continuously. Learning algorithms adapt by retraining on new data, updating their knowledge without human intervention.</p>
+
+      <p><strong>3. Tasks Involving Large and Complex Data</strong></p>
+      <p>When datasets are massive and high-dimensional — genomics data, satellite imagery, transaction logs — manual analysis is infeasible. ML can discover patterns, correlations, and anomalies at a scale and speed no human analyst could achieve.</p>
+
+      <p><strong>4. Prediction Tasks</strong></p>
+      <p>ML algorithms excel at learning from historical data to forecast future outcomes — house price prediction, weather forecasting, demand forecasting, and stock price estimation all benefit from ML's ability to model complex, multi-variable relationships.</p>
+
+      <p><strong>5. Classification Tasks</strong></p>
+      <p>Assigning instances to one of a set of predefined categories — spam/not spam, disease/no disease, loan approved/rejected — is one of the most common ML use cases. Classification models are trained on labelled examples and then generalised to new instances.</p>
+
+      <p><strong>6. Tasks That Improve With Experience</strong></p>
+      <p>Recommendation engines, search engines, and conversational agents all improve as more user interaction data accumulates. ML systems can be continuously retrained, making them progressively more accurate and personalised over time.</p>
+
+      <p><strong>7. Tasks Involving Personalisation</strong></p>
+      <p>Systems that must tailor behaviour to individual users — personalised news feeds, targeted advertising, adaptive learning platforms — cannot be programmed with fixed rules for every user. ML learns individual preferences from behaviour data.</p>
+
+      <h3>3. Summary Table</h3>
+      <table>
+        <tr><th>Task Type</th><th>Why ML Is Best</th><th>Example</th></tr>
+        <tr><td>Hard-to-define rules</td><td>Learns implicit patterns humans cannot articulate</td><td>Handwriting recognition</td></tr>
+        <tr><td>Adaptation</td><td>Updates knowledge as environment changes</td><td>Stock price prediction</td></tr>
+        <tr><td>Large/complex data</td><td>Finds patterns at scale impossible for humans</td><td>Genomics analysis</td></tr>
+        <tr><td>Prediction</td><td>Models complex multi-variable relationships</td><td>Weather forecasting</td></tr>
+        <tr><td>Classification</td><td>Generalises from labelled examples</td><td>Email spam detection</td></tr>
+        <tr><td>Improves with experience</td><td>Continuously retrains on new data</td><td>Recommendation systems</td></tr>
+        <tr><td>Personalisation</td><td>Learns individual user patterns</td><td>Netflix recommendations</td></tr>
+      </table>
+
+      <h3>4. Conclusion</h3>
+      <p>Machine learning is most useful when problems are too complex to solve with hand-written rules, when data is too large for manual analysis, or when the system must adapt over time. Learning algorithms are particularly effective for classification, prediction, pattern recognition, and personalisation — tasks that are ubiquitous across every major industry and application domain.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q8 ════════════════ -->
+  <section class="q-panel" id="panel-8" role="tabpanel">
+    <p class="q-label">Question 8</p>
+    <div class="q-title">Discuss briefly the aspects of developing a learning system and explain function approximation in detail.</div>
+    <div class="q-body">
+
+      <h3>1. Aspects of Developing a Learning System</h3>
+      <p>Developing a machine learning system involves several key aspects that collectively determine how well the system learns and performs.</p>
+
+      <table>
+        <tr><th>Aspect</th><th>Description</th><th>Example</th></tr>
+        <tr><td>Task (T)</td><td>The specific objective the system must accomplish — classification, prediction, recognition, or control.</td><td>Classifying emails as spam or not spam.</td></tr>
+        <tr><td>Performance Measure (P)</td><td>A metric that quantifies how well the system is performing the task. Guides optimisation.</td><td>Accuracy of classification; mean squared error in regression.</td></tr>
+        <tr><td>Training Experience (E)</td><td>The data or examples from which the system learns. Quality and quantity both matter.</td><td>Past emails labelled as spam or non-spam.</td></tr>
+        <tr><td>Representation</td><td>The format used to encode data and the learned model — feature vectors, decision trees, neural weights.</td><td>A weight vector representing the importance of each email feature.</td></tr>
+        <tr><td>Learning Algorithm</td><td>The method used to adjust the model based on training data — gradient descent, backpropagation, etc.</td><td>Gradient descent updating weights to minimise classification error.</td></tr>
+        <tr><td>Generalisation</td><td>The ability of the trained model to perform well on new data it has not seen during training.</td><td>Correctly classifying new emails not in the training set.</td></tr>
+      </table>
+
+      <h3>2. Function Approximation</h3>
+      <p>Function approximation is one of the most fundamental concepts in machine learning. It addresses the core challenge that the true relationship between inputs and outputs in real-world problems is almost always unknown, complex, or noisy.</p>
+
+      <p><strong>Definition:</strong> Function approximation is the process of learning an unknown target function f by finding a hypothesis function h — from a predefined hypothesis space — that closely approximates f using available training data.</p>
+
+      <h3>3. Formal Framework</h3>
+      <ul>
+        <li>Let <strong>f</strong> be the <em>target function</em> — the true, unknown mapping from input x to output y.</li>
+        <li>Let <strong>h</strong> be the <em>hypothesis function</em> — the function chosen or constructed by the learning algorithm.</li>
+        <li>The goal is to find h such that h(x) ≈ f(x) for all inputs x, both in the training set and in new data.</li>
+      </ul>
+      <div class="formula formula-block">Goal: minimise | h(x) − f(x) | for all x</div>
+
+      <h3>4. Why Exact Solutions Are Not Possible</h3>
+      <ul>
+        <li>The exact target function is usually <strong>unknown</strong> — we only observe input-output pairs.</li>
+        <li>Real-world data contains <strong>noise</strong>, meaning observed outputs are not perfectly consistent with any single function.</li>
+        <li>Problems are often too <strong>high-dimensional</strong> for exact analytical solutions.</li>
+        <li>The training set is finite — the true function's behaviour on all possible inputs cannot be fully observed.</li>
+      </ul>
+
+      <h3>5. Example — House Price Prediction</h3>
+      <p>The exact formula relating a house's price to its features (size, location, number of rooms) is unknown. A learning algorithm approximates this function using historical housing data:</p>
+      <ul>
+        <li><strong>Input features (x):</strong> House size, location, number of rooms, age of building.</li>
+        <li><strong>Target output (f(x)):</strong> Actual sale price.</li>
+        <li><strong>Learned hypothesis (h(x)):</strong> A linear or polynomial function fitted to the training data that predicts price given features.</li>
+      </ul>
+
+      <h3>6. Common Methods for Function Approximation</h3>
+      <table>
+        <tr><th>Method</th><th>Type of Function</th><th>When Used</th></tr>
+        <tr><td>Linear Regression</td><td>Linear combination of features</td><td>When relationship between input and output is approximately linear</td></tr>
+        <tr><td>Polynomial Regression</td><td>Polynomial function</td><td>When the relationship is curved or non-linear but smooth</td></tr>
+        <tr><td>Decision Trees</td><td>Piecewise constant function</td><td>When data has clear feature-based decision boundaries</td></tr>
+        <tr><td>Neural Networks</td><td>Highly non-linear compositions</td><td>Complex, high-dimensional problems (images, speech, text)</td></tr>
+        <tr><td>Support Vector Regression</td><td>Kernel-based function</td><td>Small to medium datasets with non-linear relationships</td></tr>
+      </table>
+
+      <h3>7. Conclusion</h3>
+      <p>Developing a learning system requires careful decisions about the task, performance measure, training experience, representation, and algorithm. Function approximation is the core mechanism by which all this comes together — the learning algorithm searches the hypothesis space to find a function h that best approximates the unknown true function f. The quality of this approximation, measured on unseen data, is what defines a successful machine learning system.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q9 ════════════════ -->
+  <section class="q-panel" id="panel-9" role="tabpanel">
+    <p class="q-label">Question 9</p>
+    <div class="q-title">Define and explain the importance of data preprocessing in the context of machine learning. What are the common techniques used in data preprocessing?</div>
+    <div class="q-body">
+
+      <h3>1. Definition</h3>
+      <p>Data preprocessing is the process of cleaning, transforming, and organising raw data before it is fed into a machine learning algorithm. Real-world data is frequently <strong>incomplete, noisy, inconsistent, or unstructured</strong>. Preprocessing improves data quality, making it suitable for building accurate and reliable models.</p>
+
+      <h3>2. Importance of Data Preprocessing</h3>
+      <table>
+        <tr><th>Reason</th><th>Explanation</th></tr>
+        <tr><td>Improves accuracy</td><td>Clean, well-prepared data enables the model to learn genuine patterns and make correct predictions.</td></tr>
+        <tr><td>Handles missing and noisy data</td><td>Removes errors, duplicates, and irrelevant data that would otherwise distort learning.</td></tr>
+        <tr><td>Reduces complexity</td><td>Dimensionality reduction and feature selection reduce data size, improving efficiency without significant accuracy loss.</td></tr>
+        <tr><td>Makes data algorithm-compatible</td><td>Many algorithms require data in a specific format, range, or type — preprocessing ensures compatibility.</td></tr>
+        <tr><td>Improves generalisation</td><td>Preprocessed data leads to faster training and models that perform better on unseen examples.</td></tr>
+        <tr><td>Reduces bias</td><td>Balanced and normalised data prevents certain features or classes from disproportionately influencing the model.</td></tr>
+      </table>
+
+      <h3>3. Common Data Preprocessing Techniques</h3>
+
+      <p><strong>(a) Data Cleaning</strong></p>
+      <p>Data cleaning removes errors, inconsistencies, and noise from the dataset. It is the first and most essential preprocessing step.</p>
+      <ul>
+        <li><strong>Handling missing values:</strong> Replace with mean/median/mode, or remove records with missing values depending on extent.</li>
+        <li><strong>Removing duplicates:</strong> Eliminate repeated records that could bias the model.</li>
+        <li><strong>Correcting inconsistent data:</strong> Fix formatting errors (e.g., "Male" vs "M") and out-of-range values.</li>
+      </ul>
+
+      <p><strong>(b) Data Integration</strong></p>
+      <p>Data from multiple sources is merged into a single, unified dataset to provide a complete view of the information.</p>
+      <ul>
+        <li>Avoids data duplication and resolves conflicts between sources.</li>
+        <li><strong>Example:</strong> Combining customer records from a CRM system and a transaction database.</li>
+      </ul>
+
+      <p><strong>(c) Data Transformation</strong></p>
+      <p>Data is converted into a format or scale suitable for the chosen algorithm.</p>
+      <ul>
+        <li><strong>Normalisation:</strong> Scales feature values to a range such as [0, 1]. Prevents features with large ranges from dominating. Formula: x' = (x − min) / (max − min).</li>
+        <li><strong>Standardisation:</strong> Transforms data to have zero mean and unit variance. Formula: x' = (x − μ) / σ.</li>
+        <li><strong>Encoding categorical data:</strong> Converts text categories to numbers — e.g., One-Hot Encoding or Label Encoding (Male=0, Female=1).</li>
+      </ul>
+
+      <p><strong>(d) Data Reduction</strong></p>
+      <p>Reduces the volume of data while preserving as much useful information as possible.</p>
+      <ul>
+        <li><strong>Feature selection:</strong> Retains only the most relevant features, removing redundant or irrelevant ones.</li>
+        <li><strong>Dimensionality reduction:</strong> Techniques like PCA (Principal Component Analysis) project data into a lower-dimensional space.</li>
+        <li>Benefits: Faster training, reduced storage, lower risk of overfitting.</li>
+      </ul>
+
+      <p><strong>(e) Data Discretisation</strong></p>
+      <p>Continuous numerical data is converted into discrete intervals or categories.</p>
+      <ul>
+        <li>Simplifies patterns and makes data easier to interpret for certain algorithms (e.g., decision trees, Naïve Bayes).</li>
+        <li><strong>Example:</strong> Age grouped into intervals — Child (0–18), Young Adult (19–35), Middle-Aged (36–60), Senior (61+).</li>
+      </ul>
+
+      <h3>4. Summary of Techniques</h3>
+      <table>
+        <tr><th>Technique</th><th>Problem Addressed</th><th>Output</th></tr>
+        <tr><td>Data Cleaning</td><td>Missing values, noise, duplicates</td><td>Clean, complete dataset</td></tr>
+        <tr><td>Data Integration</td><td>Multiple data sources</td><td>Single unified dataset</td></tr>
+        <tr><td>Data Transformation</td><td>Incompatible scales, categorical data</td><td>Normalised/encoded dataset</td></tr>
+        <tr><td>Data Reduction</td><td>High dimensionality, redundant features</td><td>Compact, efficient dataset</td></tr>
+        <tr><td>Data Discretisation</td><td>Continuous values in classification</td><td>Binned categorical dataset</td></tr>
+      </table>
+
+      <h3>5. Conclusion</h3>
+      <p>Data preprocessing is an indispensable step in the machine learning pipeline. The quality of the data fed to a model directly determines the quality of the model's predictions — the well-known principle "garbage in, garbage out" applies in full. By systematically cleaning, integrating, transforming, reducing, and discretising data, preprocessing ensures that learning algorithms receive input that is accurate, complete, and in an appropriate form, leading to faster training and more reliable, generalisable models.</p>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ Q10 ════════════════ -->
+  <section class="q-panel" id="panel-10" role="tabpanel">
+    <p class="q-label">Question 10</p>
+    <div class="q-title">Evaluate the effectiveness of different evaluation metrics in assessing the performance of a machine learning model.</div>
+    <div class="q-body">
+
+      <p>Evaluation metrics are used to measure how well a machine learning model performs on data. Selecting the right metric is critical — different metrics capture different aspects of model quality, and the best choice depends on the problem type (classification vs regression) and the specific costs associated with different types of errors.</p>
+
+      <h3>Classification Metrics</h3>
+
+      <p><strong>1. Accuracy</strong></p>
+      <p>Accuracy measures the proportion of all predictions that are correct.</p>
+      <div class="formula formula-block">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+      <ul>
+        <li>Easy to compute and interpret.</li>
+        <li><strong>Limitation:</strong> Misleading for <strong>imbalanced datasets</strong>. If 95% of emails are not spam, a model that always predicts "not spam" achieves 95% accuracy while being useless.</li>
+      </ul>
+
+      <p><strong>2. Precision</strong></p>
+      <p>Precision measures how many predicted positives are actually correct.</p>
+      <div class="formula formula-block">Precision = TP / (TP + FP)</div>
+      <ul>
+        <li>High precision → few false positives.</li>
+        <li>Effective when <strong>false positives are costly</strong> — e.g., spam detection (legitimate emails should not be flagged).</li>
+      </ul>
+
+      <p><strong>3. Recall (Sensitivity)</strong></p>
+      <p>Recall measures how many actual positives were correctly identified.</p>
+      <div class="formula formula-block">Recall = TP / (TP + FN)</div>
+      <ul>
+        <li>High recall → few missed positives.</li>
+        <li>Critical when <strong>false negatives are dangerous</strong> — e.g., medical diagnosis (a missed disease is life-threatening).</li>
+      </ul>
+
+      <p><strong>4. F1 Score</strong></p>
+      <p>The F1 Score is the harmonic mean of Precision and Recall. It balances both metrics.</p>
+      <div class="formula formula-block">F1 = 2 × (Precision × Recall) / (Precision + Recall)</div>
+      <ul>
+        <li>Useful when both precision and recall are important and the dataset is imbalanced.</li>
+        <li>The harmonic mean penalises extreme imbalance between the two metrics.</li>
+      </ul>
+
+      <h3>Regression Metrics</h3>
+
+      <p><strong>5. Mean Absolute Error (MAE)</strong></p>
+      <p>MAE calculates the average absolute difference between predicted and actual values.</p>
+      <div class="formula formula-block">MAE = (1/n) × Σ | yᵢ − ŷᵢ |</div>
+      <ul>
+        <li>Simple to understand; all errors are weighted equally.</li>
+        <li>Less sensitive to outliers than MSE.</li>
+        <li>Good for problems where all error magnitudes are equally important.</li>
+      </ul>
+
+      <p><strong>6. Mean Squared Error (MSE) and Root Mean Squared Error (RMSE)</strong></p>
+      <div class="formula formula-block">MSE = (1/n) × Σ (yᵢ − ŷᵢ)²</div>
+      <div class="formula formula-block">RMSE = √MSE</div>
+      <ul>
+        <li>MSE squares errors, giving <strong>higher weight to large errors</strong> — penalises outlier predictions more heavily than MAE.</li>
+        <li>RMSE is in the same unit as the output variable, making it more interpretable than MSE.</li>
+        <li>Commonly used when large errors are particularly undesirable.</li>
+      </ul>
+
+      <p><strong>7. R² (Coefficient of Determination)</strong></p>
+      <div class="formula formula-block">R² = 1 − (SS_residual / SS_total)</div>
+      <ul>
+        <li>Measures the proportion of variance in the target variable that is explained by the model.</li>
+        <li>Range: 0 to 1 (or negative for very poor models). R² = 1 means perfect fit; R² = 0 means the model explains nothing.</li>
+        <li>Useful for comparing models trained on the same data.</li>
+      </ul>
+
+      <h3>Summary Comparison</h3>
+      <table>
+        <tr><th>Metric</th><th>Problem Type</th><th>Best When</th><th>Limitation</th></tr>
+        <tr><td>Accuracy</td><td>Classification</td><td>Balanced class distribution</td><td>Misleading on imbalanced data</td></tr>
+        <tr><td>Precision</td><td>Classification</td><td>False positives are costly</td><td>Ignores false negatives</td></tr>
+        <tr><td>Recall</td><td>Classification</td><td>False negatives are costly</td><td>Ignores false positives</td></tr>
+        <tr><td>F1 Score</td><td>Classification</td><td>Imbalanced data, both FP and FN matter</td><td>Less interpretable than Accuracy</td></tr>
+        <tr><td>MAE</td><td>Regression</td><td>All errors equally important, outliers present</td><td>Does not penalise large errors</td></tr>
+        <tr><td>MSE / RMSE</td><td>Regression</td><td>Large errors particularly undesirable</td><td>Sensitive to outliers</td></tr>
+        <tr><td>R²</td><td>Regression</td><td>Comparing model fit on same dataset</td><td>Can be misleading across different datasets</td></tr>
+      </table>
+
+      <h3>Conclusion</h3>
+      <p>No single evaluation metric is universally best. Accuracy is appropriate for balanced classification tasks but misleading otherwise. Precision and Recall capture different failure modes and should be selected based on the relative costs of false positives and false negatives. F1 balances both. For regression, MAE is robust to outliers while RMSE penalises them more severely. R² provides a normalised measure of model fit. Effective model evaluation requires selecting and interpreting metrics that align with the real-world consequences of prediction errors in the specific application domain.</p>
+
+    </div>
+  </section>
+
+</div><!-- .page -->
+
+<nav class="page-nav">
+  <span></span>
+  <a class="home" href="index.html">↑ Home</a>
+  <a href="unit2.html">Unit 2 →</a>
+</nav>
+
+<script>
+  function show(n) {
+    document.querySelectorAll('.q-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
+    document.getElementById('panel-' + n).classList.add('active');
+    var tabs = document.querySelectorAll('.tab-btn');
+    var idx = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].indexOf(n);
+    if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  }
+</script>
+</body>
+</html>
