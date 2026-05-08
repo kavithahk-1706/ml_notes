@@ -687,11 +687,79 @@
         </table>
 
         <figure class="fig-wrap">
-          <img src=""
-            alt="page 60 of UNIT_3_UNIT_5.pdf — SVM classification diagram showing two classes (circles and triangles) separated by a hyperplane with dashed margin boundaries wx+b=1 and wx+b=-1, support vectors highlighted, and the margin width labelled as 2/||w||">
-          <figcaption class="fig-caption">Fig. 6 — SVM hyperplane with margin and support vectors. The optimal
-            hyperplane maximises the distance between the two margin boundaries. Screenshot from p. 60 of
-            UNIT_3_UNIT_5.pdf.</figcaption>
+          <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;display:block;margin:0 auto;font-family:inherit;">
+            <!-- axes -->
+            <line x1="60" y1="360" x2="660" y2="360" stroke="#aaa" stroke-width="1.5"/>
+            <line x1="60" y1="20"  x2="60"  y2="360" stroke="#aaa" stroke-width="1.5"/>
+            <text x="665" y="364" font-size="13" fill="#555">x₁</text>
+            <text x="50"  y="16"  font-size="13" fill="#555" text-anchor="end">x₂</text>
+            <!-- axis ticks -->
+            <text x="30" y="365" font-size="11" fill="#888" text-anchor="middle">0</text>
+
+            <!-- ── Hyperplane  w·x + b = 0  (solid, blue) ── -->
+            <!-- passes through ~(120,320) to (620,60) -->
+            <line x1="120" y1="320" x2="620" y2="60" stroke="#2563eb" stroke-width="2.5"/>
+            <text x="635" y="55" font-size="12" fill="#2563eb" font-weight="700">w·x+b=0</text>
+            <text x="635" y="70" font-size="11" fill="#2563eb">(Hyperplane)</text>
+
+            <!-- ── Margin boundary +1  (dashed, green) ── -->
+            <line x1="60" y1="305" x2="540" y2="60" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="8,5"/>
+            <text x="548" y="56" font-size="12" fill="#16a34a" font-weight="700">w·x+b=+1</text>
+
+            <!-- ── Margin boundary -1  (dashed, red) ── -->
+            <line x1="200" y1="360" x2="660" y2="110" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="8,5"/>
+            <text x="548" y="108" font-size="12" fill="#dc2626" font-weight="700">w·x+b=−1</text>
+
+            <!-- ── Class +1  (blue filled circles, upper-left cluster) ── -->
+            <circle cx="130" cy="200" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="160" cy="155" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="100" cy="165" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="195" cy="175" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="145" cy="120" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="80"  cy="230" r="9" fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <!-- Class +1 support vector (double ring) -->
+            <circle cx="240" cy="195" r="9"  fill="#93c5fd" stroke="#1d4ed8" stroke-width="2"/>
+            <circle cx="240" cy="195" r="16" fill="none"    stroke="#1d4ed8" stroke-width="2" stroke-dasharray="4,3"/>
+
+            <!-- ── Class −1  (red triangles, lower-right cluster) ── -->
+            <!-- triangle helper: centred at (cx,cy) with radius r → points -->
+            <polygon points="450,200 440,218 460,218" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <polygon points="500,240 490,258 510,258" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <polygon points="520,190 510,208 530,208" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <polygon points="480,280 470,298 490,298" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <polygon points="560,250 550,268 570,268" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <polygon points="420,260 410,278 430,278" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <!-- Class −1 support vector (double ring around triangle) -->
+            <polygon points="390,230 380,248 400,248" fill="#fca5a5" stroke="#b91c1c" stroke-width="2"/>
+            <circle  cx="390" cy="241" r="18" fill="none" stroke="#b91c1c" stroke-width="2" stroke-dasharray="4,3"/>
+
+            <!-- ── Margin width arrow ── -->
+            <!-- perpendicular distance annotation between the two margin lines -->
+            <line x1="330" y1="157" x2="390" y2="242" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#sv-arr)" marker-start="url(#sv-arr-rev)"/>
+            <defs>
+              <marker id="sv-arr"     markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#7c3aed"/>
+              </marker>
+              <marker id="sv-arr-rev" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto">
+                <path d="M8,0 L8,6 L0,3 z" fill="#7c3aed"/>
+              </marker>
+            </defs>
+            <rect x="335" y="184" width="54" height="22" rx="4" fill="white" opacity="0.85"/>
+            <text x="362" y="199" text-anchor="middle" font-size="13" fill="#7c3aed" font-weight="700">2/‖w‖</text>
+            <text x="362" y="213" text-anchor="middle" font-size="10" fill="#7c3aed">(margin)</text>
+
+            <!-- ── Legend ── -->
+            <rect x="62" y="22" width="220" height="92" rx="6" fill="white" stroke="#ddd" stroke-width="1"/>
+            <line x1="76"  y1="42" x2="110" y2="42" stroke="#2563eb" stroke-width="2.5"/>
+            <text x="118" y="46" font-size="11" fill="#333">Optimal hyperplane (w·x+b=0)</text>
+            <line x1="76"  y1="60" x2="110" y2="60" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="6,4"/>
+            <text x="118" y="64" font-size="11" fill="#333">Margin boundary +1</text>
+            <line x1="76"  y1="78" x2="110" y2="78" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="6,4"/>
+            <text x="118" y="82" font-size="11" fill="#333">Margin boundary −1</text>
+            <circle cx="88" cy="103" r="6" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.5"/>
+            <text x="100" y="107" font-size="11" fill="#333">Class +1 (double circle = support vector)</text>
+          </svg>
+          <figcaption class="fig-caption">Fig. 6 — SVM hyperplane with margin and support vectors. The solid blue line is the optimal hyperplane (w·x+b=0). The dashed green and red lines are the margin boundaries (+1 and −1). Support vectors (double-ringed) are the closest points to the hyperplane. The margin width is 2/‖w‖.</figcaption>
         </figure>
 
         <h3>2. Mathematical Representation</h3>
@@ -862,9 +930,78 @@
           further until convergence.</p>
 
         <figure class="fig-wrap">
-          <img src="" alt="search: XGBoost gradient boosting residuals sequential trees prediction update diagram">
-          <figcaption class="fig-caption">Fig. 7 — XGBoost iteratively adds trees that predict residuals. Each iteration
-            refines the prediction, reducing error progressively.</figcaption>
+          <svg viewBox="0 0 700 370" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;display:block;margin:0 auto;font-family:inherit;">
+            <defs>
+              <marker id="xg-arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+                <path d="M0,0 L0,7 L9,3.5 z" fill="#555"/>
+              </marker>
+            </defs>
+
+            <!-- ── Title ── -->
+            <text x="350" y="22" text-anchor="middle" font-size="13" font-weight="700" fill="#1e293b">XGBoost: Sequential Residual Learning</text>
+
+            <!-- ═══ Column 1: Initial F₀ ═══ -->
+            <!-- Box: Initial prediction -->
+            <rect x="20" y="38" width="150" height="52" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+            <text x="95" y="58" text-anchor="middle" font-size="12" font-weight="700" fill="#1e3a8a">F₀(x) = mean(y)</text>
+            <text x="95" y="75" text-anchor="middle" font-size="10" fill="#1e3a8a">Initial Prediction</text>
+            <!-- Down arrow -->
+            <line x1="95" y1="90" x2="95" y2="115" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <!-- Residual box -->
+            <rect x="20" y="115" width="150" height="46" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.8"/>
+            <text x="95" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#713f12">Residuals r₁</text>
+            <text x="95" y="149" text-anchor="middle" font-size="10" fill="#713f12">= y − F₀(x)</text>
+            <!-- Down arrow -->
+            <line x1="95" y1="161" x2="95" y2="186" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <!-- Tree 1 box -->
+            <rect x="20" y="186" width="150" height="52" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+            <text x="95" y="207" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">Tree₁ : h₁(x)</text>
+            <text x="95" y="222" text-anchor="middle" font-size="10" fill="#14532d">Fits residuals r₁</text>
+            <!-- Down arrow -->
+            <line x1="95" y1="238" x2="95" y2="263" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <!-- Updated prediction -->
+            <rect x="20" y="263" width="150" height="52" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+            <text x="95" y="282" text-anchor="middle" font-size="12" font-weight="700" fill="#4c1d95">F₁(x) = F₀ + η·h₁</text>
+            <text x="95" y="297" text-anchor="middle" font-size="10" fill="#4c1d95">Updated Prediction</text>
+
+            <!-- ═══ Arrow: F₁ → Iteration 2 ═══ -->
+            <line x1="170" y1="289" x2="255" y2="289" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <text x="212" y="283" text-anchor="middle" font-size="10" fill="#555">next iter</text>
+
+            <!-- ═══ Column 2: Iteration 2 ═══ -->
+            <rect x="255" y="115" width="150" height="46" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.8"/>
+            <text x="330" y="134" text-anchor="middle" font-size="12" font-weight="700" fill="#713f12">Residuals r₂</text>
+            <text x="330" y="149" text-anchor="middle" font-size="10" fill="#713f12">= y − F₁(x)</text>
+            <line x1="330" y1="115" x2="330" y2="90" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <text x="330" y="83" text-anchor="middle" font-size="10" fill="#555">(smaller residuals)</text>
+            <line x1="330" y1="161" x2="330" y2="186" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <rect x="255" y="186" width="150" height="52" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+            <text x="330" y="207" text-anchor="middle" font-size="12" font-weight="700" fill="#14532d">Tree₂ : h₂(x)</text>
+            <text x="330" y="222" text-anchor="middle" font-size="10" fill="#14532d">Fits residuals r₂</text>
+            <line x1="330" y1="238" x2="330" y2="263" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+            <rect x="255" y="263" width="150" height="52" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+            <text x="330" y="282" text-anchor="middle" font-size="12" font-weight="700" fill="#4c1d95">F₂(x) = F₁ + η·h₂</text>
+            <text x="330" y="297" text-anchor="middle" font-size="10" fill="#4c1d95">Updated Prediction</text>
+
+            <!-- ═══ Ellipsis arrow ═══ -->
+            <line x1="405" y1="289" x2="445" y2="289" stroke="#555" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#xg-arr)"/>
+            <text x="425" y="283" text-anchor="middle" font-size="14" fill="#888">···</text>
+
+            <!-- ═══ Column 3: Final ═══ -->
+            <rect x="530" y="186" width="150" height="52" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+            <text x="605" y="205" text-anchor="middle" font-size="12" font-weight="700" fill="#7f1d1d">Fₜ(x) = F₀</text>
+            <text x="605" y="220" text-anchor="middle" font-size="11" font-weight="700" fill="#7f1d1d">+ η·Σ hₜ(x)</text>
+
+            <rect x="530" y="263" width="150" height="52" rx="8" fill="#f0fdf4" stroke="#15803d" stroke-width="2.5"/>
+            <text x="605" y="284" text-anchor="middle" font-size="13" font-weight="700" fill="#14532d">Final Prediction</text>
+            <text x="605" y="301" text-anchor="middle" font-size="10" fill="#14532d">Minimum loss achieved</text>
+            <line x1="605" y1="238" x2="605" y2="263" stroke="#555" stroke-width="1.5" marker-end="url(#xg-arr)"/>
+
+            <!-- learning rate label -->
+            <rect x="490" y="330" width="220" height="30" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+            <text x="600" y="349" text-anchor="middle" font-size="11" fill="#334155">η = learning rate (shrinkage); keeps each tree small</text>
+          </svg>
+          <figcaption class="fig-caption">Fig. 7 — XGBoost iterative residual learning. Starting from the mean (F₀), each tree hₜ(x) is fitted to predict the residuals of the current ensemble. The prediction is updated as Fₜ = Fₜ₋₁ + η·hₜ. Each iteration shrinks residuals, progressively reducing prediction error.</figcaption>
         </figure>
 
         <h3>5. Advantages and Disadvantages</h3>
@@ -1013,10 +1150,82 @@
           classified based on which side of the hyperplane it falls.</p>
 
         <figure class="fig-wrap">
-          <img src=""
-            alt="search: SVM support vector machine linearly separable classification 2D example hyperplane margin boundary two classes">
-          <figcaption class="fig-caption">Fig. 8 — SVM classifying two classes in 2D. The hyperplane (solid line)
-            maximises the margin. Dashed lines mark the margin boundaries. Support vectors are circled.</figcaption>
+          <svg viewBox="0 0 660 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:660px;display:block;margin:0 auto;font-family:inherit;">
+            <defs>
+              <marker id="ax-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L8,3 z" fill="#888"/>
+              </marker>
+            </defs>
+
+            <!-- ── axes ── -->
+            <line x1="70" y1="350" x2="590" y2="350" stroke="#aaa" stroke-width="1.5" marker-end="url(#ax-arr)"/>
+            <line x1="70" y1="350" x2="70"  y2="30"  stroke="#aaa" stroke-width="1.5" marker-end="url(#ax-arr)"/>
+            <text x="595" y="355" font-size="13" fill="#555">Weight (g) →</text>
+            <text x="14"  y="195" font-size="12" fill="#555" transform="rotate(-90,14,195)">Colour Intensity →</text>
+
+            <!-- ── Optimal hyperplane (solid blue line) ── -->
+            <!-- slopes downward left-to-right: (130,40) to (530,300) -->
+            <line x1="130" y1="40" x2="530" y2="310" stroke="#2563eb" stroke-width="2.5"/>
+            <text x="540" y="308" font-size="11" fill="#2563eb" font-weight="700">w·x+b=0</text>
+
+            <!-- ── Margin boundary +1 (dashed green) ── -->
+            <line x1="80"  y1="55"  x2="470" y2="310" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="8,5"/>
+            <text x="478" y="308" font-size="11" fill="#16a34a" font-weight="700">w·x+b=+1</text>
+
+            <!-- ── Margin boundary -1 (dashed red) ── -->
+            <line x1="200" y1="40"  x2="590" y2="310" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="8,5"/>
+            <text x="540" y="330" font-size="11" fill="#dc2626" font-weight="700">w·x+b=−1</text>
+
+            <!-- ── Apples (red circles — lighter weight, high colour intensity) → top-left ── -->
+            <circle cx="120" cy="130" r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="120" y="134" text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <circle cx="150" cy="90"  r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="150" y="94"  text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <circle cx="95"  cy="175" r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="95"  y="179" text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <circle cx="185" cy="110" r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="185" y="114" text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <circle cx="115" cy="62"  r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="115" y="66"  text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <!-- Apple support vector (circled) -->
+            <circle cx="248" cy="145" r="11" fill="#fca5a5" stroke="#dc2626" stroke-width="2"/>
+            <text x="248" y="149" text-anchor="middle" font-size="11" fill="#7f1d1d">🍎</text>
+            <circle cx="248" cy="145" r="19" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="248" y="178" text-anchor="middle" font-size="9" fill="#dc2626">SV</text>
+
+            <!-- ── Oranges (orange circles — heavier weight, low colour intensity) → bottom-right ── -->
+            <circle cx="440" cy="280" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="440" y="284" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <circle cx="490" cy="240" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="490" y="244" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <circle cx="520" cy="195" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="520" y="199" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <circle cx="465" cy="315" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="465" y="319" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <circle cx="545" cy="260" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="545" y="264" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <!-- Orange support vector (circled) -->
+            <circle cx="368" cy="238" r="11" fill="#fed7aa" stroke="#ea580c" stroke-width="2"/>
+            <text x="368" y="242" text-anchor="middle" font-size="11" fill="#9a3412">🍊</text>
+            <circle cx="368" cy="238" r="19" fill="none" stroke="#ea580c" stroke-width="2" stroke-dasharray="4,3"/>
+            <text x="368" y="270" text-anchor="middle" font-size="9" fill="#ea580c">SV</text>
+
+            <!-- ── New test point ── -->
+            <circle cx="300" cy="185" r="12" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2.5"/>
+            <text x="300" y="189" text-anchor="middle" font-size="12" fill="#3730a3">?</text>
+            <text x="300" y="206" text-anchor="middle" font-size="9" fill="#4f46e5">New fruit</text>
+
+            <!-- ── Legend ── -->
+            <rect x="72" y="32" width="215" height="90" rx="6" fill="white" stroke="#e2e8f0" stroke-width="1"/>
+            <circle cx="88" cy="52" r="8" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="102" y="56" font-size="11" fill="#333">Apple (light wt, high colour)</text>
+            <circle cx="88" cy="72" r="8" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5"/>
+            <text x="102" y="76" font-size="11" fill="#333">Orange (heavy wt, low colour)</text>
+            <circle cx="88" cy="93" r="8" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+            <text x="102" y="97" font-size="11" fill="#333">New point to classify</text>
+            <text x="102" y="113" font-size="10" fill="#555">Double-ring = Support Vector</text>
+          </svg>
+          <figcaption class="fig-caption">Fig. 8 — SVM classifying Apples vs Oranges in 2D feature space (weight vs colour intensity). The solid blue line is the optimal hyperplane separating the two classes. Dashed lines mark the margin boundaries. Double-ringed points are the support vectors — the critical boundary points. A new fruit (?) is classified based on which side of the hyperplane it falls.</figcaption>
         </figure>
 
         <h3>3. Pros and Cons</h3>
